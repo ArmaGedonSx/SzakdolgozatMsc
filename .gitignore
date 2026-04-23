@@ -1,0 +1,29 @@
+# Cocos Creator
+library/
+temp/
+local/
+profiles/
+build/
+native/
+jsb-default/
+jsb-link/
+jsb-adapter/
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDEs
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw*
+
+# OS
+.DS_Store
+Thumbs.db

@@ -1,9 +1,17 @@
 {
-  /* Base configuration. Do not edit this field. */
-  "extends": "./temp/tsconfig.cocos.json",
+    /* Base configuration. Do not edit this field. */
+    "extends": "./temp/tsconfig.cocos.json",
 
-  /* Add your custom configuration here. */
-  "compilerOptions": {
-    "strict": false
-  }
+    /* Add your custom configuration here. */
+    "compilerOptions": {
+        "target": "ES2015",
+        "module": "CommonJS",
+        "allowSyntheticDefaultImports": true,
+        "types": ["jest", "node"],
+        "strictNullChecks": false,
+        "moduleResolution": "node",
+        "paths": {
+            // "@services/*": ["./assets/Scripts/Services/*"]
+        }
+    }
 }

@@ -3,16 +3,13 @@ library/
 temp/
 local/
 profiles/
-logs/
-user/
 build/
 native/
 jsb-default/
 jsb-link/
 jsb-adapter/
-
-# Extensions
-extensions/*.zip
+logs/
+user/
 
 # Node
 node_modules/
@@ -32,3 +29,8 @@ yarn-error.log*
 # OS
 .DS_Store
 Thumbs.db
+
+# Extensions
+extensions/cocos-mcp-server/dist/
+extensions/cocos-mcp-server/node_modules/
+extensions/*.zip

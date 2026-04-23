@@ -1,9 +1,12 @@
 {
   "__version__": "1.0.12",
   "modules": {
+    "graphics": {
+      "pipeline": "legacy-pipeline"
+    },
     "configs": {
-      "defaultConfig": {
-        "name": "Default Config",
+      "migrationsConfig": {
+        "name": "Migrated Configuration",
         "cache": {
           "base": {
             "_value": true
@@ -21,7 +24,7 @@
             "_value": true
           },
           "skeletal-animation": {
-            "_value": false
+            "_value": true
           },
           "3d": {
             "_value": false
@@ -80,7 +83,7 @@
           },
           "physics-2d": {
             "_value": true,
-            "_option": "physics-2d-box2d"
+            "_option": "physics-2d-builtin"
           },
           "physics-2d-box2d": {
             "_value": false
@@ -131,7 +134,7 @@
             "_value": true
           },
           "websocket": {
-            "_value": false
+            "_value": true
           },
           "websocket-server": {
             "_value": false
@@ -140,7 +143,7 @@
             "_value": false
           },
           "light-probe": {
-            "_value": false
+            "_value": true
           },
           "tiled-map": {
             "_value": true
@@ -168,7 +171,7 @@
             "_value": true
           },
           "marionette": {
-            "_value": false
+            "_value": true
           },
           "procedural-animation": {
             "_value": false
@@ -178,7 +181,7 @@
           },
           "render-pipeline": {
             "_value": true,
-            "_option": "custom-pipeline"
+            "_option": "legacy-pipeline"
           },
           "custom-pipeline": {
             "_value": true
@@ -187,40 +190,45 @@
             "_value": false
           },
           "xr": {
-            "_value": false
+            "_value": true
           }
         },
+        "flags": {},
         "includeModules": [
           "2d",
           "affine-transform",
           "animation",
           "audio",
           "base",
-          "custom-pipeline",
           "dragon-bones",
           "gfx-webgl",
           "gfx-webgl2",
           "graphics",
           "intersection-2d",
+          "legacy-pipeline",
+          "light-probe",
+          "marionette",
           "mask",
           "particle-2d",
-          "physics-2d-box2d",
+          "physics-2d-builtin",
           "profiler",
           "rich-text",
+          "skeletal-animation",
           "spine-3.8",
           "tiled-map",
           "tween",
           "ui",
           "video",
-          "webview"
+          "websocket",
+          "webview",
+          "xr"
         ],
         "noDeprecatedFeatures": {
           "value": false,
           "version": ""
-        },
-        "flags": {}
+        }
       }
     },
-    "globalConfigKey": "defaultConfig"
+    "globalConfigKey": "migrationsConfig"
   }
 }

@@ -1,14 +1,29 @@
 {
-  "name": "PixelRpg",
-  "uuid": "6bd391cb-225b-4d0e-a5ed-233cd8183fe3",
+  "name": "Slash the Hordes",
+  "uuid": "44d41970-47e0-4ec4-84a9-e2884a9f7957",
+  "version": "3.6.2",
   "creator": {
-    "version": "3.8.8",
-    "registry": {
-      "remote": {}
-    },
-    "dependencies": {
-      "localization-editor": "1.0.4",
-      "plugin-import-2x": "1.1.10"
-    }
+    "version": "3.8.8"
+  },
+  "scripts": {
+    "prettier-format": "prettier --config .prettierrc.json assets/Scripts/*.ts --write",
+    "test": "jest",
+    "regenerate-settings": "ts-node utils/regenerateGameSettings.ts assets/Data/GameSettings.json",
+    "generate:menu-bg": "ts-node utils/generateMenuBackgrounds.ts"
+  },
+  "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "@types/lodash": "^4.14.190",
+    "@types/node": "^25.0.10",
+    "@typescript-eslint/eslint-plugin": "^8.54.0",
+    "eslint": "^9.39.2",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.5",
+    "eslint-plugin-react": "^7.31.10",
+    "jest": "^30.2.0",
+    "lodash": ">=4.17.23",
+    "prettier": "^3.8.1",
+    "ts-jest": "^29.0.3",
+    "ts-node": "^10.9.2"
   }
 }

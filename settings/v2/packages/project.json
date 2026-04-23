@@ -1,3 +1,62 @@
 {
-  "__version__": "1.0.6"
+  "physics": {
+    "collisionGroups": [
+      {
+        "index": 1,
+        "name": "PLAYER"
+      },
+      {
+        "index": 2,
+        "name": "ENEMY"
+      },
+      {
+        "index": 3,
+        "name": "WEAPON"
+      },
+      {
+        "index": 4,
+        "name": "ITEM"
+      },
+      {
+        "index": 5,
+        "name": "PLAYER_PROJECTILE"
+      },
+      {
+        "index": 6,
+        "name": "ENEMY_PROJECTILE"
+      },
+      {
+        "index": 9,
+        "name": "MAGNET_RANGE"
+      }
+    ],
+    "collisionMatrix": {
+      "0": 0,
+      "1": 468,
+      "2": 42,
+      "3": 4,
+      "4": 514,
+      "5": 4,
+      "6": 2,
+      "7": 2,
+      "8": 2,
+      "9": 16
+    }
+  },
+  "general": {
+    "designResolution": {
+      "width": 510,
+      "height": 680,
+      "fitHeight": true
+    }
+  },
+  "__version__": "1.0.6",
+  "fbx": {
+    "legacyFbxImporter": {
+      "visible": true
+    }
+  },
+  "script": {
+    "preserveSymlinks": true
+  }
 }

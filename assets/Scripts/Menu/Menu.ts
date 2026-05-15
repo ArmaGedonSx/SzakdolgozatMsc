@@ -1,4 +1,4 @@
-import { approx, Canvas, Component, Label, Node, _decorator } from "cc";
+import { approx, Canvas, Component, input, Input, KeyCode, Label, Node, _decorator } from "cc";
 import { AppRoot } from "../AppRoot/AppRoot";
 import { requireAppRootAsync } from "../AppRoot/AppRootUtils";
 import { MetaUpgradeSettings } from "../Game/Data/GameSettings";
@@ -35,6 +35,22 @@ export class Menu extends Component {
         this.highscoreLabel.string = `Highscore: ${Math.floor(AppRoot.Instance.LiveUserData.game.highscore)}`;
 
         this.updateGoldIndicators();
+
+        // Cheat code: Press G to add 10000 gold
+        input.on(Input.EventType.KEY_DOWN, this.onKeyDown, this);
+    }
+
+    public onDestroy(): void {
+        input.off(Input.EventType.KEY_DOWN, this.onKeyDown, this);
+    }
+
+    private onKeyDown(event: any): void {
+        if (event.keyCode === KeyCode.KEY_G) {
+            AppRoot.Instance.LiveUserData.game.goldCoins += 10000;
+            AppRoot.Instance.saveUserData();
+            this.updateGoldIndicators();
+            console.log(`[CHEAT] Added 10000 gold! Total: ${AppRoot.Instance.LiveUserData.game.goldCoins}`);
+        }
     }
 
     private updateGoldIndicators(): void {

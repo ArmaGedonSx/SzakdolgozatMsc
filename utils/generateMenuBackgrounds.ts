@@ -142,6 +142,178 @@ class PixelArtGradientGenerator {
         };
     }
 
+    private smoothstep(t: number): number {
+        return t * t * (3 - 2 * t);
+    }
+
+    private noise(x: number, y: number, seed: number = 0): number {
+        const n = Math.sin(x * 12.9898 + y * 78.233 + seed) * 43758.5453;
+        return n - Math.floor(n);
+    }
+
+    public generateLavaBackground(): Buffer {
+        const pixels: Color[][] = [];
+        
+        // Lava/Fire color palette
+        const colors = {
+            darkRed: { r: 40, g: 0, b: 0, a: 255 },
+            deepRed: { r: 100, g: 0, b: 0, a: 255 },
+            red: { r: 200, g: 20, b: 0, a: 255 },
+            orange: { r: 255, g: 100, b: 0, a: 255 },
+            brightOrange: { r: 255, g: 150, b: 0, a: 255 },
+            yellow: { r: 255, g: 200, b: 0, a: 255 },
+            brightYellow: { r: 255, g: 240, b: 100, a: 255 },
+            white: { r: 255, g: 255, b: 220, a: 255 },
+        };
+
+        for (let y = 0; y < this.height; y++) {
+            const row: Color[] = [];
+            const t = y / (this.height - 1);
+            const smoothT = this.smoothstep(t);
+
+            for (let x = 0; x < this.width; x++) {
+                // Multi-color lava gradient: dark red -> red -> orange -> yellow -> white
+                let color: Color;
+                
+                if (smoothT < 0.2) {
+                    // Dark red to Deep red
+                    const localT = smoothT / 0.2;
+                    color = this.lerpColor(colors.darkRed, colors.deepRed, localT);
+                } else if (smoothT < 0.4) {
+                    // Deep red to Red
+                    const localT = (smoothT - 0.2) / 0.2;
+                    color = this.lerpColor(colors.deepRed, colors.red, localT);
+                } else if (smoothT < 0.6) {
+                    // Red to Orange
+                    const localT = (smoothT - 0.4) / 0.2;
+                    color = this.lerpColor(colors.red, colors.orange, localT);
+                } else if (smoothT < 0.8) {
+                    // Orange to Yellow
+                    const localT = (smoothT - 0.6) / 0.2;
+                    color = this.lerpColor(colors.orange, colors.yellow, localT);
+                } else {
+                    // Yellow to White
+                    const localT = (smoothT - 0.8) / 0.2;
+                    color = this.lerpColor(colors.yellow, colors.white, localT);
+                }
+
+                // Add flowing lava texture with multiple noise layers
+                const flowNoise1 = this.noise(x * 0.03, y * 0.03 + x * 0.01, 42);
+                const flowNoise2 = this.noise(x * 0.08, y * 0.08, 123);
+                const combinedNoise = (flowNoise1 * 0.7 + flowNoise2 * 0.3);
+                const noiseStrength = 25;
+                
+                color.r = Math.max(0, Math.min(255, color.r + (combinedNoise - 0.5) * noiseStrength));
+                color.g = Math.max(0, Math.min(255, color.g + (combinedNoise - 0.5) * noiseStrength * 0.8));
+                color.b = Math.max(0, Math.min(255, color.b + (combinedNoise - 0.5) * noiseStrength * 0.3));
+
+                // Add bright lava veins
+                const veinNoise = this.noise(x * 0.15, y * 0.15, 456);
+                if (veinNoise > 0.75) {
+                    const veinIntensity = (veinNoise - 0.75) / 0.25;
+                    const veinColor = this.lerpColor(colors.orange, colors.brightYellow, veinIntensity);
+                    color = this.lerpColor(color, veinColor, veinIntensity * 0.6);
+                }
+
+                // Add hot sparks/embers
+                const sparkNoise = this.noise(x * 0.4, y * 0.4, 789);
+                if (sparkNoise > 0.97) {
+                    const sparkBrightness = (sparkNoise - 0.97) / 0.03;
+                    if (sparkBrightness > 0.5) {
+                        color = { r: 255, g: 255, b: 200, a: 255 }; // Bright white spark
+                    } else {
+                        color = { r: 255, g: 180, b: 0, a: 255 }; // Orange spark
+                    }
+                }
+
+                // Add darker cracks/cooled areas
+                const crackNoise = this.noise(x * 0.25, y * 0.25, 999);
+                if (crackNoise < 0.15) {
+                    const darkening = (0.15 - crackNoise) / 0.15;
+                    color.r = Math.floor(color.r * (1 - darkening * 0.7));
+                    color.g = Math.floor(color.g * (1 - darkening * 0.8));
+                    color.b = Math.floor(color.b * (1 - darkening * 0.9));
+                }
+
+                row.push(color);
+            }
+            pixels.push(row);
+        }
+
+        return this.createPNG(pixels);
+    }
+
+    public generateFantasyBackground(): Buffer {
+        const pixels: Color[][] = [];
+        
+        // Fantasy color palette
+        const colors = {
+            deepPurple: { r: 75, g: 0, b: 130, a: 255 },
+            purple: { r: 138, g: 43, b: 226, a: 255 },
+            magenta: { r: 199, g: 21, b: 133, a: 255 },
+            pink: { r: 255, g: 105, b: 180, a: 255 },
+            cyan: { r: 64, g: 224, b: 208, a: 255 },
+            lightCyan: { r: 127, g: 255, b: 212, a: 255 },
+        };
+
+        for (let y = 0; y < this.height; y++) {
+            const row: Color[] = [];
+            const t = y / (this.height - 1);
+            const smoothT = this.smoothstep(t);
+
+            for (let x = 0; x < this.width; x++) {
+                // Multi-color gradient: cyan -> purple -> magenta -> pink
+                let color: Color;
+                
+                if (smoothT < 0.33) {
+                    // Cyan to Purple
+                    const localT = smoothT / 0.33;
+                    color = this.lerpColor(colors.lightCyan, colors.purple, localT);
+                } else if (smoothT < 0.66) {
+                    // Purple to Magenta
+                    const localT = (smoothT - 0.33) / 0.33;
+                    color = this.lerpColor(colors.purple, colors.magenta, localT);
+                } else {
+                    // Magenta to Pink
+                    const localT = (smoothT - 0.66) / 0.34;
+                    color = this.lerpColor(colors.magenta, colors.pink, localT);
+                }
+
+                // Add noise for texture
+                const noiseValue = this.noise(x * 0.05, y * 0.05, 42);
+                const noiseStrength = 15;
+                color.r = Math.max(0, Math.min(255, color.r + (noiseValue - 0.5) * noiseStrength));
+                color.g = Math.max(0, Math.min(255, color.g + (noiseValue - 0.5) * noiseStrength));
+                color.b = Math.max(0, Math.min(255, color.b + (noiseValue - 0.5) * noiseStrength));
+
+                // Add stars
+                const starNoise = this.noise(x * 0.3, y * 0.3, 123);
+                if (starNoise > 0.98) {
+                    const brightness = Math.floor((starNoise - 0.98) / 0.02 * 255);
+                    color = { r: 255, g: 255, b: 255, a: brightness };
+                }
+
+                // Add magical particles (colored sparkles)
+                const particleNoise = this.noise(x * 0.2, y * 0.2, 456);
+                if (particleNoise > 0.985) {
+                    const hue = this.noise(x, y, 789);
+                    if (hue < 0.33) {
+                        color = { r: 255, g: 200, b: 255, a: 255 }; // Pink sparkle
+                    } else if (hue < 0.66) {
+                        color = { r: 200, g: 255, b: 255, a: 255 }; // Cyan sparkle
+                    } else {
+                        color = { r: 255, g: 255, b: 200, a: 255 }; // Yellow sparkle
+                    }
+                }
+
+                row.push(color);
+            }
+            pixels.push(row);
+        }
+
+        return this.createPNG(pixels);
+    }
+
     public generateVerticalGradient(topColor: Color, bottomColor: Color, dithering: boolean = false): Buffer {
         const pixels: Color[][] = [];
 
@@ -197,14 +369,16 @@ class PixelArtGradientGenerator {
     }
 }
 
-// Color palette - Red and Black theme for pixel art
+// Fantasy color palette
 const colors = {
-    black: { r: 0, g: 0, b: 0, a: 255 },
-    darkGray: { r: 25, g: 29, b: 43, a: 255 },
-    darkRed: { r: 139, g: 0, b: 0, a: 255 },
-    red: { r: 178, g: 34, b: 34, a: 255 },
-    brightRed: { r: 220, g: 20, b: 60, a: 255 },
-    crimson: { r: 158, g: 40, b: 54, a: 255 },
+    deepPurple: { r: 75, g: 0, b: 130, a: 255 },
+    purple: { r: 138, g: 43, b: 226, a: 255 },
+    magenta: { r: 199, g: 21, b: 133, a: 255 },
+    pink: { r: 255, g: 105, b: 180, a: 255 },
+    hotPink: { r: 255, g: 20, b: 147, a: 255 },
+    cyan: { r: 64, g: 224, b: 208, a: 255 },
+    lightCyan: { r: 127, g: 255, b: 212, a: 255 },
+    darkPurple: { r: 50, g: 0, b: 80, a: 255 },
     transparent: { r: 0, g: 0, b: 0, a: 0 },
 };
 
@@ -216,46 +390,51 @@ function generateMenuBackgrounds(): void {
         fs.mkdirSync(outputDir, { recursive: true });
     }
 
-    console.log('🎨 Generating pixel art menu backgrounds...\n');
+    console.log('🔥 Generating lava-themed menu backgrounds...\n');
 
-    // 1. Main background - solid dark
+    // 1. Main background - Lava gradient with flowing texture
     const bgGenerator = new PixelArtGradientGenerator(700, 1000);
-    const mainBg = bgGenerator.generateSolidColor(colors.darkGray);
+    const mainBg = bgGenerator.generateLavaBackground();
     fs.writeFileSync(path.join(outputDir, 'menu-background.png'), mainBg);
-    console.log('✅ Generated: menu-background.png (700x1000)');
+    console.log('✅ Generated: menu-background.png (700x1000) - Lava gradient with embers');
 
-    // 2. Red gradient overlay - vertical gradient
+    // 2. Purple-Pink gradient overlay
     const redGradientGen = new PixelArtGradientGenerator(700, 960);
     const redGradient = redGradientGen.generateVerticalGradient(
-        { ...colors.crimson, a: 255 },
-        { ...colors.darkRed, a: 200 },
+        { ...colors.purple, a: 200 },
+        { ...colors.magenta, a: 150 },
         true // with dithering
     );
     fs.writeFileSync(path.join(outputDir, 'menu-gradient-red.png'), redGradient);
-    console.log('✅ Generated: menu-gradient-red.png (700x960)');
+    console.log('✅ Generated: menu-gradient-red.png (700x960) - Purple to Magenta');
 
-    // 3. Top gradient - dark to transparent
+    // 3. Top gradient - Purple to semi-transparent
     const topGradientGen = new PixelArtGradientGenerator(700, 300);
     const topGradient = topGradientGen.generateVerticalGradient(
-        { r: 139, g: 0, b: 0, a: 255 }, // dark red
-        { r: 0, g: 0, b: 0, a: 180 }, // semi-transparent black
+        { ...colors.deepPurple, a: 255 },
+        { ...colors.purple, a: 100 },
         true
     );
     fs.writeFileSync(path.join(outputDir, 'menu-gradient-top.png'), topGradient);
-    console.log('✅ Generated: menu-gradient-top.png (700x300)');
+    console.log('✅ Generated: menu-gradient-top.png (700x300) - Deep purple fade');
 
-    // 4. Bottom gradient - transparent to dark
+    // 4. Bottom gradient - Pink to dark purple
     const bottomGradientGen = new PixelArtGradientGenerator(700, 143);
     const bottomGradient = bottomGradientGen.generateVerticalGradient(
-        { r: 0, g: 0, b: 0, a: 100 },
-        colors.darkGray,
+        { ...colors.pink, a: 80 },
+        { ...colors.darkPurple, a: 255 },
         true
     );
     fs.writeFileSync(path.join(outputDir, 'menu-gradient-bottom.png'), bottomGradient);
-    console.log('✅ Generated: menu-gradient-bottom.png (700x143)');
+    console.log('✅ Generated: menu-gradient-bottom.png (700x143) - Pink to dark purple');
 
-    console.log('\n🎉 All backgrounds generated successfully!');
+    console.log('\n🎉 All fantasy backgrounds generated successfully!');
     console.log(`📁 Output directory: ${outputDir}`);
+    console.log('\n✨ Fantasy theme features:');
+    console.log('   - Multi-color gradient (Cyan → Purple → Magenta → Pink)');
+    console.log('   - Sparkling stars');
+    console.log('   - Magical colored particles');
+    console.log('   - Pixel art texture with noise');
 }
 
 // Run the generator

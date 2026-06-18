@@ -2,7 +2,7 @@
   "ver": "1.0.27",
   "importer": "image",
   "imported": true,
-  "uuid": "3454ec8f-56cc-491f-a5df-1ad3338f9416",
+  "uuid": "7c252ea4-2351-4644-a53e-ba913915bdde",
   "files": [
     ".json",
     ".png"
@@ -10,7 +10,7 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "3454ec8f-56cc-491f-a5df-1ad3338f9416@6c48a",
+      "uuid": "7c252ea4-2351-4644-a53e-ba913915bdde@6c48a",
       "displayName": "Gradient",
       "id": "6c48a",
       "name": "texture",
@@ -22,7 +22,7 @@
         "mipfilter": "none",
         "anisotropy": 0,
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "3454ec8f-56cc-491f-a5df-1ad3338f9416",
+        "imageUuidOrDatabaseUri": "7c252ea4-2351-4644-a53e-ba913915bdde",
         "visible": false
       },
       "ver": "1.0.22",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "3454ec8f-56cc-491f-a5df-1ad3338f9416@f9941",
+      "uuid": "7c252ea4-2351-4644-a53e-ba913915bdde@f9941",
       "displayName": "Gradient",
       "id": "f9941",
       "name": "spriteFrame",
@@ -114,7 +114,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "3454ec8f-56cc-491f-a5df-1ad3338f9416@6c48a",
+        "imageUuidOrDatabaseUri": "7c252ea4-2351-4644-a53e-ba913915bdde@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.12",
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": true,
     "hasAlpha": true,
-    "redirect": "3454ec8f-56cc-491f-a5df-1ad3338f9416@6c48a"
+    "redirect": "7c252ea4-2351-4644-a53e-ba913915bdde@6c48a"
   }
 }

@@ -2,7 +2,7 @@
   "ver": "1.0.27",
   "importer": "image",
   "imported": true,
-  "uuid": "a35c9455-ce86-4551-9283-b29525c6b209",
+  "uuid": "25007b17-f0be-4ab6-a281-9631f1a67b70",
   "files": [
     ".json",
     ".png"
@@ -10,7 +10,7 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "a35c9455-ce86-4551-9283-b29525c6b209@6c48a",
+      "uuid": "25007b17-f0be-4ab6-a281-9631f1a67b70@6c48a",
       "displayName": "Horde",
       "id": "6c48a",
       "name": "texture",
@@ -22,7 +22,7 @@
         "mipfilter": "none",
         "anisotropy": 0,
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "a35c9455-ce86-4551-9283-b29525c6b209",
+        "imageUuidOrDatabaseUri": "25007b17-f0be-4ab6-a281-9631f1a67b70",
         "visible": false
       },
       "ver": "1.0.22",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "a35c9455-ce86-4551-9283-b29525c6b209@f9941",
+      "uuid": "25007b17-f0be-4ab6-a281-9631f1a67b70@f9941",
       "displayName": "Horde",
       "id": "f9941",
       "name": "spriteFrame",
@@ -114,7 +114,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "a35c9455-ce86-4551-9283-b29525c6b209@6c48a",
+        "imageUuidOrDatabaseUri": "25007b17-f0be-4ab6-a281-9631f1a67b70@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.12",
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": true,
     "hasAlpha": true,
-    "redirect": "a35c9455-ce86-4551-9283-b29525c6b209@6c48a"
+    "redirect": "25007b17-f0be-4ab6-a281-9631f1a67b70@6c48a"
   }
 }

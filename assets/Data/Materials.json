@@ -1,0 +1,51 @@
+[
+  {
+    "materialId": "mat_common_ore",
+    "name": "Kozonseges Erc",
+    "rarity": "common",
+    "description": "Alapveto nyersanyag, a skill fa korai fejleszteseihez.",
+    "icon": "icon_common_ore",
+    "dropZones": [],
+    "dropWeight": 40,
+    "lastUpdated": "2026-06-19T00:00:00.000Z"
+  },
+  {
+    "materialId": "mat_uncommon_crystal",
+    "name": "Kulonleges Kristaly",
+    "rarity": "uncommon",
+    "description": "Kozepes ritkasagu alapanyag, fejlettebb fejlesztesekhez.",
+    "icon": "icon_uncommon_crystal",
+    "dropZones": [
+      "zone_shadow_forest",
+      "zone_crystal_caves",
+      "zone_ancient_ruins"
+    ],
+    "dropWeight": 20,
+    "lastUpdated": "2026-06-19T00:00:00.000Z"
+  },
+  {
+    "materialId": "mat_rare_essence",
+    "name": "Ritka Esszencia",
+    "rarity": "rare",
+    "description": "Magasabb szintu fejlesztesekhez hasznalt ritka nyersanyag.",
+    "icon": "icon_rare_essence",
+    "dropZones": [
+      "zone_crystal_caves",
+      "zone_ancient_ruins"
+    ],
+    "dropWeight": 8,
+    "lastUpdated": "2026-06-19T00:00:00.000Z"
+  },
+  {
+    "materialId": "mat_epic_core",
+    "name": "Epikus Mag",
+    "rarity": "epic",
+    "description": "Nagyon ritka alapanyag a legerosebb fejlesztesekhez.",
+    "icon": "icon_epic_core",
+    "dropZones": [
+      "zone_ancient_ruins"
+    ],
+    "dropWeight": 3,
+    "lastUpdated": "2026-06-19T00:00:00.000Z"
+  }
+]

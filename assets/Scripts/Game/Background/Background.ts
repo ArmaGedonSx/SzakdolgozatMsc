@@ -1,13 +1,22 @@
 import { _decorator, Component, Node, Prefab, instantiate, randomRangeInt, Vec3 } from "cc";
 import { SCREEN_HALF_HEIGHT, SCREEN_HALF_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH } from "../Data/GameConstants";
+import { ZoneBackgroundResolver, ZoneBackgroundSetData } from "../Data/ZoneBackgroundResolver";
 const { ccclass, property } = _decorator;
+
+@ccclass("ZoneBackgroundSet")
+export class ZoneBackgroundSet implements ZoneBackgroundSetData<Prefab> {
+    @property() public zoneId = "";
+    @property(Prefab) public backgroundPrefabs: Prefab[] = [];
+}
 
 @ccclass("Background")
 export class Background extends Component {
     @property(Prefab) private backgroundPrefabs: Prefab[] = [];
+    @property(ZoneBackgroundSet) private zoneBackgroundSets: ZoneBackgroundSet[] = [];
 
     private targetNode: Node;
     private instancedBackgrounds: Node[][] = [];
+    private activeBackgroundPrefabs: Prefab[] = [];
 
     private rows = 3;
     private columns = 3;
@@ -16,14 +25,15 @@ export class Background extends Component {
     private playerGridPosX = 0;
     private playerGridPosY = 0;
 
-    public init(targetNode: Node): void {
+    public init(targetNode: Node, zoneId = ""): void {
         this.targetNode = targetNode;
+        this.activeBackgroundPrefabs = ZoneBackgroundResolver.resolve(this.backgroundPrefabs, this.zoneBackgroundSets, zoneId);
 
         for (let i = 0; i < this.rows; i++) {
             const rowNodes: Node[] = [];
             for (let u = 0; u < this.columns; u++) {
-                const randomIndex = randomRangeInt(0, this.backgroundPrefabs.length);
-                const backgroundNode = instantiate(this.backgroundPrefabs[randomIndex]);
+                const randomIndex = randomRangeInt(0, this.activeBackgroundPrefabs.length);
+                const backgroundNode = instantiate(this.activeBackgroundPrefabs[randomIndex]);
                 backgroundNode.setParent(this.node);
 
                 const x = u * this.nodeSize - this.nodeSize + SCREEN_HALF_WIDTH;

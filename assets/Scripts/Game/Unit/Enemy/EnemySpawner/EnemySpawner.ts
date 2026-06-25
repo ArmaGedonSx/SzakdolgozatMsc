@@ -41,18 +41,22 @@ export class EnemySpawner extends Component {
         return this.enemyRemovedEvent;
     }
 
-    public spawnNewEnemy(positionX: number, positionY: number, id: string): Enemy {
+    public spawnNewEnemy(positionX: number, positionY: number, id: string, level = 1): Enemy {
         if (!this.idToSettings.has(id)) {
             throw new Error("Does not have setting for enemy " + id);
         }
 
         const enemySettings = this.idToSettings.get(id);
+        const graphicsType = enemySettings.graphicsType || enemySettings.spriteAsset;
+        if (!graphicsType) {
+            throw new Error("Enemy does not have graphics type or sprite asset " + id);
+        }
 
-        const enemy = this.enemyGraphicsTypeToPool.get(<EnemyGraphicsType>enemySettings.graphicsType).borrow();
+        const enemy = this.enemyGraphicsTypeToPool.get(<EnemyGraphicsType>graphicsType).borrow();
         const spawnPosition = new Vec3();
         spawnPosition.x = this.targetNode.worldPosition.x + positionX;
         spawnPosition.y = this.targetNode.worldPosition.y + positionY;
-        enemy.setup(spawnPosition, enemySettings);
+        enemy.setup(spawnPosition, enemySettings, level);
 
         enemy.DeathEvent.on(this.returnEnemy, this);
         enemy.LifetimeEndedEvent.on(this.returnEnemy, this);

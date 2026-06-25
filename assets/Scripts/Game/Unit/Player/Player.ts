@@ -25,17 +25,23 @@ export class Player extends Component {
     private level: UnitLevel;
     private regeneration: PlayerRegeneration;
     private speed: number;
+    private defense: number;
+    private critChance: number;
+    private critMult: number;
 
     private isMoveAnimationPlaying = false;
 
     public init(input: IInput, data: PlayerData): void {
         this.input = input;
         this.health = new UnitHealth(data.maxHp);
-        this.level = new UnitLevel(data.requiredXP, data.xpMultiplier);
+        this.level = new UnitLevel(data.requiredXP, data.xpMultiplier, Math.max(0, data.initialLevel - 1), data.initialXp);
         this.regeneration = new PlayerRegeneration(this.health, data.regenerationDelay);
         this.speed = data.speed;
+        this.defense = data.defense;
+        this.critChance = data.critChance;
+        this.critMult = data.critMult;
 
-        this.weapon.init(data.strikeDelay, data.damage);
+        this.weapon.init(data.strikeDelay, data.damage, this.critChance, this.critMult);
         this.magnet.init(data.magnetDuration);
         this.health.HealthPointsChangeEvent.on(this.animateHpChange, this);
         this.playerUI.init(this.health);
@@ -59,6 +65,10 @@ export class Player extends Component {
 
     public get Regeneration(): PlayerRegeneration {
         return this.regeneration;
+    }
+
+    public get Defense(): number {
+        return this.defense;
     }
 
     public get Collider(): Collider2D {
@@ -121,12 +131,17 @@ export class Player extends Component {
 }
 
 export class PlayerData {
+    public initialLevel = 1;
+    public initialXp = 0;
     public requiredXP: number[] = [];
     public speed = 0;
     public maxHp = 0;
     public regenerationDelay = 0;
     public xpMultiplier = 0;
     public goldMultiplier = 0;
+    public defense = 0;
+    public critChance = 0;
+    public critMult = 1;
 
     // Weapon
     public strikeDelay = 0;

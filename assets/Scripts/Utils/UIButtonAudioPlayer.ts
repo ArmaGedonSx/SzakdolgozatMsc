@@ -11,7 +11,11 @@ export class UIButtonAudioPlayer extends Component {
     }
 
     private playButtonClick(): void {
-        const audioClip = AppRoot.Instance.GameAssets.AudioAssets.buttonClick;
+        const gameAssets = AppRoot.Instance?.GameAssets;
+        const audioClip = gameAssets?.AudioAssets?.buttonClick;
+        if (!audioClip) {
+            return;
+        }
         AppRoot.Instance.AudioPlayer.playSound(audioClip);
     }
 }

@@ -1,6 +1,7 @@
-import { randomRangeInt, _decorator } from "cc";
+import { random, _decorator } from "cc";
 import { ModalWindow } from "../../Services/ModalWindowSystem/ModalWindow";
 import { UIButton } from "../../Services/UI/Button/UIButton";
+import { ChestRewardChoice } from "../Data/ChestRewardChoice";
 import { LevelUpModalWindowParams } from "../UI/LevelUpWindow/LevelUpModalWindow";
 import { LevelUpSkill } from "../UI/LevelUpWindow/LevelUpSkill";
 import { UpgradeType } from "../Upgrades/UpgradeType";
@@ -12,10 +13,14 @@ export class ChestModalWindow extends ModalWindow<LevelUpModalWindowParams, Upgr
     @property(UIButton) private okButton: UIButton;
 
     protected setup(params: LevelUpModalWindowParams): void {
-        const randomIndex = randomRangeInt(0, params.availableUpgrades.length - 1);
-        const skillToUpgrade = params.availableUpgrades[randomIndex];
-        this.levelUpSkill.init(skillToUpgrade, params.translationData);
+        const skillToUpgrade = ChestRewardChoice.chooseRandomUpgrade(params.availableUpgrades, random);
+        if (!skillToUpgrade) {
+            this.dismiss(null);
+            return;
+        }
 
-        this.okButton.InteractedEvent.on(() => this.dismiss(skillToUpgrade), this);
+        this.levelUpSkill.init(skillToUpgrade);
+
+        this.okButton.InteractedEvent.on(() => this.dismiss(skillToUpgrade.upgradeType), this);
     }
 }

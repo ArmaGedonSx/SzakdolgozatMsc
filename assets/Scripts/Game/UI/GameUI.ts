@@ -1,4 +1,5 @@
 import { Component, Label, ProgressBar, _decorator } from "cc";
+import { GameHudPresentation, RunEventMilestones } from "../Data/GameHudPresentation";
 import { UIButton } from "../../Services/UI/Button/UIButton";
 import { GameResult } from "../Game";
 import { ItemManager } from "../Items/ItemManager";
@@ -50,7 +51,7 @@ export class GameUI extends Component {
         this.modalLauncher.showPauseModal();
     }
 
-    public updateTimeAlive(timeAlive: number): void {
-        this.timeAliveText.string = `${Math.floor(timeAlive)}`;
+    public updateTimeAlive(timeAlive: number, milestones: RunEventMilestones = {}): void {
+        this.timeAliveText.string = GameHudPresentation.formatRunStatus(timeAlive, this.playerLevel.CurrentLevel, this.gameResult.kills, milestones);
     }
 }

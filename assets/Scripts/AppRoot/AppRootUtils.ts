@@ -4,6 +4,8 @@ import { AppRoot } from "./AppRoot";
 export async function requireAppRootAsync(): Promise<void> {
     console.log("Waiting for app root");
     while (AppRoot.Instance == null) await delay(10);
+    while (!AppRoot.Instance.IsReady) await delay(10);
+    await AppRoot.Instance.waitUntilReady();
 
     AppRoot.Instance.node.setSiblingIndex(1000); // render on top
     AppRoot.Instance.node.active = false; // forces engine to reorder by hierarchy

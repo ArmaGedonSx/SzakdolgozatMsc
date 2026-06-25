@@ -19,6 +19,8 @@ export class ProjectileLauncher extends Component implements IProjectileLauncher
     private projectilePierces: number;
     private projectileLifetime: number;
     private projectileSpeed: number;
+    private projectileCritChance = 0;
+    private projectileCritMult = 1;
 
     private projectilePool: ObjectPool<Projectile>;
 
@@ -35,11 +37,20 @@ export class ProjectileLauncher extends Component implements IProjectileLauncher
         return this.projectileLaunchedEvent;
     }
 
-    public init(projectileLifetime: number, projectileSpeed: number, projectileDamage: number, projectilePierces: number): void {
+    public init(
+        projectileLifetime: number,
+        projectileSpeed: number,
+        projectileDamage: number,
+        projectilePierces: number,
+        projectileCritChance = 0,
+        projectileCritMult = 1
+    ): void {
         this.projectileLifetime = projectileLifetime;
         this.projectileSpeed = projectileSpeed;
         this.projectileDamage = projectileDamage;
         this.projectilePierces = projectilePierces;
+        this.projectileCritChance = projectileCritChance;
+        this.projectileCritMult = projectileCritMult;
 
         this.projectilePool = new ObjectPool<Projectile>(this.projectilePrefab, this.node, 6, "Projectile");
     }
@@ -59,7 +70,13 @@ export class ProjectileLauncher extends Component implements IProjectileLauncher
     private fireProjectile(startPosition: Vec3, direction: Vec2): void {
         direction = direction.normalize();
         const projectile: Projectile = this.projectilePool.borrow();
-        projectile.setup(this.projectileDamage, this.projectilePierces, getDegreeAngleFromDirection(direction.x, direction.y));
+        projectile.setup(
+            this.projectileDamage,
+            this.projectilePierces,
+            getDegreeAngleFromDirection(direction.x, direction.y),
+            this.projectileCritChance,
+            this.projectileCritMult
+        );
         projectile.node.setWorldPosition(startPosition);
         projectile.node.active = true;
         projectile.ContactBeginEvent.on(this.onProjectileCollision, this);

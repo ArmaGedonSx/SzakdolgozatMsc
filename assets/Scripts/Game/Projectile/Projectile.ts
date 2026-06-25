@@ -1,6 +1,7 @@
 import { Collider2D, Component, Contact2DType, Vec3, _decorator } from "cc";
 import { ISignal } from "../../Services/EventSystem/ISignal";
 import { Signal } from "../../Services/EventSystem/Signal";
+import { AttackResolver } from "../Data/AttackResolver";
 import { ProjectileCollision } from "./ProjectileCollision";
 const { ccclass, property } = _decorator;
 
@@ -14,10 +15,14 @@ export class Projectile extends Component {
 
     private piercesLeft = 0;
     private damage = 0;
+    private critChance = 0;
+    private critMult = 1;
 
-    public setup(damage: number, pierces: number, angle: number): void {
+    public setup(damage: number, pierces: number, angle: number, critChance = 0, critMult = 1): void {
         this.piercesLeft = pierces;
         this.damage = damage;
+        this.critChance = critChance;
+        this.critMult = critMult;
 
         if (!this.isContactListenerSet) {
             this.isContactListenerSet = true;
@@ -36,6 +41,10 @@ export class Projectile extends Component {
 
     public get Damage(): number {
         return this.damage;
+    }
+
+    public rollDamage(): number {
+        return AttackResolver.resolveOutgoingDamage(this.damage, this.critChance, this.critMult);
     }
 
     public get ContactBeginEvent(): ISignal<ProjectileCollision> {

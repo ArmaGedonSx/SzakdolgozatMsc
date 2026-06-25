@@ -35,7 +35,14 @@ export class HaloProjectileLauncher implements IProjectileLauncherSignaler {
             this.directions.push(new Vec2(x, y).normalize());
         }
 
-        launcher.init(settings.launcher.projectileLifetime, settings.launcher.projectileSpeed, projectileData.damage, projectileData.pierces);
+        launcher.init(
+            settings.launcher.projectileLifetime,
+            settings.launcher.projectileSpeed,
+            projectileData.damage,
+            projectileData.pierces,
+            projectileData.critChance,
+            projectileData.critMult
+        );
     }
 
     public get ProjectileCollisionEvent(): ISignal<ProjectileCollision> {

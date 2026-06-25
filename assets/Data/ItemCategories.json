@@ -1,0 +1,58 @@
+[
+  {
+    "categoryId": "weapon",
+    "name": "Fegyver",
+    "slot": "mainHand",
+    "maxStack": 1,
+    "icon": "icon_sword",
+    "lastUpdated": "2026-06-19T00:00:00.000Z"
+  },
+  {
+    "categoryId": "helmet",
+    "name": "Sisak",
+    "slot": "head",
+    "maxStack": 1,
+    "icon": "icon_helmet",
+    "lastUpdated": "2026-06-19T00:00:00.000Z"
+  },
+  {
+    "categoryId": "chestplate",
+    "name": "Mellvert",
+    "slot": "chest",
+    "maxStack": 1,
+    "icon": "icon_chestplate",
+    "lastUpdated": "2026-06-19T00:00:00.000Z"
+  },
+  {
+    "categoryId": "leggings",
+    "name": "Nadrag",
+    "slot": "legs",
+    "maxStack": 1,
+    "icon": "icon_leggings",
+    "lastUpdated": "2026-06-19T00:00:00.000Z"
+  },
+  {
+    "categoryId": "boots",
+    "name": "Csizma",
+    "slot": "feet",
+    "maxStack": 1,
+    "icon": "icon_boots",
+    "lastUpdated": "2026-06-19T00:00:00.000Z"
+  },
+  {
+    "categoryId": "ring",
+    "name": "Gyuru",
+    "slot": "ring",
+    "maxStack": 1,
+    "icon": "icon_ring",
+    "lastUpdated": "2026-06-19T00:00:00.000Z"
+  },
+  {
+    "categoryId": "amulet",
+    "name": "Nyaklanc",
+    "slot": "amulet",
+    "maxStack": 1,
+    "icon": "icon_amulet",
+    "lastUpdated": "2026-06-19T00:00:00.000Z"
+  }
+]

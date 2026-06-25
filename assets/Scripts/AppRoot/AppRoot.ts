@@ -1,8 +1,16 @@
 import { Camera, Component, director, instantiate, JsonAsset, Prefab, _decorator } from "cc";
 import { GameSettings } from "../Game/Data/GameSettings";
 import { GameAssets } from "../Game/Data/Assets/GameAssets";
+import { ContentValidator } from "../Game/Data/ContentValidator";
+import { InventoryState } from "../Game/Data/InventoryState";
+import { OfflineProgressState } from "../Game/Data/OfflineProgressState";
+import { PlayerProgression } from "../Game/Data/PlayerProgression";
+import { PlayerRuntimeState } from "../Game/Data/PlayerRuntimeState";
+import { SkillBonusResolver } from "../Game/Data/SkillBonuses";
+import { PlayerSkillTreeState } from "../Game/Data/PlayerSkillTreeState";
 import { TranslationData } from "../Game/Data/TranslationData";
 import { UserData } from "../Game/Data/UserData";
+import { ZoneResolver } from "../Game/Data/ZoneResolver";
 import { AudioPlayer } from "../Services/AudioPlayer/AudioPlayer";
 import { SaveSystem } from "./SaveSystem";
 import { ModalWindowManager } from "../Services/ModalWindowSystem/ModalWindowManager";
@@ -22,6 +30,7 @@ export class AppRoot extends Component {
 
     private static instance: AppRoot;
     private saveSystem: SaveSystem;
+    private initPromise: Promise<void>;
 
     private liveUserData: UserData;
     private gameAssets: GameAssets;
@@ -41,6 +50,10 @@ export class AppRoot extends Component {
 
     public get LiveUserData(): UserData {
         return this.liveUserData;
+    }
+
+    public get IsReady(): boolean {
+        return this.liveUserData != null;
     }
 
     public get Settings(): GameSettings {
@@ -75,10 +88,14 @@ export class AppRoot extends Component {
         if (AppRoot.Instance == null) {
             AppRoot.instance = this;
             director.addPersistRootNode(this.node);
-            this.init();
+            this.initPromise = this.init();
         } else {
             this.node.destroy();
         }
+    }
+
+    public async waitUntilReady(): Promise<void> {
+        await this.initPromise;
     }
 
     public update(deltaTime: number): void {
@@ -86,8 +103,22 @@ export class AppRoot extends Component {
     }
 
     private async init(): Promise<void> {
+        const contentIssues = ContentValidator.validate(this.Settings);
+        const blockingContentIssues = contentIssues.filter((issue) => issue.severity === "error");
+        if (blockingContentIssues.length > 0) {
+            throw new Error(`Invalid content data:\n${blockingContentIssues.map((issue) => `${issue.path}: ${issue.message}`).join("\n")}`);
+        }
+
         this.saveSystem = new SaveSystem();
         this.liveUserData = this.saveSystem.load();
+        PlayerSkillTreeState.normalize(this.Settings, this.liveUserData);
+        InventoryState.normalize(this.Settings, this.liveUserData);
+        this.liveUserData.game.idleRate = Math.max(1, 1 + SkillBonusResolver.resolve(this.Settings, this.liveUserData).idleRate);
+        OfflineProgressState.normalize(this.Settings, this.liveUserData);
+        PlayerProgression.normalize(this.Settings, this.liveUserData);
+        PlayerRuntimeState.normalize(this.Settings, this.liveUserData);
+        ZoneResolver.resolveCurrentZone(this.Settings, this.liveUserData);
+        this.saveUserData();
 
         const gameAssetsNode = instantiate(this.gameAssetsPrefab);
         gameAssetsNode.setParent(this.node);

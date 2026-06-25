@@ -26,7 +26,7 @@
     "collisionDelay": 0.5,
     "magnetDuration": 6,
     "weapon": {
-      "strikeDelay": 2,
+      "strikeDelay": 1.6,
       "damage": 2
     },
     "haloLauncher": {
@@ -143,6 +143,146 @@
       ]
     }
   },
+  "skills": [
+    {
+      "skillId": "combat_weapon_length_1",
+      "upgradeType": "WEAPON_LENGTH",
+      "name": "Weapon Length",
+      "description": "Increase melee reach.",
+      "type": "passive",
+      "maxRank": 5,
+      "goldCoinCost": 0,
+      "materialCosts": {},
+      "choiceWeight": 3,
+      "statBonusPerRank": {
+        "atk": 0,
+        "def": 0,
+        "hp": 0,
+        "speed": 0,
+        "critChance": 0,
+        "critMult": 1,
+        "goldBonus": 0,
+        "xpBonus": 0,
+        "idleRate": 0
+      },
+      "lastUpdated": "2026-06-23T00:00:00.000Z"
+    },
+    {
+      "skillId": "combat_weapon_damage_1",
+      "upgradeType": "WEAPON_DAMAGE",
+      "name": "Weapon Damage",
+      "description": "Increase melee damage.",
+      "type": "passive",
+      "maxRank": 10,
+      "goldCoinCost": 0,
+      "materialCosts": {},
+      "choiceWeight": 3,
+      "statBonusPerRank": {
+        "atk": 0,
+        "def": 0,
+        "hp": 0,
+        "speed": 0,
+        "critChance": 0,
+        "critMult": 1,
+        "goldBonus": 0,
+        "xpBonus": 0,
+        "idleRate": 0
+      },
+      "lastUpdated": "2026-06-23T00:00:00.000Z"
+    },
+    {
+      "skillId": "combat_horizontal_projectile_1",
+      "upgradeType": "HORIZONTAL_PROJECTILE",
+      "name": "Horizontal Projectile",
+      "description": "Unlock or improve forward projectile volleys.",
+      "type": "passive",
+      "maxRank": 6,
+      "goldCoinCost": 0,
+      "materialCosts": {},
+      "choiceWeight": 2,
+      "statBonusPerRank": {
+        "atk": 0,
+        "def": 0,
+        "hp": 0,
+        "speed": 0,
+        "critChance": 0,
+        "critMult": 1,
+        "goldBonus": 0,
+        "xpBonus": 0,
+        "idleRate": 0
+      },
+      "lastUpdated": "2026-06-23T00:00:00.000Z"
+    },
+    {
+      "skillId": "combat_diagonal_projectile_1",
+      "upgradeType": "DIAGONAL_PROJECTILE",
+      "name": "Diagonal Projectile",
+      "description": "Unlock or improve diagonal projectile volleys.",
+      "type": "passive",
+      "maxRank": 6,
+      "goldCoinCost": 0,
+      "materialCosts": {},
+      "choiceWeight": 2,
+      "statBonusPerRank": {
+        "atk": 0,
+        "def": 0,
+        "hp": 0,
+        "speed": 0,
+        "critChance": 0,
+        "critMult": 1,
+        "goldBonus": 0,
+        "xpBonus": 0,
+        "idleRate": 0
+      },
+      "lastUpdated": "2026-06-23T00:00:00.000Z"
+    },
+    {
+      "skillId": "combat_halo_projectile_1",
+      "upgradeType": "HALO_PROJECTILE",
+      "name": "Halo Projectile",
+      "description": "Improve the rotating projectile halo.",
+      "type": "passive",
+      "maxRank": 6,
+      "goldCoinCost": 0,
+      "materialCosts": {},
+      "choiceWeight": 2,
+      "statBonusPerRank": {
+        "atk": 0,
+        "def": 0,
+        "hp": 0,
+        "speed": 0,
+        "critChance": 0,
+        "critMult": 1,
+        "goldBonus": 0,
+        "xpBonus": 0,
+        "idleRate": 0
+      },
+      "lastUpdated": "2026-06-23T00:00:00.000Z"
+    },
+    {
+      "skillId": "support_regeneration_1",
+      "upgradeType": "REGENERATION",
+      "name": "Regeneration",
+      "description": "Improve passive health regeneration.",
+      "type": "passive",
+      "maxRank": 6,
+      "goldCoinCost": 0,
+      "materialCosts": {},
+      "choiceWeight": 1,
+      "statBonusPerRank": {
+        "atk": 0,
+        "def": 0,
+        "hp": 0,
+        "speed": 0,
+        "critChance": 0,
+        "critMult": 1,
+        "goldBonus": 0,
+        "xpBonus": 0,
+        "idleRate": 0
+      },
+      "lastUpdated": "2026-06-23T00:00:00.000Z"
+    }
+  ],
   "enemyManager": {
     "axeLauncher": {
       "enemyIds": [
@@ -178,7 +318,8 @@
         "goldReward": 0.11,
         "healthPotionRewardChance": 0.01,
         "magnetRewardChance": 0.01,
-        "chestRewardChance": 0
+        "chestRewardChance": 0,
+        "lastUpdated": "2026-06-23T00:00:00.000Z"
       },
       {
         "id": "BasicEnemySkeleton",
@@ -192,203 +333,218 @@
         "goldReward": 0.1,
         "healthPotionRewardChance": 0.01,
         "magnetRewardChance": 0.01,
-        "chestRewardChance": 0
+        "chestRewardChance": 0,
+        "lastUpdated": "2026-06-23T00:00:00.000Z"
       },
       {
         "id": "StandardEnemy",
         "moveType": "Follow",
         "graphicsType": "Goblin",
-        "health": 4,
-        "damage": 2,
-        "speed": 65,
+        "health": 9,
+        "damage": 3.13,
+        "speed": 71,
         "lifetime": -1,
-        "xpReward": 1,
-        "goldReward": 0.1,
+        "xpReward": 2.25,
+        "goldReward": 0.22,
         "healthPotionRewardChance": 0.01,
         "magnetRewardChance": 0.01,
-        "chestRewardChance": 0
+        "chestRewardChance": 0,
+        "lastUpdated": "2026-06-23T00:00:00.000Z"
       },
       {
         "id": "TreasureEnemy",
         "moveType": "Launch",
         "graphicsType": "Goblin",
-        "health": 4,
-        "damage": 1,
-        "speed": 50,
+        "health": 9,
+        "damage": 1.56,
+        "speed": 56,
         "lifetime": 25,
-        "xpReward": 1,
-        "goldReward": 1,
+        "xpReward": 2.25,
+        "goldReward": 2.25,
         "healthPotionRewardChance": 0.02,
         "magnetRewardChance": 0.02,
-        "chestRewardChance": 0
+        "chestRewardChance": 0,
+        "lastUpdated": "2026-06-23T00:00:00.000Z"
       },
       {
         "id": "FastEnemy",
         "moveType": "Follow",
         "graphicsType": "Shark",
-        "health": 3,
-        "damage": 2,
-        "speed": 80,
+        "health": 8,
+        "damage": 3.13,
+        "speed": 88,
         "lifetime": -1,
-        "xpReward": 1,
-        "goldReward": 0.1,
+        "xpReward": 2.25,
+        "goldReward": 0.22,
         "healthPotionRewardChance": 0.01,
         "magnetRewardChance": 0.01,
-        "chestRewardChance": 0
+        "chestRewardChance": 0,
+        "lastUpdated": "2026-06-23T00:00:00.000Z"
       },
       {
         "id": "SpeedEnemy",
         "moveType": "Follow",
         "graphicsType": "Runner",
-        "health": 4,
-        "damage": 2,
-        "speed": 90,
+        "health": 13,
+        "damage": 4.5,
+        "speed": 103,
         "lifetime": -1,
-        "xpReward": 1,
-        "goldReward": 0.15,
+        "xpReward": 6.25,
+        "goldReward": 0.95,
         "healthPotionRewardChance": 0.01,
         "magnetRewardChance": 0.01,
-        "chestRewardChance": 0
+        "chestRewardChance": 0,
+        "lastUpdated": "2026-06-23T00:00:00.000Z"
       },
       {
         "id": "ToughEnemy",
         "moveType": "Follow",
         "graphicsType": "FlyWorm",
-        "health": 7,
-        "damage": 2,
-        "speed": 70,
+        "health": 23,
+        "damage": 4.5,
+        "speed": 80,
         "lifetime": -1,
-        "xpReward": 1,
-        "goldReward": 0.1,
+        "xpReward": 6.25,
+        "goldReward": 0.63,
         "healthPotionRewardChance": 0.01,
         "magnetRewardChance": 0.02,
-        "chestRewardChance": 0
+        "chestRewardChance": 0,
+        "lastUpdated": "2026-06-23T00:00:00.000Z"
       },
       {
         "id": "HardEnemy",
         "moveType": "Follow",
         "graphicsType": "FlyWorm",
-        "health": 10,
-        "damage": 2,
-        "speed": 75,
+        "health": 32,
+        "damage": 4.5,
+        "speed": 86,
         "lifetime": -1,
-        "xpReward": 1,
-        "goldReward": 0.1,
+        "xpReward": 6.25,
+        "goldReward": 0.63,
         "healthPotionRewardChance": 0.02,
         "magnetRewardChance": 0.02,
-        "chestRewardChance": 0
+        "chestRewardChance": 0,
+        "lastUpdated": "2026-06-23T00:00:00.000Z"
       },
       {
         "id": "HarderEnemy",
         "moveType": "Follow",
         "graphicsType": "FlyWorm",
-        "health": 16,
-        "damage": 2,
-        "speed": 80,
+        "health": 52,
+        "damage": 4.5,
+        "speed": 92,
         "lifetime": -1,
-        "xpReward": 1,
-        "goldReward": 0.1,
+        "xpReward": 6.25,
+        "goldReward": 0.63,
         "healthPotionRewardChance": 0.02,
         "magnetRewardChance": 0.02,
-        "chestRewardChance": 0
+        "chestRewardChance": 0,
+        "lastUpdated": "2026-06-23T00:00:00.000Z"
       },
       {
         "id": "HardestEnemy",
         "moveType": "Follow",
         "graphicsType": "FlyWorm",
-        "health": 22,
-        "damage": 2,
-        "speed": 95,
+        "health": 59,
+        "damage": 4.5,
+        "speed": 130,
         "lifetime": -1,
-        "xpReward": 1,
-        "goldReward": 0.15,
+        "xpReward": 4,
+        "goldReward": 0.33,
         "healthPotionRewardChance": 0.02,
         "magnetRewardChance": 0.01,
-        "chestRewardChance": 0.01
+        "chestRewardChance": 0.01,
+        "lastUpdated": "2026-06-23T00:00:00.000Z"
       },
       {
         "id": "EndEnemy",
         "moveType": "Follow",
         "graphicsType": "Runner",
-        "health": 26,
-        "damage": 2,
-        "speed": 133,
+        "health": 68,
+        "damage": 4.5,
+        "speed": 181,
         "lifetime": -1,
-        "xpReward": 1,
-        "goldReward": 0.15,
+        "xpReward": 4,
+        "goldReward": 0.33,
         "healthPotionRewardChance": 0.02,
         "magnetRewardChance": 0.01,
-        "chestRewardChance": 0.01
+        "chestRewardChance": 0.01,
+        "lastUpdated": "2026-06-23T00:00:00.000Z"
       },
       {
         "id": "TankEnemy",
         "moveType": "Follow",
         "graphicsType": "Barbarian",
-        "health": 18,
-        "damage": 2,
-        "speed": 60,
+        "health": 58,
+        "damage": 4.5,
+        "speed": 68,
         "lifetime": -1,
-        "xpReward": 1,
-        "goldReward": 0.15,
+        "xpReward": 6.25,
+        "goldReward": 0.95,
         "healthPotionRewardChance": 0.02,
         "magnetRewardChance": 0,
-        "chestRewardChance": 0
+        "chestRewardChance": 0,
+        "lastUpdated": "2026-06-23T00:00:00.000Z"
       },
       {
         "id": "SiegeEnemyMelee",
         "moveType": "Follow",
         "graphicsType": "Shark",
-        "health": 30,
-        "damage": 2,
-        "speed": 70,
+        "health": 97,
+        "damage": 4.5,
+        "speed": 80,
         "lifetime": -1,
-        "xpReward": 1,
-        "goldReward": 0.2,
+        "xpReward": 6.25,
+        "goldReward": 1.25,
         "healthPotionRewardChance": 0.02,
         "magnetRewardChance": 0,
-        "chestRewardChance": 0.01
+        "chestRewardChance": 0.01,
+        "lastUpdated": "2026-06-23T00:00:00.000Z"
       },
       {
         "id": "SiegeEnemyRanged",
         "moveType": "PeriodicFollow",
         "graphicsType": "Barbarian",
-        "health": 30,
-        "damage": 2,
-        "speed": 80,
+        "health": 97,
+        "damage": 4.5,
+        "speed": 92,
         "lifetime": 27,
-        "xpReward": 1,
-        "goldReward": 0.2,
+        "xpReward": 6.25,
+        "goldReward": 1.25,
         "healthPotionRewardChance": 0.02,
         "magnetRewardChance": 0.01,
-        "chestRewardChance": 0.01
+        "chestRewardChance": 0.01,
+        "lastUpdated": "2026-06-23T00:00:00.000Z"
       },
       {
         "id": "SkeletonRanger",
         "moveType": "PeriodicFollow",
         "graphicsType": "Skeleton",
-        "health": 20,
-        "damage": 3,
-        "speed": 90,
+        "health": 65,
+        "damage": 6.75,
+        "speed": 103,
         "lifetime": -1,
-        "xpReward": 1,
-        "goldReward": 0.2,
+        "xpReward": 6.25,
+        "goldReward": 1.25,
         "healthPotionRewardChance": 0.02,
         "magnetRewardChance": 0.01,
-        "chestRewardChance": 0
+        "chestRewardChance": 0,
+        "lastUpdated": "2026-06-23T00:00:00.000Z"
       },
       {
         "id": "BatEnemy",
         "moveType": "Follow",
         "graphicsType": "Bat",
-        "health": 5,
-        "damage": 1,
-        "speed": 120,
+        "health": 16,
+        "damage": 2.25,
+        "speed": 137,
         "lifetime": -1,
-        "xpReward": 1,
-        "goldReward": 0.1,
+        "xpReward": 6.25,
+        "goldReward": 0.63,
         "healthPotionRewardChance": 0.01,
         "magnetRewardChance": 0.01,
-        "chestRewardChance": 0
+        "chestRewardChance": 0,
+        "lastUpdated": "2026-06-23T00:00:00.000Z"
       },
       {
         "id": "CircleEnemy",
@@ -402,7 +558,8 @@
         "goldReward": 0.15,
         "healthPotionRewardChance": 0.05,
         "magnetRewardChance": 0.05,
-        "chestRewardChance": 0
+        "chestRewardChance": 0,
+        "lastUpdated": "2026-06-23T00:00:00.000Z"
       },
       {
         "id": "CircleEnemyBat",
@@ -413,66 +570,71 @@
         "speed": 22,
         "lifetime": 25,
         "xpReward": 1,
-        "goldReward": 0.10,
+        "goldReward": 0.1,
         "healthPotionRewardChance": 0.07,
         "magnetRewardChance": 0.05,
-        "chestRewardChance": 0
+        "chestRewardChance": 0,
+        "lastUpdated": "2026-06-23T00:00:00.000Z"
       },
       {
         "id": "CircleEnemyStandard",
         "moveType": "Follow",
         "graphicsType": "Skeleton",
-        "health": 7,
-        "damage": 2,
-        "speed": 35,
+        "health": 17,
+        "damage": 3.13,
+        "speed": 39,
         "lifetime": 27,
-        "xpReward": 1,
-        "goldReward": 0.15,
+        "xpReward": 2.25,
+        "goldReward": 0.33,
         "healthPotionRewardChance": 0.02,
         "magnetRewardChance": 0.02,
-        "chestRewardChance": 0
+        "chestRewardChance": 0,
+        "lastUpdated": "2026-06-23T00:00:00.000Z"
       },
       {
         "id": "CircleEnemyTough",
         "moveType": "Follow",
         "graphicsType": "Barbarian",
-        "health": 11,
-        "damage": 2,
-        "speed": 30,
+        "health": 36,
+        "damage": 4.5,
+        "speed": 34,
         "lifetime": 27,
-        "xpReward": 1,
-        "goldReward": 0.2,
+        "xpReward": 6.25,
+        "goldReward": 1.25,
         "healthPotionRewardChance": 0.02,
         "magnetRewardChance": 0.01,
-        "chestRewardChance": 0
+        "chestRewardChance": 0,
+        "lastUpdated": "2026-06-23T00:00:00.000Z"
       },
       {
         "id": "CircleEnemySkelePrison",
         "moveType": "Follow",
         "graphicsType": "Skeleton",
-        "health": 20,
-        "damage": 2,
-        "speed": 60,
+        "health": 65,
+        "damage": 4.5,
+        "speed": 68,
         "lifetime": 26,
-        "xpReward": 1,
-        "goldReward": 0.2,
+        "xpReward": 6.25,
+        "goldReward": 1.25,
         "healthPotionRewardChance": 0.02,
         "magnetRewardChance": 0.01,
-        "chestRewardChance": 0
+        "chestRewardChance": 0,
+        "lastUpdated": "2026-06-23T00:00:00.000Z"
       },
       {
         "id": "CircleEnemyDark",
         "moveType": "Follow",
         "graphicsType": "DarkRaven",
-        "health": 19,
-        "damage": 2,
-        "speed": 25,
+        "health": 61,
+        "damage": 4.5,
+        "speed": 29,
         "lifetime": 27,
-        "xpReward": 1,
-        "goldReward": 0.2,
+        "xpReward": 6.25,
+        "goldReward": 1.25,
         "healthPotionRewardChance": 0.02,
         "magnetRewardChance": 0.02,
-        "chestRewardChance": 0
+        "chestRewardChance": 0,
+        "lastUpdated": "2026-06-23T00:00:00.000Z"
       },
       {
         "id": "WaveEnemy",
@@ -486,217 +648,233 @@
         "goldReward": 0.15,
         "healthPotionRewardChance": 0.02,
         "magnetRewardChance": 0.01,
-        "chestRewardChance": 0
+        "chestRewardChance": 0,
+        "lastUpdated": "2026-06-23T00:00:00.000Z"
       },
       {
         "id": "WaveEnemyArmor",
         "moveType": "Launch",
         "graphicsType": "Skeleton",
-        "health": 5,
-        "damage": 2,
-        "speed": 70,
+        "health": 12,
+        "damage": 3.13,
+        "speed": 78,
         "lifetime": 30,
-        "xpReward": 1,
-        "goldReward": 0.2,
+        "xpReward": 2.25,
+        "goldReward": 0.45,
         "healthPotionRewardChance": 0.01,
         "magnetRewardChance": 0,
-        "chestRewardChance": 0.01
+        "chestRewardChance": 0.01,
+        "lastUpdated": "2026-06-23T00:00:00.000Z"
       },
       {
         "id": "WaveEnemyArmorFast",
         "moveType": "Launch",
         "graphicsType": "Runner",
-        "health": 5,
-        "damage": 2,
-        "speed": 320,
+        "health": 12,
+        "damage": 3.13,
+        "speed": 353,
         "lifetime": 30,
-        "xpReward": 1,
-        "goldReward": 0.15,
+        "xpReward": 2.25,
+        "goldReward": 0.33,
         "healthPotionRewardChance": 0.01,
         "magnetRewardChance": 0.01,
-        "chestRewardChance": 0
+        "chestRewardChance": 0,
+        "lastUpdated": "2026-06-23T00:00:00.000Z"
       },
       {
         "id": "WaveEnemyArmorBlitz",
         "moveType": "Launch",
         "graphicsType": "Runner",
-        "health": 10,
-        "damage": 2,
-        "speed": 340,
+        "health": 32,
+        "damage": 4.5,
+        "speed": 389,
         "lifetime": 24,
-        "xpReward": 1,
-        "goldReward": 0.2,
+        "xpReward": 6.25,
+        "goldReward": 1.25,
         "healthPotionRewardChance": 0.01,
         "magnetRewardChance": 0.01,
-        "chestRewardChance": 0
+        "chestRewardChance": 0,
+        "lastUpdated": "2026-06-23T00:00:00.000Z"
       },
       {
         "id": "WaveEnemyDeath",
         "moveType": "Launch",
         "graphicsType": "DarkRaven",
-        "health": 18,
-        "damage": 2,
-        "speed": 400,
+        "health": 58,
+        "damage": 4.5,
+        "speed": 458,
         "lifetime": 27,
-        "xpReward": 1,
-        "goldReward": 0.3,
+        "xpReward": 6.25,
+        "goldReward": 1.88,
         "healthPotionRewardChance": 0.01,
         "magnetRewardChance": 0.01,
-        "chestRewardChance": 0
+        "chestRewardChance": 0,
+        "lastUpdated": "2026-06-23T00:00:00.000Z"
       },
       {
         "id": "WaveEnemyArmorMarch",
         "moveType": "Launch",
         "graphicsType": "Skeleton",
-        "health": 16,
-        "damage": 2,
-        "speed": 170,
+        "health": 52,
+        "damage": 4.5,
+        "speed": 195,
         "lifetime": 30,
-        "xpReward": 1,
-        "goldReward": 0.3,
+        "xpReward": 6.25,
+        "goldReward": 1.88,
         "healthPotionRewardChance": 0.01,
         "magnetRewardChance": 0.01,
-        "chestRewardChance": 0
+        "chestRewardChance": 0,
+        "lastUpdated": "2026-06-23T00:00:00.000Z"
       },
       {
         "id": "BasicBoss",
         "moveType": "Follow",
         "graphicsType": "BossStoneGolem",
-        "health": 12,
-        "damage": 2,
-        "speed": 95,
+        "health": 27,
+        "damage": 3.13,
+        "speed": 105,
         "lifetime": -1,
-        "xpReward": 1,
-        "goldReward": 2,
+        "xpReward": 2.25,
+        "goldReward": 4.5,
         "healthPotionRewardChance": 1,
         "magnetRewardChance": 0.1,
-        "chestRewardChance": 0
+        "chestRewardChance": 0.35,
+        "lastUpdated": "2026-06-23T00:00:00.000Z"
       },
       {
         "id": "StandardBoss",
         "moveType": "Follow",
         "graphicsType": "BossOrcKing",
-        "health": 20,
-        "damage": 3,
-        "speed": 108,
+        "health": 65,
+        "damage": 6.75,
+        "speed": 124,
         "lifetime": -1,
-        "xpReward": 2,
-        "goldReward": 2,
+        "xpReward": 12.5,
+        "goldReward": 12.5,
         "healthPotionRewardChance": 0.3,
         "magnetRewardChance": 0.1,
-        "chestRewardChance": 0
+        "chestRewardChance": 0.35,
+        "lastUpdated": "2026-06-23T00:00:00.000Z"
       },
       {
         "id": "HardBoss",
         "moveType": "Follow",
         "graphicsType": "BossOrcKing",
-        "health": 26,
-        "damage": 4,
-        "speed": 117,
+        "health": 85,
+        "damage": 9,
+        "speed": 134,
         "lifetime": -1,
-        "xpReward": 2,
-        "goldReward": 4,
+        "xpReward": 12.5,
+        "goldReward": 25,
         "healthPotionRewardChance": 0.2,
         "magnetRewardChance": 0.1,
-        "chestRewardChance": 0.1
+        "chestRewardChance": 0.35,
+        "lastUpdated": "2026-06-23T00:00:00.000Z"
       },
       {
         "id": "HarderBoss",
         "moveType": "Follow",
         "graphicsType": "BossStoneGolem",
-        "health": 34,
-        "damage": 4,
-        "speed": 126,
+        "health": 110,
+        "damage": 9,
+        "speed": 144,
         "lifetime": -1,
-        "xpReward": 3,
-        "goldReward": 5,
+        "xpReward": 18.75,
+        "goldReward": 31.25,
         "healthPotionRewardChance": 0.2,
         "magnetRewardChance": 0.1,
-        "chestRewardChance": 0.1
+        "chestRewardChance": 0.35,
+        "lastUpdated": "2026-06-23T00:00:00.000Z"
       },
       {
         "id": "HardestBoss",
         "moveType": "Follow",
         "graphicsType": "BossOrcKing",
-        "health": 44,
-        "damage": 4,
-        "speed": 133,
+        "health": 117,
+        "damage": 9,
+        "speed": 181,
         "lifetime": -1,
-        "xpReward": 5,
-        "goldReward": 6,
+        "xpReward": 20,
+        "goldReward": 13.5,
         "healthPotionRewardChance": 0.3,
         "magnetRewardChance": 0.2,
-        "chestRewardChance": 0.1
+        "chestRewardChance": 0.35,
+        "lastUpdated": "2026-06-23T00:00:00.000Z"
       },
       {
         "id": "FinalBoss",
         "moveType": "Follow",
         "graphicsType": "BossStoneGolem",
-        "health": 50,
-        "damage": 5,
-        "speed": 137,
+        "health": 132,
+        "damage": 11.25,
+        "speed": 187,
         "lifetime": -1,
-        "xpReward": 10,
-        "goldReward": 10,
+        "xpReward": 40,
+        "goldReward": 22.5,
         "healthPotionRewardChance": 0.5,
         "magnetRewardChance": 0.5,
-        "chestRewardChance": 0.5
+        "chestRewardChance": 1,
+        "lastUpdated": "2026-06-23T00:00:00.000Z"
       },
       {
         "id": "Hunter",
         "moveType": "PeriodicFollow",
         "graphicsType": "Barbarian",
-        "health": 4,
-        "damage": 1,
-        "speed": 70,
+        "health": 9,
+        "damage": 1.56,
+        "speed": 78,
         "lifetime": -1,
-        "xpReward": 1,
-        "goldReward": 0.1,
+        "xpReward": 2.25,
+        "goldReward": 0.22,
         "healthPotionRewardChance": 0.01,
         "magnetRewardChance": 0.01,
-        "chestRewardChance": 0
+        "chestRewardChance": 0,
+        "lastUpdated": "2026-06-23T00:00:00.000Z"
       },
       {
         "id": "HunterMage",
         "moveType": "PeriodicFollow",
         "graphicsType": "DarkRaven",
-        "health": 9,
-        "damage": 2,
-        "speed": 90,
+        "health": 29,
+        "damage": 4.5,
+        "speed": 103,
         "lifetime": -1,
-        "xpReward": 1,
-        "goldReward": 0.1,
+        "xpReward": 6.25,
+        "goldReward": 0.63,
         "healthPotionRewardChance": 0.01,
         "magnetRewardChance": 0.01,
-        "chestRewardChance": 0
+        "chestRewardChance": 0,
+        "lastUpdated": "2026-06-23T00:00:00.000Z"
       },
       {
         "id": "BasicCheetah",
         "moveType": "PeriodicFollow",
         "graphicsType": "Runner",
-        "health": 4,
-        "damage": 1,
-        "speed": 120,
+        "health": 9,
+        "damage": 1.56,
+        "speed": 132,
         "lifetime": -1,
-        "xpReward": 0.5,
-        "goldReward": 0.15,
+        "xpReward": 1.13,
+        "goldReward": 0.33,
         "healthPotionRewardChance": 0.01,
         "magnetRewardChance": 0.01,
-        "chestRewardChance": 0
+        "chestRewardChance": 0,
+        "lastUpdated": "2026-06-23T00:00:00.000Z"
       },
       {
         "id": "StandardCheetah",
         "moveType": "PeriodicFollow",
         "graphicsType": "Runner",
-        "health": 7,
-        "damage": 2,
-        "speed": 130,
+        "health": 23,
+        "damage": 4.5,
+        "speed": 149,
         "lifetime": -1,
-        "xpReward": 1,
-        "goldReward": 0.15,
+        "xpReward": 6.25,
+        "goldReward": 0.95,
         "healthPotionRewardChance": 0.01,
         "magnetRewardChance": 0.01,
-        "chestRewardChance": 0
+        "chestRewardChance": 0,
+        "lastUpdated": "2026-06-23T00:00:00.000Z"
       }
     ],
     "periodicFollowMovers": [
@@ -731,582 +909,928 @@
         "waitTime": 2
       }
     ],
-    "individualEnemySpawners": [
+    "individualEnemySpawners": [],
+    "circularEnemySpawners": [],
+    "waveEnemySpawners": [],
+    "zoneEnemySpawns": [
       {
-        "common": {
-          "enemyId": "BasicEnemy",
-          "startDelay": 0,
-          "stopDelay": 59,
-          "cooldown": 1
-        }
+        "spawnId": "main_basic_patrol",
+        "zoneId": "zone_main_arena",
+        "enemyId": "BasicEnemy",
+        "weight": 4,
+        "minLevel": 1,
+        "maxLevel": 2,
+        "maxAlive": 12,
+        "spawnInterval": 2200,
+        "idleOnly": false,
+        "spawnPattern": "individual",
+        "groupSize": 1,
+        "milestoneTimeSeconds": 0,
+        "spawnRegion": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        },
+        "lastUpdated": "2026-06-23T00:00:00.000Z"
       },
       {
-        "common": {
-          "enemyId": "BasicEnemy",
-          "startDelay": 0,
-          "stopDelay": 0.2,
-          "cooldown": 0.1
-        }
+        "spawnId": "main_skeleton_patrol",
+        "zoneId": "zone_main_arena",
+        "enemyId": "BasicEnemySkeleton",
+        "weight": 2,
+        "minLevel": 1,
+        "maxLevel": 2,
+        "maxAlive": 7,
+        "spawnInterval": 3600,
+        "idleOnly": false,
+        "spawnPattern": "individual",
+        "groupSize": 1,
+        "milestoneTimeSeconds": 0,
+        "spawnRegion": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        },
+        "lastUpdated": "2026-06-23T00:00:00.000Z"
       },
       {
-        "common": {
-          "enemyId": "BasicEnemySkeleton",
-          "startDelay": 82,
-          "stopDelay": 90,
-          "cooldown": 1
-        }
+        "spawnId": "main_basic_boss_intro",
+        "zoneId": "zone_main_arena",
+        "enemyId": "BasicBoss",
+        "weight": 1,
+        "minLevel": 2,
+        "maxLevel": 2,
+        "maxAlive": 1,
+        "spawnInterval": 26000,
+        "idleOnly": false,
+        "spawnPattern": "individual",
+        "groupSize": 1,
+        "milestoneTimeSeconds": 30,
+        "spawnRegion": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        },
+        "lastUpdated": "2026-06-23T00:00:00.000Z"
       },
       {
-        "common": {
-          "enemyId": "BasicBoss",
-          "startDelay": 89,
-          "stopDelay": 90,
-          "cooldown": 0.9
-        }
+        "spawnId": "main_small_circle",
+        "zoneId": "zone_main_arena",
+        "enemyId": "CircleEnemyBat",
+        "weight": 1,
+        "minLevel": 2,
+        "maxLevel": 2,
+        "maxAlive": 6,
+        "spawnInterval": 40000,
+        "idleOnly": false,
+        "spawnPattern": "circular",
+        "groupSize": 6,
+        "milestoneTimeSeconds": 20,
+        "spawnRegion": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        },
+        "lastUpdated": "2026-06-23T00:00:00.000Z"
       },
       {
-        "common": {
-          "enemyId": "BasicEnemy",
-          "startDelay": 61,
-          "stopDelay": 83,
-          "cooldown": 0.9
-        }
+        "spawnId": "forest_standard_patrol",
+        "zoneId": "zone_shadow_forest",
+        "enemyId": "StandardEnemy",
+        "weight": 4,
+        "minLevel": 3,
+        "maxLevel": 5,
+        "maxAlive": 16,
+        "spawnInterval": 2100,
+        "idleOnly": false,
+        "spawnPattern": "individual",
+        "groupSize": 1,
+        "milestoneTimeSeconds": 0,
+        "spawnRegion": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        },
+        "lastUpdated": "2026-06-23T00:00:00.000Z"
       },
       {
-        "common": {
-          "enemyId": "BasicEnemy",
-          "startDelay": 89,
-          "stopDelay": 120,
-          "cooldown": 0.9
-        }
+        "spawnId": "forest_hunter_pressure",
+        "zoneId": "zone_shadow_forest",
+        "enemyId": "Hunter",
+        "weight": 2,
+        "minLevel": 3,
+        "maxLevel": 5,
+        "maxAlive": 5,
+        "spawnInterval": 4500,
+        "idleOnly": false,
+        "spawnPattern": "individual",
+        "groupSize": 1,
+        "milestoneTimeSeconds": 0,
+        "spawnRegion": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        },
+        "lastUpdated": "2026-06-23T00:00:00.000Z"
       },
       {
-        "common": {
-          "enemyId": "BasicEnemy",
-          "startDelay": 121,
-          "stopDelay": 190,
-          "cooldown": 0.8
-        }
+        "spawnId": "forest_fast_flank",
+        "zoneId": "zone_shadow_forest",
+        "enemyId": "FastEnemy",
+        "weight": 2,
+        "minLevel": 4,
+        "maxLevel": 5,
+        "maxAlive": 9,
+        "spawnInterval": 3600,
+        "idleOnly": false,
+        "spawnPattern": "individual",
+        "groupSize": 1,
+        "milestoneTimeSeconds": 0,
+        "spawnRegion": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        },
+        "lastUpdated": "2026-06-23T00:00:00.000Z"
       },
       {
-        "common": {
-          "enemyId": "Hunter",
-          "startDelay": 350,
-          "stopDelay": 400,
-          "cooldown": 2
-        }
+        "spawnId": "forest_standard_boss",
+        "zoneId": "zone_shadow_forest",
+        "enemyId": "StandardBoss",
+        "weight": 1,
+        "minLevel": 5,
+        "maxLevel": 5,
+        "maxAlive": 1,
+        "spawnInterval": 32000,
+        "idleOnly": false,
+        "spawnPattern": "individual",
+        "groupSize": 1,
+        "milestoneTimeSeconds": 60,
+        "spawnRegion": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        },
+        "lastUpdated": "2026-06-23T00:00:00.000Z"
       },
       {
-        "common": {
-          "enemyId": "StandardBoss",
-          "startDelay": 199,
-          "stopDelay": 200,
-          "cooldown": 0.4
-        }
+        "spawnId": "forest_circle_standard",
+        "zoneId": "zone_shadow_forest",
+        "enemyId": "CircleEnemyStandard",
+        "weight": 1,
+        "minLevel": 5,
+        "maxLevel": 5,
+        "maxAlive": 8,
+        "spawnInterval": 44000,
+        "idleOnly": false,
+        "spawnPattern": "circular",
+        "groupSize": 8,
+        "milestoneTimeSeconds": 45,
+        "spawnRegion": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        },
+        "lastUpdated": "2026-06-23T00:00:00.000Z"
       },
       {
-        "common": {
-          "enemyId": "BasicEnemy",
-          "startDelay": 191,
-          "stopDelay": 220,
-          "cooldown": 1
-        }
+        "spawnId": "caves_tough_patrol",
+        "zoneId": "zone_crystal_caves",
+        "enemyId": "ToughEnemy",
+        "weight": 4,
+        "minLevel": 6,
+        "maxLevel": 9,
+        "maxAlive": 18,
+        "spawnInterval": 2200,
+        "idleOnly": false,
+        "spawnPattern": "individual",
+        "groupSize": 1,
+        "milestoneTimeSeconds": 0,
+        "spawnRegion": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        },
+        "lastUpdated": "2026-06-23T00:00:00.000Z"
       },
       {
-        "common": {
-          "enemyId": "StandardEnemy",
-          "startDelay": 200,
-          "stopDelay": 250,
-          "cooldown": 0.9
-        }
+        "spawnId": "caves_hard_pressure",
+        "zoneId": "zone_crystal_caves",
+        "enemyId": "HardEnemy",
+        "weight": 3,
+        "minLevel": 6,
+        "maxLevel": 9,
+        "maxAlive": 11,
+        "spawnInterval": 3600,
+        "idleOnly": false,
+        "spawnPattern": "individual",
+        "groupSize": 1,
+        "milestoneTimeSeconds": 0,
+        "spawnRegion": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        },
+        "lastUpdated": "2026-06-23T00:00:00.000Z"
       },
       {
-        "common": {
-          "enemyId": "BasicEnemy",
-          "startDelay": 290,
-          "stopDelay": 320,
-          "cooldown": 1
-        }
+        "spawnId": "caves_speed_flank",
+        "zoneId": "zone_crystal_caves",
+        "enemyId": "SpeedEnemy",
+        "weight": 2,
+        "minLevel": 7,
+        "maxLevel": 9,
+        "maxAlive": 8,
+        "spawnInterval": 3900,
+        "idleOnly": false,
+        "spawnPattern": "individual",
+        "groupSize": 1,
+        "milestoneTimeSeconds": 0,
+        "spawnRegion": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        },
+        "lastUpdated": "2026-06-23T00:00:00.000Z"
       },
       {
-        "common": {
-          "enemyId": "StandardEnemy",
-          "startDelay": 335,
-          "stopDelay": 420,
-          "cooldown": 0.7
-        }
+        "spawnId": "caves_wave_armor",
+        "zoneId": "zone_crystal_caves",
+        "enemyId": "WaveEnemyArmor",
+        "weight": 1,
+        "minLevel": 8,
+        "maxLevel": 9,
+        "maxAlive": 6,
+        "spawnInterval": 36000,
+        "idleOnly": false,
+        "spawnPattern": "wave",
+        "groupSize": 6,
+        "milestoneTimeSeconds": 70,
+        "spawnRegion": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        },
+        "lastUpdated": "2026-06-23T00:00:00.000Z"
       },
       {
-        "common": {
-          "enemyId": "StandardEnemy",
-          "startDelay": 421,
-          "stopDelay": 520,
-          "cooldown": 0.6
-        }
+        "spawnId": "caves_hard_boss",
+        "zoneId": "zone_crystal_caves",
+        "enemyId": "HardBoss",
+        "weight": 1,
+        "minLevel": 9,
+        "maxLevel": 9,
+        "maxAlive": 1,
+        "spawnInterval": 36000,
+        "idleOnly": false,
+        "spawnPattern": "individual",
+        "groupSize": 1,
+        "milestoneTimeSeconds": 90,
+        "spawnRegion": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        },
+        "lastUpdated": "2026-06-23T00:00:00.000Z"
       },
       {
-        "common": {
-          "enemyId": "ToughEnemy",
-          "startDelay": 520,
-          "stopDelay": 600,
-          "cooldown": 0.5
-        }
+        "spawnId": "ruins_harder_patrol",
+        "zoneId": "zone_ancient_ruins",
+        "enemyId": "HarderEnemy",
+        "weight": 4,
+        "minLevel": 10,
+        "maxLevel": 999,
+        "maxAlive": 20,
+        "spawnInterval": 2200,
+        "idleOnly": false,
+        "spawnPattern": "individual",
+        "groupSize": 1,
+        "milestoneTimeSeconds": 0,
+        "spawnRegion": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        },
+        "lastUpdated": "2026-06-23T00:00:00.000Z"
       },
       {
-        "common": {
-          "enemyId": "FastEnemy",
-          "startDelay": 310,
-          "stopDelay": 340,
-          "cooldown": 0.5
-        }
+        "spawnId": "ruins_hardest_pressure",
+        "zoneId": "zone_ancient_ruins",
+        "enemyId": "HardestEnemy",
+        "weight": 3,
+        "minLevel": 10,
+        "maxLevel": 999,
+        "maxAlive": 14,
+        "spawnInterval": 3600,
+        "idleOnly": false,
+        "spawnPattern": "individual",
+        "groupSize": 1,
+        "milestoneTimeSeconds": 0,
+        "spawnRegion": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        },
+        "lastUpdated": "2026-06-23T00:00:00.000Z"
       },
       {
-        "common": {
-          "enemyId": "FastEnemy",
-          "startDelay": 260,
-          "stopDelay": 300,
-          "cooldown": 0.8
-        }
+        "spawnId": "ruins_end_wave",
+        "zoneId": "zone_ancient_ruins",
+        "enemyId": "WaveEnemyDeath",
+        "weight": 1,
+        "minLevel": 11,
+        "maxLevel": 999,
+        "maxAlive": 8,
+        "spawnInterval": 45000,
+        "idleOnly": false,
+        "spawnPattern": "wave",
+        "groupSize": 8,
+        "milestoneTimeSeconds": 95,
+        "spawnRegion": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        },
+        "lastUpdated": "2026-06-23T00:00:00.000Z"
       },
       {
-        "common": {
-          "enemyId": "HardEnemy",
-          "startDelay": 601,
-          "stopDelay": 720,
-          "cooldown": 0.6
-        }
-      },
-      {
-        "common": {
-          "enemyId": "HarderEnemy",
-          "startDelay": 821,
-          "stopDelay": 1000,
-          "cooldown": 0.9
-        }
-      },
-      {
-        "common": {
-          "enemyId": "HardestEnemy",
-          "startDelay": 1001,
-          "stopDelay": -1,
-          "cooldown": 0.8
-        }
-      },
-      {
-        "common": {
-          "enemyId": "HardestEnemy",
-          "startDelay": 1175,
-          "stopDelay": -1,
-          "cooldown": 0.6
-        }
-      },
-      {
-        "common": {
-          "enemyId": "EndEnemy",
-          "startDelay": 1175,
-          "stopDelay": -1,
-          "cooldown": 0.5
-        }
-      },
-      {
-        "common": {
-          "enemyId": "HardBoss",
-          "startDelay": 600,
-          "stopDelay": 601,
-          "cooldown": 0.9
-        }
-      },
-      {
-        "common": {
-          "enemyId": "HarderBoss",
-          "startDelay": 800,
-          "stopDelay": 801,
-          "cooldown": 0.4
-        }
-      },
-      {
-        "common": {
-          "enemyId": "HardestBoss",
-          "startDelay": 900,
-          "stopDelay": 901,
-          "cooldown": 0.9
-        }
-      },
-      {
-        "common": {
-          "enemyId": "HardestBoss",
-          "startDelay": 910,
-          "stopDelay": 1100,
-          "cooldown": 45
-        }
-      },
-      {
-        "common": {
-          "enemyId": "FinalBoss",
-          "startDelay": 1100,
-          "stopDelay": 1111,
-          "cooldown": 0.9
-        }
-      },
-      {
-        "common": {
-          "enemyId": "FinalBoss",
-          "startDelay": 1170,
-          "stopDelay": 1198,
-          "cooldown": 3
-        }
-      },
-      {
-        "common": {
-          "enemyId": "FinalBoss",
-          "startDelay": 1197,
-          "stopDelay": 1220,
-          "cooldown": 0.5
-        }
-      },
-      {
-        "common": {
-          "enemyId": "SpeedEnemy",
-          "startDelay": 630,
-          "stopDelay": 660,
-          "cooldown": 0.6
-        }
-      },
-      {
-        "common": {
-          "enemyId": "TankEnemy",
-          "startDelay": 710,
-          "stopDelay": 800,
-          "cooldown": 0.6
-        }
-      },
-      {
-        "common": {
-          "enemyId": "HardEnemy",
-          "startDelay": 790,
-          "stopDelay": 840,
-          "cooldown": 0.6
-        }
-      },
-      {
-        "common": {
-          "enemyId": "BatEnemy",
-          "startDelay": 890,
-          "stopDelay": 960,
-          "cooldown": 0.6
-        }
-      },
-      {
-        "common": {
-          "enemyId": "StandardCheetah",
-          "startDelay": 820,
-          "stopDelay": 840,
-          "cooldown": 0.4
-        }
-      },
-      {
-        "common": {
-          "enemyId": "SiegeEnemyMelee",
-          "startDelay": 830,
-          "stopDelay": 890,
-          "cooldown": 0.5
-        }
+        "spawnId": "ruins_final_boss",
+        "zoneId": "zone_ancient_ruins",
+        "enemyId": "FinalBoss",
+        "weight": 1,
+        "minLevel": 12,
+        "maxLevel": 999,
+        "maxAlive": 1,
+        "spawnInterval": 60000,
+        "idleOnly": false,
+        "spawnPattern": "individual",
+        "groupSize": 1,
+        "milestoneTimeSeconds": 120,
+        "spawnRegion": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        },
+        "lastUpdated": "2026-06-23T00:00:00.000Z"
       }
     ],
-    "circularEnemySpawners": [
-      {
-        "common": {
-          "enemyId": "CircleEnemyBat",
-          "startDelay": 1,
-          "stopDelay": 47,
-          "cooldown": 45
-        },
-        "enemiesToSpawn": 30
-      },
-      {
-        "common": {
-          "enemyId": "CircleEnemy",
-          "startDelay": 40,
-          "stopDelay": 130,
-          "cooldown": 45
-        },
-        "enemiesToSpawn": 32
-      },
-      {
-        "common": {
-          "enemyId": "BasicEnemy",
-          "startDelay": 0,
-          "stopDelay": 122,
-          "cooldown": 60
-        },
-        "enemiesToSpawn": 5
-      },
-      {
-        "common": {
-          "enemyId": "Hunter",
-          "startDelay": 111,
-          "stopDelay": 113,
-          "cooldown": 1.5
-        },
-        "enemiesToSpawn": 4
-      },
-      {
-        "common": {
-          "enemyId": "SkeletonRanger",
-          "startDelay": 500,
-          "stopDelay": 700,
-          "cooldown": 55
-        },
-        "enemiesToSpawn": 15
-      },
-      {
-        "common": {
-          "enemyId": "CircleEnemyStandard",
-          "startDelay": 280,
-          "stopDelay": 520,
-          "cooldown": 50
-        },
-        "enemiesToSpawn": 44
-      },
-      {
-        "common": {
-          "enemyId": "CircleEnemyTough",
-          "startDelay": 480,
-          "stopDelay": 620,
-          "cooldown": 45
-        },
-        "enemiesToSpawn": 50
-      },
-      {
-        "common": {
-          "enemyId": "CircleEnemyDark",
-          "startDelay": 600,
-          "stopDelay": 740,
-          "cooldown": 45
-        },
-        "enemiesToSpawn": 38
-      },
-      {
-        "common": {
-          "enemyId": "HunterMage",
-          "startDelay": 700,
-          "stopDelay": 940,
-          "cooldown": 45
-        },
-        "enemiesToSpawn": 20
-      },
-      {
-        "common": {
-          "enemyId": "SiegeEnemyRanged",
-          "startDelay": 800,
-          "stopDelay": -1,
-          "cooldown": 50
-        },
-        "enemiesToSpawn": 20
-      },
-      {
-        "common": {
-          "enemyId": "CircleEnemyStandard",
-          "startDelay": 383,
-          "stopDelay": 390,
-          "cooldown": 3
-        },
-        "enemiesToSpawn": 44
-      },
-      {
-        "common": {
-          "enemyId": "BasicEnemy",
-          "startDelay": 245,
-          "stopDelay": 280,
-          "cooldown": 5
-        },
-        "enemiesToSpawn": 11
-      },
-      {
-        "common": {
-          "enemyId": "BasicEnemy",
-          "startDelay": 278,
-          "stopDelay": 291,
-          "cooldown": 3
-        },
-        "enemiesToSpawn": 20
-      },
-      {
-        "common": {
-          "enemyId": "StandardEnemy",
-          "startDelay": 578,
-          "stopDelay": 591,
-          "cooldown": 3
-        },
-        "enemiesToSpawn": 20
-      },
-      {
-        "common": {
-          "enemyId": "ToughEnemy",
-          "startDelay": 678,
-          "stopDelay": 691,
-          "cooldown": 3
-        },
-        "enemiesToSpawn": 10
-      },
-      {
-        "common": {
-          "enemyId": "CircleEnemySkelePrison",
-          "startDelay": 900,
-          "stopDelay": -1,
-          "cooldown": 45
-        },
-        "enemiesToSpawn": 40
-      },
-      {
-        "common": {
-          "enemyId": "BasicBoss",
-          "startDelay": 300,
-          "stopDelay": 303,
-          "cooldown": 2
-        },
-        "enemiesToSpawn": 4
-      },
-      {
-        "common": {
-          "enemyId": "FinalBoss",
-          "startDelay": 1190,
-          "stopDelay": -1,
-          "cooldown": 8
-        },
-        "enemiesToSpawn": 3
-      },
-      {
-        "common": {
-          "enemyId": "EndEnemy",
-          "startDelay": 1190,
-          "stopDelay": -1,
-          "cooldown": 7
-        },
-        "enemiesToSpawn": 6
-      },
-      {
-        "common": {
-          "enemyId": "SiegeEnemyRanged",
-          "startDelay": 1190,
-          "stopDelay": -1,
-          "cooldown": 20
-        },
-        "enemiesToSpawn": 16
-      },
-      {
-        "common": {
-          "enemyId": "EndEnemy",
-          "startDelay": 1190,
-          "stopDelay": -1,
-          "cooldown": 5
-        },
-        "enemiesToSpawn": 6
-      },
-      {
-        "common": {
-          "enemyId": "BasicCheetah",
-          "startDelay": 139,
-          "stopDelay": 140,
-          "cooldown": 0.9
-        },
-        "enemiesToSpawn": 6
-      }
-    ],
-    "waveEnemySpawners": [
-      {
-        "common": {
-          "enemyId": "WaveEnemy",
-          "startDelay": 1,
-          "stopDelay": 50,
-          "cooldown": 27
-        },
-        "enemiesToSpawn": 5
-      },
-      {
-        "common": {
-          "enemyId": "WaveEnemy",
-          "startDelay": 23,
-          "stopDelay": 75,
-          "cooldown": 50
-        },
-        "enemiesToSpawn": 5
-      },
-      {
-        "common": {
-          "enemyId": "WaveEnemy",
-          "startDelay": 100,
-          "stopDelay": 200,
-          "cooldown": 35
-        },
-        "enemiesToSpawn": 7
-      },
-      {
-        "common": {
-          "enemyId": "WaveEnemy",
-          "startDelay": 420,
-          "stopDelay": 600,
-          "cooldown": 35
-        },
-        "enemiesToSpawn": 30
-      },
-      {
-        "common": {
-          "enemyId": "WaveEnemyArmor",
-          "startDelay": 1,
-          "stopDelay": 199,
-          "cooldown": 48
-        },
-        "enemiesToSpawn": 4
-      },
-      {
-        "common": {
-          "enemyId": "WaveEnemyArmorFast",
-          "startDelay": 200,
-          "stopDelay": 600,
-          "cooldown": 27
-        },
-        "enemiesToSpawn": 14
-      },
-      {
-        "common": {
-          "enemyId": "WaveEnemyArmorMarch",
-          "startDelay": 600,
-          "stopDelay": 800,
-          "cooldown": 35
-        },
-        "enemiesToSpawn": 10
-      },
-      {
-        "common": {
-          "enemyId": "WaveEnemyArmorBlitz",
-          "startDelay": 550,
-          "stopDelay": 900,
-          "cooldown": 30
-        },
-        "enemiesToSpawn": 12
-      },
-      {
-        "common": {
-          "enemyId": "TreasureEnemy",
-          "startDelay": 0,
-          "stopDelay": 50,
-          "cooldown": 10
-        },
-        "enemiesToSpawn": 1
-      },
-      {
-        "common": {
-          "enemyId": "WaveEnemyDeath",
-          "startDelay": 900,
-          "stopDelay": -1,
-          "cooldown": 30
-        },
-        "enemiesToSpawn": 14
-      }
-    ]
+    "spawnPressure": {
+      "enabled": true,
+      "rampStartSeconds": 75,
+      "secondsPerStep": 45,
+      "maxSteps": 4,
+      "cooldownReductionPerStep": 0.08,
+      "levelBonusPerStep": 1
+    }
   },
   "items": {
     "healthPerPotion": 10
-  }
+  },
+  "zones": [
+    {
+      "zoneId": "zone_main_arena",
+      "name": "Main Arena",
+      "requiredLevel": 1,
+      "isUnlocked": true,
+      "targetSurvivalSeconds": 120,
+      "clearRewardGold": 25,
+      "createdAt": "2026-06-19T00:00:00.000Z",
+      "lastUpdated": "2026-06-19T00:00:00.000Z",
+      "exits": [
+        {
+          "direction": "east",
+          "targetZoneId": "zone_shadow_forest",
+          "spawnX": 0,
+          "spawnY": 0,
+          "minLevel": 0
+        }
+      ]
+    },
+    {
+      "zoneId": "zone_shadow_forest",
+      "name": "Shadow Forest",
+      "requiredLevel": 3,
+      "isUnlocked": true,
+      "targetSurvivalSeconds": 180,
+      "clearRewardGold": 50,
+      "createdAt": "2026-06-19T00:00:00.000Z",
+      "lastUpdated": "2026-06-19T00:00:00.000Z",
+      "exits": [
+        {
+          "direction": "east",
+          "targetZoneId": "zone_crystal_caves",
+          "spawnX": 0,
+          "spawnY": 0,
+          "minLevel": 0
+        }
+      ]
+    },
+    {
+      "zoneId": "zone_crystal_caves",
+      "name": "Crystal Caves",
+      "requiredLevel": 6,
+      "isUnlocked": true,
+      "targetSurvivalSeconds": 240,
+      "clearRewardGold": 85,
+      "createdAt": "2026-06-19T00:00:00.000Z",
+      "lastUpdated": "2026-06-19T00:00:00.000Z",
+      "exits": [
+        {
+          "direction": "east",
+          "targetZoneId": "zone_ancient_ruins",
+          "spawnX": 0,
+          "spawnY": 0,
+          "minLevel": 0
+        }
+      ]
+    },
+    {
+      "zoneId": "zone_ancient_ruins",
+      "name": "Ancient Ruins",
+      "requiredLevel": 10,
+      "isUnlocked": true,
+      "targetSurvivalSeconds": 300,
+      "clearRewardGold": 125,
+      "createdAt": "2026-06-19T00:00:00.000Z",
+      "lastUpdated": "2026-06-19T00:00:00.000Z",
+      "exits": []
+    }
+  ],
+  "materials": [
+    {
+      "materialId": "mat_common_ore",
+      "name": "Kozonseges Erc",
+      "rarity": "common",
+      "description": "Alapveto nyersanyag, a skill fa korai fejleszteseihez.",
+      "icon": "icon_common_ore",
+      "dropZones": [],
+      "dropWeight": 40,
+      "lastUpdated": "2026-06-19T00:00:00.000Z"
+    },
+    {
+      "materialId": "mat_uncommon_crystal",
+      "name": "Kulonleges Kristaly",
+      "rarity": "uncommon",
+      "description": "Kozepes ritkasagu alapanyag, fejlettebb fejlesztesekhez.",
+      "icon": "icon_uncommon_crystal",
+      "dropZones": [
+        "zone_shadow_forest",
+        "zone_crystal_caves",
+        "zone_ancient_ruins"
+      ],
+      "dropWeight": 20,
+      "lastUpdated": "2026-06-19T00:00:00.000Z"
+    },
+    {
+      "materialId": "mat_rare_essence",
+      "name": "Ritka Esszencia",
+      "rarity": "rare",
+      "description": "Magasabb szintu fejlesztesekhez hasznalt ritka nyersanyag.",
+      "icon": "icon_rare_essence",
+      "dropZones": [
+        "zone_crystal_caves",
+        "zone_ancient_ruins"
+      ],
+      "dropWeight": 8,
+      "lastUpdated": "2026-06-19T00:00:00.000Z"
+    },
+    {
+      "materialId": "mat_epic_core",
+      "name": "Epikus Mag",
+      "rarity": "epic",
+      "description": "Nagyon ritka alapanyag a legerosebb fejlesztesekhez.",
+      "icon": "icon_epic_core",
+      "dropZones": [
+        "zone_ancient_ruins"
+      ],
+      "dropWeight": 3,
+      "lastUpdated": "2026-06-19T00:00:00.000Z"
+    }
+  ],
+  "itemCategories": [
+    {
+      "categoryId": "weapon",
+      "name": "Fegyver",
+      "slot": "mainHand",
+      "maxStack": 1,
+      "icon": "icon_sword",
+      "lastUpdated": "2026-06-19T00:00:00.000Z"
+    },
+    {
+      "categoryId": "helmet",
+      "name": "Sisak",
+      "slot": "head",
+      "maxStack": 1,
+      "icon": "icon_helmet",
+      "lastUpdated": "2026-06-19T00:00:00.000Z"
+    },
+    {
+      "categoryId": "chestplate",
+      "name": "Mellvert",
+      "slot": "chest",
+      "maxStack": 1,
+      "icon": "icon_chestplate",
+      "lastUpdated": "2026-06-19T00:00:00.000Z"
+    },
+    {
+      "categoryId": "leggings",
+      "name": "Nadrag",
+      "slot": "legs",
+      "maxStack": 1,
+      "icon": "icon_leggings",
+      "lastUpdated": "2026-06-19T00:00:00.000Z"
+    },
+    {
+      "categoryId": "boots",
+      "name": "Csizma",
+      "slot": "feet",
+      "maxStack": 1,
+      "icon": "icon_boots",
+      "lastUpdated": "2026-06-19T00:00:00.000Z"
+    },
+    {
+      "categoryId": "ring",
+      "name": "Gyuru",
+      "slot": "ring",
+      "maxStack": 1,
+      "icon": "icon_ring",
+      "lastUpdated": "2026-06-19T00:00:00.000Z"
+    },
+    {
+      "categoryId": "amulet",
+      "name": "Nyaklanc",
+      "slot": "amulet",
+      "maxStack": 1,
+      "icon": "icon_amulet",
+      "lastUpdated": "2026-06-19T00:00:00.000Z"
+    }
+  ],
+  "equippableItems": [
+    {
+      "itemId": "sword_iron_01",
+      "name": "Vashegy Kard",
+      "categoryId": "weapon",
+      "rarity": "common",
+      "requiredLevel": 1,
+      "icon": "icon_iron_sword",
+      "description": "Egy egyszeru vaskard kezdo kalandoroknak.",
+      "dropZones": [
+        "zone_main_arena",
+        "zone_shadow_forest"
+      ],
+      "dropWeight": 10,
+      "lastUpdated": "2026-06-23T00:00:00.000Z",
+      "stats": {
+        "atk": 12,
+        "def": 0,
+        "hp": 0,
+        "speed": 0,
+        "critChance": 0.05,
+        "critMult": 1.5,
+        "goldBonus": 0,
+        "xpBonus": 0
+      }
+    },
+    {
+      "itemId": "helmet_leather_01",
+      "name": "Bor Sisak",
+      "categoryId": "helmet",
+      "rarity": "common",
+      "requiredLevel": 1,
+      "icon": "icon_leather_helmet",
+      "description": "Konnyu vedelem a korai zsakmanyok kozul.",
+      "dropZones": [
+        "zone_main_arena",
+        "zone_shadow_forest"
+      ],
+      "dropWeight": 8,
+      "lastUpdated": "2026-06-23T00:00:00.000Z",
+      "stats": {
+        "atk": 0,
+        "def": 2,
+        "hp": 5,
+        "speed": 0,
+        "critChance": 0,
+        "critMult": 1,
+        "goldBonus": 0,
+        "xpBonus": 0
+      }
+    },
+    {
+      "itemId": "boots_runner_01",
+      "name": "Futas Csizma",
+      "categoryId": "boots",
+      "rarity": "common",
+      "requiredLevel": 1,
+      "icon": "icon_runner_boots",
+      "description": "Kis sebessegbonusz, hogy konnyebb legyen helyezkedni a hordak kozott.",
+      "dropZones": [
+        "zone_main_arena",
+        "zone_shadow_forest"
+      ],
+      "dropWeight": 7,
+      "lastUpdated": "2026-06-23T00:00:00.000Z",
+      "stats": {
+        "atk": 0,
+        "def": 0,
+        "hp": 0,
+        "speed": 0.05,
+        "critChance": 0,
+        "critMult": 1,
+        "goldBonus": 0,
+        "xpBonus": 0
+      }
+    },
+    {
+      "itemId": "chest_guard_01",
+      "name": "Orzo Mellvert",
+      "categoryId": "chestplate",
+      "rarity": "common",
+      "requiredLevel": 2,
+      "icon": "icon_guard_chest",
+      "description": "Stabil tulelesi alap a hosszabb korokhoz.",
+      "dropZones": [
+        "zone_main_arena",
+        "zone_shadow_forest"
+      ],
+      "dropWeight": 6,
+      "lastUpdated": "2026-06-23T00:00:00.000Z",
+      "stats": {
+        "atk": 0,
+        "def": 3,
+        "hp": 12,
+        "speed": 0,
+        "critChance": 0,
+        "critMult": 1,
+        "goldBonus": 0,
+        "xpBonus": 0
+      }
+    },
+    {
+      "itemId": "blade_bloodthorn_01",
+      "name": "Vertovis Penge",
+      "categoryId": "weapon",
+      "rarity": "uncommon",
+      "requiredLevel": 3,
+      "icon": "icon_bloodthorn_blade",
+      "description": "A Shadow Forest gyorsabb, agresszivabb harcaihoz tervezett penge.",
+      "dropZones": [
+        "zone_shadow_forest",
+        "zone_crystal_caves"
+      ],
+      "dropWeight": 5,
+      "lastUpdated": "2026-06-23T00:00:00.000Z",
+      "stats": {
+        "atk": 18,
+        "def": 0,
+        "hp": 0,
+        "speed": 0,
+        "critChance": 0.08,
+        "critMult": 1.6,
+        "goldBonus": 0,
+        "xpBonus": 0
+      }
+    },
+    {
+      "itemId": "ring_greed_01",
+      "name": "Kapzsisag Gyuruje",
+      "categoryId": "ring",
+      "rarity": "uncommon",
+      "requiredLevel": 3,
+      "icon": "icon_greed_ring",
+      "description": "Kis merteku aranybonuszt ad minden futamhoz.",
+      "dropZones": [
+        "zone_shadow_forest",
+        "zone_crystal_caves",
+        "zone_ancient_ruins"
+      ],
+      "dropWeight": 4,
+      "lastUpdated": "2026-06-23T00:00:00.000Z",
+      "stats": {
+        "atk": 0,
+        "def": 0,
+        "hp": 0,
+        "speed": 0,
+        "critChance": 0,
+        "critMult": 1,
+        "goldBonus": 0.1,
+        "xpBonus": 0
+      }
+    },
+    {
+      "itemId": "amulet_apprentice_01",
+      "name": "Tanonc Amulett",
+      "categoryId": "amulet",
+      "rarity": "uncommon",
+      "requiredLevel": 3,
+      "icon": "icon_apprentice_amulet",
+      "description": "Tobb tapasztalatot segit kiszedni a rovid futamokbol.",
+      "dropZones": [
+        "zone_shadow_forest",
+        "zone_crystal_caves"
+      ],
+      "dropWeight": 4,
+      "lastUpdated": "2026-06-23T00:00:00.000Z",
+      "stats": {
+        "atk": 0,
+        "def": 0,
+        "hp": 8,
+        "speed": 0,
+        "critChance": 0,
+        "critMult": 1,
+        "goldBonus": 0,
+        "xpBonus": 0.08
+      }
+    },
+    {
+      "itemId": "leggings_hunter_01",
+      "name": "Vadasz Nadrag",
+      "categoryId": "leggings",
+      "rarity": "uncommon",
+      "requiredLevel": 4,
+      "icon": "icon_hunter_leggings",
+      "description": "Mozgekony vedelmet ad a surubb ellenfelhullamoknal.",
+      "dropZones": [
+        "zone_shadow_forest",
+        "zone_crystal_caves"
+      ],
+      "dropWeight": 4,
+      "lastUpdated": "2026-06-23T00:00:00.000Z",
+      "stats": {
+        "atk": 0,
+        "def": 3,
+        "hp": 6,
+        "speed": 0.04,
+        "critChance": 0,
+        "critMult": 1,
+        "goldBonus": 0,
+        "xpBonus": 0
+      }
+    },
+    {
+      "itemId": "sword_crystal_01",
+      "name": "Kristaly Kard",
+      "categoryId": "weapon",
+      "rarity": "rare",
+      "requiredLevel": 6,
+      "icon": "icon_crystal_sword",
+      "description": "Nagyobb sebzes es stabil kritikus esely a Crystal Caves szintjen.",
+      "dropZones": [
+        "zone_crystal_caves",
+        "zone_ancient_ruins"
+      ],
+      "dropWeight": 3,
+      "lastUpdated": "2026-06-23T00:00:00.000Z",
+      "stats": {
+        "atk": 28,
+        "def": 0,
+        "hp": 0,
+        "speed": 0,
+        "critChance": 0.12,
+        "critMult": 1.8,
+        "goldBonus": 0,
+        "xpBonus": 0
+      }
+    },
+    {
+      "itemId": "helmet_crystal_01",
+      "name": "Kristaly Sisak",
+      "categoryId": "helmet",
+      "rarity": "rare",
+      "requiredLevel": 6,
+      "icon": "icon_crystal_helmet",
+      "description": "Kemeny vedelem es egy kis kritikus fokusz.",
+      "dropZones": [
+        "zone_crystal_caves",
+        "zone_ancient_ruins"
+      ],
+      "dropWeight": 3,
+      "lastUpdated": "2026-06-23T00:00:00.000Z",
+      "stats": {
+        "atk": 0,
+        "def": 6,
+        "hp": 16,
+        "speed": 0,
+        "critChance": 0.04,
+        "critMult": 1.3,
+        "goldBonus": 0,
+        "xpBonus": 0
+      }
+    },
+    {
+      "itemId": "ring_storm_01",
+      "name": "Vihar Gyuru",
+      "categoryId": "ring",
+      "rarity": "rare",
+      "requiredLevel": 7,
+      "icon": "icon_storm_ring",
+      "description": "Gyorsabb tempot es tobb kritikus talalatot ad a tomegek ellen.",
+      "dropZones": [
+        "zone_crystal_caves",
+        "zone_ancient_ruins"
+      ],
+      "dropWeight": 2,
+      "lastUpdated": "2026-06-23T00:00:00.000Z",
+      "stats": {
+        "atk": 0,
+        "def": 0,
+        "hp": 0,
+        "speed": 0.08,
+        "critChance": 0.1,
+        "critMult": 1.4,
+        "goldBonus": 0,
+        "xpBonus": 0
+      }
+    },
+    {
+      "itemId": "amulet_void_01",
+      "name": "Uresszilank Amulett",
+      "categoryId": "amulet",
+      "rarity": "epic",
+      "requiredLevel": 10,
+      "icon": "icon_void_amulet",
+      "description": "Keso jatekos ereklye, ami a sebzest es fejlodest is gyorsitja.",
+      "dropZones": [
+        "zone_ancient_ruins"
+      ],
+      "dropWeight": 1,
+      "lastUpdated": "2026-06-23T00:00:00.000Z",
+      "stats": {
+        "atk": 10,
+        "def": 0,
+        "hp": 0,
+        "speed": 0,
+        "critChance": 0.08,
+        "critMult": 1.7,
+        "goldBonus": 0,
+        "xpBonus": 0.15
+      }
+    },
+    {
+      "itemId": "chest_relic_01",
+      "name": "Relikvia Mellvert",
+      "categoryId": "chestplate",
+      "rarity": "epic",
+      "requiredLevel": 10,
+      "icon": "icon_relic_chest",
+      "description": "Massziv tulelesi targy az Ancient Ruins boss pillanataihoz.",
+      "dropZones": [
+        "zone_ancient_ruins"
+      ],
+      "dropWeight": 1,
+      "lastUpdated": "2026-06-23T00:00:00.000Z",
+      "stats": {
+        "atk": 0,
+        "def": 10,
+        "hp": 36,
+        "speed": -0.02,
+        "critChance": 0,
+        "critMult": 1,
+        "goldBonus": 0.08,
+        "xpBonus": 0
+      }
+    },
+    {
+      "itemId": "boots_phase_01",
+      "name": "Fazis Csizma",
+      "categoryId": "boots",
+      "rarity": "epic",
+      "requiredLevel": 10,
+      "icon": "icon_phase_boots",
+      "description": "Gyors kitoreseket tamogat, amikor mar tenyleg minden iranybol jonnek.",
+      "dropZones": [
+        "zone_ancient_ruins"
+      ],
+      "dropWeight": 1,
+      "lastUpdated": "2026-06-23T00:00:00.000Z",
+      "stats": {
+        "atk": 0,
+        "def": 2,
+        "hp": 0,
+        "speed": 0.14,
+        "critChance": 0.06,
+        "critMult": 1.3,
+        "goldBonus": 0,
+        "xpBonus": 0
+      }
+    }
+  ]
 }

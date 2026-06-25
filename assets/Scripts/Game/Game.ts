@@ -9,6 +9,14 @@ import { PlayerCollisionSystem } from "./Collision/PlayerCollisionSystem";
 import { PlayerProjectileCollisionSystem } from "./Collision/PlayerProjectileCollisionSystem";
 import { WeaponCollisionSystem } from "./Collision/WeaponCollisionSystem";
 import { GameSettings, PlayerSettings } from "./Data/GameSettings";
+import { EquipmentBonuses, EquipmentBonusResolver } from "./Data/EquipmentBonuses";
+import { DefaultSkillContent } from "./Data/DefaultSkillContent";
+import { ItemDropResolver } from "./Data/ItemDrops";
+import { MaterialDropResolver } from "./Data/MaterialDrops";
+import { PlayerProgression } from "./Data/PlayerProgression";
+import { PlayerRuntimeState } from "./Data/PlayerRuntimeState";
+import { SkillBonuses, SkillBonusResolver } from "./Data/SkillBonuses";
+import { StageObjective } from "./Data/StageObjective";
 import { TranslationData } from "./Data/TranslationData";
 import { UserData } from "./Data/UserData";
 import { KeyboardInput } from "./Input/KeyboardInput";
@@ -21,6 +29,7 @@ import { Pauser } from "./Pauser";
 import { TestValues } from "./TestGameRunner";
 import { GameUI } from "./UI/GameUI";
 import { EnemyDeathEffectSpawner } from "./Unit/Enemy/EnemyDeathEffectSpawner/EnemyDeathEffectSpawner";
+import { Enemy } from "./Unit/Enemy/Enemy";
 import { EnemyManager } from "./Unit/Enemy/EnemyManager";
 import { EnemyProjectileLauncher } from "./Unit/Enemy/ProjectileLauncher.cs/EnemyProjectileLauncher";
 import { MetaUpgrades } from "./Unit/MetaUpgrades/MetaUpgrades";
@@ -68,6 +77,9 @@ export class Game extends Component {
     private gameResult: GameResult;
 
     private timeAlive = 0;
+    private bossMilestones: number[] = [];
+    private hordeMilestones: number[] = [];
+    private targetSurvivalSeconds = 0;
 
     public static get Instance(): Game {
         return this.instance;
@@ -88,11 +100,15 @@ export class Game extends Component {
         this.blackScreen.active = false;
         AppRoot.Instance.ScreenFader.playClose();
 
-        while (!this.gameResult.hasExitManually && this.player.Health.IsAlive) await delay(100);
+        while (!this.gameResult.hasExitManually && this.player.Health.IsAlive && !this.isStageObjectiveComplete()) await delay(100);
 
         this.gamePauser.pause();
         Game.instance = null;
         this.gameResult.score = this.timeAlive;
+        this.gameResult.zoneId = userData.game.currentZoneId;
+        this.gameResult.finalLevel = this.player.Level.CurrentLevel;
+        this.gameResult.targetSurvivalSeconds = this.targetSurvivalSeconds;
+        this.gameResult.cleared = this.isStageObjectiveComplete();
 
         if (!this.gameResult.hasExitManually) {
             AppRoot.Instance.Analytics.goldPerRun(this.gameResult.goldCoins);
@@ -103,6 +119,8 @@ export class Game extends Component {
             AppRoot.Instance.Analytics.gameExit(this.timeAlive);
         }
 
+        PlayerProgression.syncFromRuntime(userData, this.player.Level);
+        PlayerRuntimeState.syncFromRuntime(userData, this.player);
         return this.gameResult;
     }
 
@@ -125,7 +143,11 @@ export class Game extends Component {
         this.background.gameTick();
 
         this.timeAlive += deltaTime;
-        this.gameUI.updateTimeAlive(this.timeAlive);
+        this.gameUI.updateTimeAlive(this.timeAlive, {
+            hordeMilestones: this.hordeMilestones,
+            bossMilestones: this.bossMilestones,
+            targetSurvivalSeconds: this.targetSurvivalSeconds
+        });
 
         AppRoot.Instance.MainCamera.node.setWorldPosition(this.player.node.worldPosition);
         this.gameUI.node.setWorldPosition(this.player.node.worldPosition);
@@ -136,7 +158,12 @@ export class Game extends Component {
         this.gameCanvas.cameraComponent = AppRoot.Instance.MainCamera;
 
         this.gameResult = new GameResult();
+        this.targetSurvivalSeconds = StageObjective.resolveTargetSeconds(settings, userData.game.currentZoneId);
+        this.bossMilestones = this.resolveBossMilestones(settings, userData.game.currentZoneId);
+        this.hordeMilestones = this.resolveHordeMilestones(settings, userData.game.currentZoneId);
         const metaUpgrades = new MetaUpgrades(userData.game.metaUpgrades, settings.metaUpgrades);
+        const equipmentBonuses = EquipmentBonusResolver.resolve(settings, userData);
+        const skillBonuses = SkillBonusResolver.resolve(settings, userData);
 
         this.virtualJoystic.init();
 
@@ -144,16 +171,21 @@ export class Game extends Component {
         const arrowKeys = new KeyboardInput(KeyCode.ARROW_UP, KeyCode.ARROW_DOWN, KeyCode.ARROW_LEFT, KeyCode.ARROW_RIGHT);
         const multiInput: MultiInput = new MultiInput([this.virtualJoystic, wasd, arrowKeys]);
 
-        this.player.init(multiInput, this.createPlayerData(settings.player, metaUpgrades));
-        this.enemyManager.init(this.player.node, settings.enemyManager);
+        this.player.init(multiInput, this.createPlayerData(settings.player, metaUpgrades, equipmentBonuses, skillBonuses, userData));
+        PlayerRuntimeState.applySavedPosition(userData, this.player);
+        this.enemyManager.init(this.player.node, settings.enemyManager, userData.game.currentZoneId, userData.game.level);
+        this.enemyManager.EnemyAddedEvent.on(this.addEnemyResultListeners, this);
+        this.enemyManager.EnemyRemovedEvent.on(this.removeEnemyResultListeners, this);
         this.deathEffectSpawner.init(this.enemyManager);
 
         this.playerCollisionSystem = new PlayerCollisionSystem(this.player, settings.player.collisionDelay, this.itemManager);
         new WeaponCollisionSystem(this.player.Weapon);
 
         const projectileData = new ProjectileData();
-        projectileData.damage = 1 + metaUpgrades.getUpgradeValue(MetaUpgradeType.OverallDamage);
+        projectileData.damage = 1 + metaUpgrades.getUpgradeValue(MetaUpgradeType.OverallDamage) + equipmentBonuses.atk + skillBonuses.atk;
         projectileData.pierces = 1 + metaUpgrades.getUpgradeValue(MetaUpgradeType.ProjectilePiercing);
+        projectileData.critChance = equipmentBonuses.critChance + skillBonuses.critChance;
+        projectileData.critMult = Math.max(1, equipmentBonuses.critMult * skillBonuses.critMult);
 
         this.haloProjectileLauncher = new HaloProjectileLauncher(
             this.haloProjectileLauncherComponent,
@@ -202,13 +234,25 @@ export class Game extends Component {
             this.horizontalProjectileLauncher,
             this.haloProjectileLauncher,
             this.diagonalProjectileLauncher,
-            settings.upgrades
+            DefaultSkillContent.normalize(settings.skills ?? [], settings.upgrades),
+            userData.game.skillTree,
+            userData
         );
-        const modalLauncher = new GameModalLauncher(AppRoot.Instance.ModalWindowManager, this.player, this.gamePauser, upgrader, translationData);
+        const modalLauncher = new GameModalLauncher(AppRoot.Instance.ModalWindowManager, this.player, this.gamePauser, upgrader);
 
-        this.itemManager.init(this.enemyManager, this.player, this.gameResult, modalLauncher, settings.items);
+        this.itemManager.init(
+            this.enemyManager,
+            this.player,
+            this.gameResult,
+            modalLauncher,
+            settings.items,
+            1 + equipmentBonuses.goldBonus + skillBonuses.goldBonus,
+            userData.game.currentZoneId,
+            (zoneId) => MaterialDropResolver.tryResolveDrop(settings, zoneId),
+            (zoneId) => ItemDropResolver.tryResolveDrop(settings, zoneId)
+        );
         this.gameUI.init(this.player, modalLauncher, this.itemManager, this.gameResult);
-        this.background.init(this.player.node);
+        this.background.init(this.player.node, userData.game.currentZoneId);
 
         if (testValues) {
             this.timeAlive += testValues.startTime;
@@ -225,27 +269,81 @@ export class Game extends Component {
         );
     }
 
-    private createPlayerData(settings: PlayerSettings, metaUpgrades: MetaUpgrades): PlayerData {
+    private createPlayerData(
+        settings: PlayerSettings,
+        metaUpgrades: MetaUpgrades,
+        equipmentBonuses: EquipmentBonuses,
+        skillBonuses: SkillBonuses,
+        userData: UserData
+    ): PlayerData {
         const playerData: PlayerData = Object.assign(new PlayerData(), settings);
 
-        playerData.maxHp = metaUpgrades.getUpgradeValue(MetaUpgradeType.Health) + settings.defaultHP;
+        playerData.initialLevel = userData.game.level;
+        playerData.initialXp = userData.game.xp;
+        playerData.maxHp = metaUpgrades.getUpgradeValue(MetaUpgradeType.Health) + settings.defaultHP + equipmentBonuses.hp + skillBonuses.hp;
         playerData.requiredXP = settings.requiredXP;
-        playerData.speed = metaUpgrades.getUpgradeValue(MetaUpgradeType.MovementSpeed) + settings.speed;
+        playerData.speed = metaUpgrades.getUpgradeValue(MetaUpgradeType.MovementSpeed) + settings.speed + equipmentBonuses.speed + skillBonuses.speed;
+        playerData.defense = equipmentBonuses.def + skillBonuses.def;
         playerData.regenerationDelay = settings.regenerationDelay;
-        playerData.xpMultiplier = metaUpgrades.getUpgradeValue(MetaUpgradeType.XPGatherer) + 1;
-        playerData.goldMultiplier = metaUpgrades.getUpgradeValue(MetaUpgradeType.GoldGatherer) + 1;
+        playerData.xpMultiplier = metaUpgrades.getUpgradeValue(MetaUpgradeType.XPGatherer) + 1 + equipmentBonuses.xpBonus + skillBonuses.xpBonus;
+        playerData.goldMultiplier = metaUpgrades.getUpgradeValue(MetaUpgradeType.GoldGatherer) + 1 + equipmentBonuses.goldBonus + skillBonuses.goldBonus;
+        playerData.critChance = equipmentBonuses.critChance + skillBonuses.critChance;
+        playerData.critMult = Math.max(1, equipmentBonuses.critMult * skillBonuses.critMult);
 
-        playerData.damage = metaUpgrades.getUpgradeValue(MetaUpgradeType.OverallDamage) + settings.weapon.damage;
+        playerData.damage = metaUpgrades.getUpgradeValue(MetaUpgradeType.OverallDamage) + settings.weapon.damage + equipmentBonuses.atk + skillBonuses.atk;
         playerData.strikeDelay = settings.weapon.strikeDelay;
 
         playerData.magnetDuration = settings.magnetDuration;
 
         return playerData;
     }
+
+    private addEnemyResultListeners(enemy: Enemy): void {
+        enemy.DeathEvent.on(this.recordEnemyKill, this);
+    }
+
+    private removeEnemyResultListeners(enemy: Enemy): void {
+        enemy.DeathEvent.off(this.recordEnemyKill);
+    }
+
+    private recordEnemyKill(): void {
+        this.gameResult.kills++;
+    }
+
+    private resolveBossMilestones(settings: GameSettings, zoneId: string): number[] {
+        return settings.enemyManager.zoneEnemySpawns
+            .filter((spawn) => spawn.zoneId === zoneId)
+            .filter((spawn) => spawn.enemyId.includes("Boss"))
+            .map((spawn) => Math.floor(spawn.milestoneTimeSeconds ?? 0))
+            .filter((milestone) => 0 < milestone)
+            .sort((left, right) => left - right);
+    }
+
+    private resolveHordeMilestones(settings: GameSettings, zoneId: string): number[] {
+        return settings.enemyManager.zoneEnemySpawns
+            .filter((spawn) => spawn.zoneId === zoneId)
+            .filter((spawn) => !spawn.enemyId.includes("Boss"))
+            .filter((spawn) => spawn.spawnPattern === "circular" || spawn.spawnPattern === "wave")
+            .map((spawn) => Math.floor(spawn.milestoneTimeSeconds ?? 0))
+            .filter((milestone) => 0 < milestone)
+            .sort((left, right) => left - right);
+    }
+
+    private isStageObjectiveComplete(): boolean {
+        return 0 < this.targetSurvivalSeconds && this.targetSurvivalSeconds <= this.timeAlive;
+    }
 }
 
 export class GameResult {
     public hasExitManually = false;
+    public zoneId = "";
+    public kills = 0;
+    public finalLevel = 1;
+    public chestsOpened = 0;
     public goldCoins = 0;
     public score = 0;
+    public cleared = false;
+    public targetSurvivalSeconds = 0;
+    public collectedMaterials: Record<string, number> = {};
+    public collectedItems: Record<string, number> = {};
 }

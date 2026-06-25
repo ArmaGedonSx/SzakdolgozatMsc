@@ -1,0 +1,350 @@
+[
+  {
+    "itemId": "sword_iron_01",
+    "name": "Vashegy Kard",
+    "categoryId": "weapon",
+    "rarity": "common",
+    "requiredLevel": 1,
+    "icon": "icon_iron_sword",
+    "description": "Egy egyszeru vaskard kezdo kalandoroknak.",
+    "dropZones": [
+      "zone_main_arena",
+      "zone_shadow_forest"
+    ],
+    "dropWeight": 10,
+    "lastUpdated": "2026-06-23T00:00:00.000Z",
+    "stats": {
+      "atk": 12,
+      "def": 0,
+      "hp": 0,
+      "speed": 0,
+      "critChance": 0.05,
+      "critMult": 1.5,
+      "goldBonus": 0,
+      "xpBonus": 0
+    }
+  },
+  {
+    "itemId": "helmet_leather_01",
+    "name": "Bor Sisak",
+    "categoryId": "helmet",
+    "rarity": "common",
+    "requiredLevel": 1,
+    "icon": "icon_leather_helmet",
+    "description": "Konnyu vedelem a korai zsakmanyok kozul.",
+    "dropZones": [
+      "zone_main_arena",
+      "zone_shadow_forest"
+    ],
+    "dropWeight": 8,
+    "lastUpdated": "2026-06-23T00:00:00.000Z",
+    "stats": {
+      "atk": 0,
+      "def": 2,
+      "hp": 5,
+      "speed": 0,
+      "critChance": 0,
+      "critMult": 1,
+      "goldBonus": 0,
+      "xpBonus": 0
+    }
+  },
+  {
+    "itemId": "boots_runner_01",
+    "name": "Futas Csizma",
+    "categoryId": "boots",
+    "rarity": "common",
+    "requiredLevel": 1,
+    "icon": "icon_runner_boots",
+    "description": "Kis sebessegbonusz, hogy konnyebb legyen helyezkedni a hordak kozott.",
+    "dropZones": [
+      "zone_main_arena",
+      "zone_shadow_forest"
+    ],
+    "dropWeight": 7,
+    "lastUpdated": "2026-06-23T00:00:00.000Z",
+    "stats": {
+      "atk": 0,
+      "def": 0,
+      "hp": 0,
+      "speed": 0.05,
+      "critChance": 0,
+      "critMult": 1,
+      "goldBonus": 0,
+      "xpBonus": 0
+    }
+  },
+  {
+    "itemId": "chest_guard_01",
+    "name": "Orzo Mellvert",
+    "categoryId": "chestplate",
+    "rarity": "common",
+    "requiredLevel": 2,
+    "icon": "icon_guard_chest",
+    "description": "Stabil tulelesi alap a hosszabb korokhoz.",
+    "dropZones": [
+      "zone_main_arena",
+      "zone_shadow_forest"
+    ],
+    "dropWeight": 6,
+    "lastUpdated": "2026-06-23T00:00:00.000Z",
+    "stats": {
+      "atk": 0,
+      "def": 3,
+      "hp": 12,
+      "speed": 0,
+      "critChance": 0,
+      "critMult": 1,
+      "goldBonus": 0,
+      "xpBonus": 0
+    }
+  },
+  {
+    "itemId": "blade_bloodthorn_01",
+    "name": "Vertovis Penge",
+    "categoryId": "weapon",
+    "rarity": "uncommon",
+    "requiredLevel": 3,
+    "icon": "icon_bloodthorn_blade",
+    "description": "A Shadow Forest gyorsabb, agresszivabb harcaihoz tervezett penge.",
+    "dropZones": [
+      "zone_shadow_forest",
+      "zone_crystal_caves"
+    ],
+    "dropWeight": 5,
+    "lastUpdated": "2026-06-23T00:00:00.000Z",
+    "stats": {
+      "atk": 18,
+      "def": 0,
+      "hp": 0,
+      "speed": 0,
+      "critChance": 0.08,
+      "critMult": 1.6,
+      "goldBonus": 0,
+      "xpBonus": 0
+    }
+  },
+  {
+    "itemId": "ring_greed_01",
+    "name": "Kapzsisag Gyuruje",
+    "categoryId": "ring",
+    "rarity": "uncommon",
+    "requiredLevel": 3,
+    "icon": "icon_greed_ring",
+    "description": "Kis merteku aranybonuszt ad minden futamhoz.",
+    "dropZones": [
+      "zone_shadow_forest",
+      "zone_crystal_caves",
+      "zone_ancient_ruins"
+    ],
+    "dropWeight": 4,
+    "lastUpdated": "2026-06-23T00:00:00.000Z",
+    "stats": {
+      "atk": 0,
+      "def": 0,
+      "hp": 0,
+      "speed": 0,
+      "critChance": 0,
+      "critMult": 1,
+      "goldBonus": 0.1,
+      "xpBonus": 0
+    }
+  },
+  {
+    "itemId": "amulet_apprentice_01",
+    "name": "Tanonc Amulett",
+    "categoryId": "amulet",
+    "rarity": "uncommon",
+    "requiredLevel": 3,
+    "icon": "icon_apprentice_amulet",
+    "description": "Tobb tapasztalatot segit kiszedni a rovid futamokbol.",
+    "dropZones": [
+      "zone_shadow_forest",
+      "zone_crystal_caves"
+    ],
+    "dropWeight": 4,
+    "lastUpdated": "2026-06-23T00:00:00.000Z",
+    "stats": {
+      "atk": 0,
+      "def": 0,
+      "hp": 8,
+      "speed": 0,
+      "critChance": 0,
+      "critMult": 1,
+      "goldBonus": 0,
+      "xpBonus": 0.08
+    }
+  },
+  {
+    "itemId": "leggings_hunter_01",
+    "name": "Vadasz Nadrag",
+    "categoryId": "leggings",
+    "rarity": "uncommon",
+    "requiredLevel": 4,
+    "icon": "icon_hunter_leggings",
+    "description": "Mozgekony vedelmet ad a surubb ellenfelhullamoknal.",
+    "dropZones": [
+      "zone_shadow_forest",
+      "zone_crystal_caves"
+    ],
+    "dropWeight": 4,
+    "lastUpdated": "2026-06-23T00:00:00.000Z",
+    "stats": {
+      "atk": 0,
+      "def": 3,
+      "hp": 6,
+      "speed": 0.04,
+      "critChance": 0,
+      "critMult": 1,
+      "goldBonus": 0,
+      "xpBonus": 0
+    }
+  },
+  {
+    "itemId": "sword_crystal_01",
+    "name": "Kristaly Kard",
+    "categoryId": "weapon",
+    "rarity": "rare",
+    "requiredLevel": 6,
+    "icon": "icon_crystal_sword",
+    "description": "Nagyobb sebzes es stabil kritikus esely a Crystal Caves szintjen.",
+    "dropZones": [
+      "zone_crystal_caves",
+      "zone_ancient_ruins"
+    ],
+    "dropWeight": 3,
+    "lastUpdated": "2026-06-23T00:00:00.000Z",
+    "stats": {
+      "atk": 28,
+      "def": 0,
+      "hp": 0,
+      "speed": 0,
+      "critChance": 0.12,
+      "critMult": 1.8,
+      "goldBonus": 0,
+      "xpBonus": 0
+    }
+  },
+  {
+    "itemId": "helmet_crystal_01",
+    "name": "Kristaly Sisak",
+    "categoryId": "helmet",
+    "rarity": "rare",
+    "requiredLevel": 6,
+    "icon": "icon_crystal_helmet",
+    "description": "Kemeny vedelem es egy kis kritikus fokusz.",
+    "dropZones": [
+      "zone_crystal_caves",
+      "zone_ancient_ruins"
+    ],
+    "dropWeight": 3,
+    "lastUpdated": "2026-06-23T00:00:00.000Z",
+    "stats": {
+      "atk": 0,
+      "def": 6,
+      "hp": 16,
+      "speed": 0,
+      "critChance": 0.04,
+      "critMult": 1.3,
+      "goldBonus": 0,
+      "xpBonus": 0
+    }
+  },
+  {
+    "itemId": "ring_storm_01",
+    "name": "Vihar Gyuru",
+    "categoryId": "ring",
+    "rarity": "rare",
+    "requiredLevel": 7,
+    "icon": "icon_storm_ring",
+    "description": "Gyorsabb tempot es tobb kritikus talalatot ad a tomegek ellen.",
+    "dropZones": [
+      "zone_crystal_caves",
+      "zone_ancient_ruins"
+    ],
+    "dropWeight": 2,
+    "lastUpdated": "2026-06-23T00:00:00.000Z",
+    "stats": {
+      "atk": 0,
+      "def": 0,
+      "hp": 0,
+      "speed": 0.08,
+      "critChance": 0.1,
+      "critMult": 1.4,
+      "goldBonus": 0,
+      "xpBonus": 0
+    }
+  },
+  {
+    "itemId": "amulet_void_01",
+    "name": "Uresszilank Amulett",
+    "categoryId": "amulet",
+    "rarity": "epic",
+    "requiredLevel": 10,
+    "icon": "icon_void_amulet",
+    "description": "Keso jatekos ereklye, ami a sebzest es fejlodest is gyorsitja.",
+    "dropZones": [
+      "zone_ancient_ruins"
+    ],
+    "dropWeight": 1,
+    "lastUpdated": "2026-06-23T00:00:00.000Z",
+    "stats": {
+      "atk": 10,
+      "def": 0,
+      "hp": 0,
+      "speed": 0,
+      "critChance": 0.08,
+      "critMult": 1.7,
+      "goldBonus": 0,
+      "xpBonus": 0.15
+    }
+  },
+  {
+    "itemId": "chest_relic_01",
+    "name": "Relikvia Mellvert",
+    "categoryId": "chestplate",
+    "rarity": "epic",
+    "requiredLevel": 10,
+    "icon": "icon_relic_chest",
+    "description": "Massziv tulelesi targy az Ancient Ruins boss pillanataihoz.",
+    "dropZones": [
+      "zone_ancient_ruins"
+    ],
+    "dropWeight": 1,
+    "lastUpdated": "2026-06-23T00:00:00.000Z",
+    "stats": {
+      "atk": 0,
+      "def": 10,
+      "hp": 36,
+      "speed": -0.02,
+      "critChance": 0,
+      "critMult": 1,
+      "goldBonus": 0.08,
+      "xpBonus": 0
+    }
+  },
+  {
+    "itemId": "boots_phase_01",
+    "name": "Fazis Csizma",
+    "categoryId": "boots",
+    "rarity": "epic",
+    "requiredLevel": 10,
+    "icon": "icon_phase_boots",
+    "description": "Gyors kitoreseket tamogat, amikor mar tenyleg minden iranybol jonnek.",
+    "dropZones": [
+      "zone_ancient_ruins"
+    ],
+    "dropWeight": 1,
+    "lastUpdated": "2026-06-23T00:00:00.000Z",
+    "stats": {
+      "atk": 0,
+      "def": 2,
+      "hp": 0,
+      "speed": 0.14,
+      "critChance": 0.06,
+      "critMult": 1.3,
+      "goldBonus": 0,
+      "xpBonus": 0
+    }
+  }
+]

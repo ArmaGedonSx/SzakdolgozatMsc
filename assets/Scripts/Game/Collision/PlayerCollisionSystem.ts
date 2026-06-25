@@ -6,11 +6,13 @@ import { GroupType } from "../GroupType";
 import { Item } from "../Items/Item";
 import { ItemManager } from "../Items/ItemManager";
 import { Projectile } from "../Projectile/Projectile";
+import { DamageResolver } from "../Data/DamageResolver";
 import { Enemy } from "../Unit/Enemy/Enemy";
 import { Player } from "../Unit/Player/Player";
 
 export class PlayerCollisionSystem {
     private playerContacts: Collider2D[] = [];
+    private enemyContactCooldowns: Map<Collider2D, number> = new Map<Collider2D, number>();
     private collisionTimer: GameTimer;
 
     private groupToResolver: Map<number, (collider: Collider2D) => void> = new Map<number, (collider: Collider2D) => void>();
@@ -31,6 +33,7 @@ export class PlayerCollisionSystem {
     }
 
     public gameTick(deltaTime: number): void {
+        this.tickEnemyContactCooldowns(deltaTime);
         this.collisionTimer.gameTick(deltaTime);
         if (this.collisionTimer.tryFinishPeriod()) {
             this.resolveAllContacts();
@@ -51,6 +54,7 @@ export class PlayerCollisionSystem {
         if (index != -1) {
             this.playerContacts.splice(index, 1);
         }
+        this.enemyContactCooldowns.delete(otherCollider);
     }
 
     private resolveAllContacts(): void {
@@ -70,9 +74,31 @@ export class PlayerCollisionSystem {
     }
 
     private resolveEnemyContact(enemyCollider: Collider2D): void {
-        const damage: number = enemyCollider.node.getComponent(Enemy).Damage;
+        if ((this.enemyContactCooldowns.get(enemyCollider) ?? 0) > 0) return;
+
+        const enemy = enemyCollider.node.getComponent(Enemy);
+        const damage: number = enemy.Damage;
         console.log("Collided with enemy: Damage: " + damage);
-        this.player.Health.damage(damage);
+        this.player.Health.damage(DamageResolver.resolveIncomingDamage(damage, this.player.Defense));
+        this.setEnemyContactCooldown(enemyCollider, enemy.AttackCooldown);
+    }
+
+    private tickEnemyContactCooldowns(deltaTime: number): void {
+        for (const [enemyCollider, timeLeft] of this.enemyContactCooldowns) {
+            const nextTimeLeft = timeLeft - deltaTime;
+            if (nextTimeLeft <= 0) {
+                this.enemyContactCooldowns.delete(enemyCollider);
+            } else {
+                this.enemyContactCooldowns.set(enemyCollider, nextTimeLeft);
+            }
+        }
+    }
+
+    private setEnemyContactCooldown(enemyCollider: Collider2D, attackCooldown: number): void {
+        const cooldown = Math.max(0, attackCooldown || 0);
+        if (cooldown > 0) {
+            this.enemyContactCooldowns.set(enemyCollider, cooldown);
+        }
     }
 
     private resolveEnemyProjectileContact(enemyCollider: Collider2D): void {
@@ -81,7 +107,7 @@ export class PlayerCollisionSystem {
         projectile.pierce();
         console.log("Collided with enemy projectile: Damage: " + damage);
 
-        this.player.Health.damage(damage);
+        this.player.Health.damage(DamageResolver.resolveIncomingDamage(damage, this.player.Defense));
     }
 
     private resolveItemContact(xpCollider: Collider2D): void {

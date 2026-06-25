@@ -1,0 +1,70 @@
+[
+  {
+    "zoneId": "zone_main_arena",
+    "name": "Main Arena",
+    "requiredLevel": 1,
+    "isUnlocked": true,
+    "targetSurvivalSeconds": 120,
+    "clearRewardGold": 25,
+    "createdAt": "2026-06-19T00:00:00.000Z",
+    "lastUpdated": "2026-06-19T00:00:00.000Z",
+    "exits": [
+      {
+        "direction": "east",
+        "targetZoneId": "zone_shadow_forest",
+        "spawnX": 0,
+        "spawnY": 0,
+        "minLevel": 0
+      }
+    ]
+  },
+  {
+    "zoneId": "zone_shadow_forest",
+    "name": "Shadow Forest",
+    "requiredLevel": 3,
+    "isUnlocked": true,
+    "targetSurvivalSeconds": 180,
+    "clearRewardGold": 50,
+    "createdAt": "2026-06-19T00:00:00.000Z",
+    "lastUpdated": "2026-06-19T00:00:00.000Z",
+    "exits": [
+      {
+        "direction": "east",
+        "targetZoneId": "zone_crystal_caves",
+        "spawnX": 0,
+        "spawnY": 0,
+        "minLevel": 0
+      }
+    ]
+  },
+  {
+    "zoneId": "zone_crystal_caves",
+    "name": "Crystal Caves",
+    "requiredLevel": 6,
+    "isUnlocked": true,
+    "targetSurvivalSeconds": 240,
+    "clearRewardGold": 85,
+    "createdAt": "2026-06-19T00:00:00.000Z",
+    "lastUpdated": "2026-06-19T00:00:00.000Z",
+    "exits": [
+      {
+        "direction": "east",
+        "targetZoneId": "zone_ancient_ruins",
+        "spawnX": 0,
+        "spawnY": 0,
+        "minLevel": 0
+      }
+    ]
+  },
+  {
+    "zoneId": "zone_ancient_ruins",
+    "name": "Ancient Ruins",
+    "requiredLevel": 10,
+    "isUnlocked": true,
+    "targetSurvivalSeconds": 300,
+    "clearRewardGold": 125,
+    "createdAt": "2026-06-19T00:00:00.000Z",
+    "lastUpdated": "2026-06-19T00:00:00.000Z",
+    "exits": []
+  }
+]

@@ -1,0 +1,140 @@
+[
+  {
+    "skillId": "combat_weapon_length_1",
+    "upgradeType": "WEAPON_LENGTH",
+    "name": "Weapon Length",
+    "description": "Increase melee reach.",
+    "type": "passive",
+    "maxRank": 5,
+    "goldCoinCost": 0,
+    "materialCosts": {},
+    "choiceWeight": 3,
+    "statBonusPerRank": {
+      "atk": 0,
+      "def": 0,
+      "hp": 0,
+      "speed": 0,
+      "critChance": 0,
+      "critMult": 1,
+      "goldBonus": 0,
+      "xpBonus": 0,
+      "idleRate": 0
+    },
+    "lastUpdated": "2026-06-23T00:00:00.000Z"
+  },
+  {
+    "skillId": "combat_weapon_damage_1",
+    "upgradeType": "WEAPON_DAMAGE",
+    "name": "Weapon Damage",
+    "description": "Increase melee damage.",
+    "type": "passive",
+    "maxRank": 10,
+    "goldCoinCost": 0,
+    "materialCosts": {},
+    "choiceWeight": 3,
+    "statBonusPerRank": {
+      "atk": 0,
+      "def": 0,
+      "hp": 0,
+      "speed": 0,
+      "critChance": 0,
+      "critMult": 1,
+      "goldBonus": 0,
+      "xpBonus": 0,
+      "idleRate": 0
+    },
+    "lastUpdated": "2026-06-23T00:00:00.000Z"
+  },
+  {
+    "skillId": "combat_horizontal_projectile_1",
+    "upgradeType": "HORIZONTAL_PROJECTILE",
+    "name": "Horizontal Projectile",
+    "description": "Unlock or improve forward projectile volleys.",
+    "type": "passive",
+    "maxRank": 6,
+    "goldCoinCost": 0,
+    "materialCosts": {},
+    "choiceWeight": 2,
+    "statBonusPerRank": {
+      "atk": 0,
+      "def": 0,
+      "hp": 0,
+      "speed": 0,
+      "critChance": 0,
+      "critMult": 1,
+      "goldBonus": 0,
+      "xpBonus": 0,
+      "idleRate": 0
+    },
+    "lastUpdated": "2026-06-23T00:00:00.000Z"
+  },
+  {
+    "skillId": "combat_diagonal_projectile_1",
+    "upgradeType": "DIAGONAL_PROJECTILE",
+    "name": "Diagonal Projectile",
+    "description": "Unlock or improve diagonal projectile volleys.",
+    "type": "passive",
+    "maxRank": 6,
+    "goldCoinCost": 0,
+    "materialCosts": {},
+    "choiceWeight": 2,
+    "statBonusPerRank": {
+      "atk": 0,
+      "def": 0,
+      "hp": 0,
+      "speed": 0,
+      "critChance": 0,
+      "critMult": 1,
+      "goldBonus": 0,
+      "xpBonus": 0,
+      "idleRate": 0
+    },
+    "lastUpdated": "2026-06-23T00:00:00.000Z"
+  },
+  {
+    "skillId": "combat_halo_projectile_1",
+    "upgradeType": "HALO_PROJECTILE",
+    "name": "Halo Projectile",
+    "description": "Improve the rotating projectile halo.",
+    "type": "passive",
+    "maxRank": 6,
+    "goldCoinCost": 0,
+    "materialCosts": {},
+    "choiceWeight": 2,
+    "statBonusPerRank": {
+      "atk": 0,
+      "def": 0,
+      "hp": 0,
+      "speed": 0,
+      "critChance": 0,
+      "critMult": 1,
+      "goldBonus": 0,
+      "xpBonus": 0,
+      "idleRate": 0
+    },
+    "lastUpdated": "2026-06-23T00:00:00.000Z"
+  },
+  {
+    "skillId": "support_regeneration_1",
+    "upgradeType": "REGENERATION",
+    "name": "Regeneration",
+    "description": "Improve passive health regeneration.",
+    "type": "passive",
+    "maxRank": 6,
+    "goldCoinCost": 0,
+    "materialCosts": {},
+    "choiceWeight": 1,
+    "statBonusPerRank": {
+      "atk": 0,
+      "def": 0,
+      "hp": 0,
+      "speed": 0,
+      "critChance": 0,
+      "critMult": 1,
+      "goldBonus": 0,
+      "xpBonus": 0,
+      "idleRate": 0
+    },
+    "lastUpdated": "2026-06-23T00:00:00.000Z"
+  }
+]

@@ -1,0 +1,74 @@
+{
+  "health": {
+    "costs": [
+      10,
+      30,
+      50
+    ],
+    "bonuses": [
+      10,
+      20,
+      30
+    ]
+  },
+  "overallDamage": {
+    "costs": [
+      20,
+      40,
+      70
+    ],
+    "bonuses": [
+      0.5,
+      1,
+      1.5
+    ]
+  },
+  "projectilePiercing": {
+    "costs": [
+      30,
+      100,
+      200
+    ],
+    "bonuses": [
+      1,
+      2,
+      3
+    ]
+  },
+  "movementSpeed": {
+    "costs": [
+      20,
+      50,
+      100
+    ],
+    "bonuses": [
+      10,
+      20,
+      30
+    ]
+  },
+  "xpGatherer": {
+    "costs": [
+      10,
+      30,
+      50
+    ],
+    "bonuses": [
+      0.1,
+      0.2,
+      0.3
+    ]
+  },
+  "goldGatherer": {
+    "costs": [
+      10,
+      30,
+      50
+    ],
+    "bonuses": [
+      0.1,
+      0.2,
+      0.3
+    ]
+  }
+}

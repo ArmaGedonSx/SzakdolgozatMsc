@@ -1,5 +1,5 @@
 {
-  "name": "Slash the Hordes",
+  "name": "chronos-rpg",
   "uuid": "44d41970-47e0-4ec4-84a9-e2884a9f7957",
   "version": "3.6.2",
   "creator": {
@@ -8,6 +8,7 @@
   "scripts": {
     "prettier-format": "prettier --config .prettierrc.json assets/Scripts/*.ts --write",
     "test": "jest",
+    "extract-domain-data": "ts-node utils/extractDomainData.ts assets/Data/GameSettings.json",
     "regenerate-settings": "ts-node utils/regenerateGameSettings.ts assets/Data/GameSettings.json",
     "generate:menu-bg": "ts-node utils/generateMenuBackgrounds.ts"
   },

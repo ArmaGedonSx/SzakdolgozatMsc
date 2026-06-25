@@ -2,6 +2,7 @@ import { BoxCollider2D, Component, Material, randomRange, Sprite, Vec3, _decorat
 import { ISignal } from "../../../Services/EventSystem/ISignal";
 import { Signal } from "../../../Services/EventSystem/Signal";
 import { delay } from "../../../Services/Utils/AsyncUtils";
+import { EnemyRuntimeStats } from "../../Data/EnemyRuntimeStats";
 import { EnemySettings } from "../../Data/GameSettings";
 import { UnitHealth } from "../UnitHealth";
 import { EnemyMovementType } from "./EnemyMovementType";
@@ -22,6 +23,9 @@ export class Enemy extends Component {
     private movementType: EnemyMovementType;
     private health: UnitHealth;
     private damage: number;
+    private aggroRange: number;
+    private attackRange: number;
+    private attackCooldown: number;
     private speedX: number;
     private speedY: number;
     private lifetimeLeft: number;
@@ -34,17 +38,21 @@ export class Enemy extends Component {
 
     private endOfLifetimeTriggered = false;
 
-    public setup(position: Vec3, settings: EnemySettings): void {
+    public setup(position: Vec3, settings: EnemySettings, level = 1): void {
+        const resolved = EnemyRuntimeStats.resolve(settings, level);
         this.id = settings.id;
         this.movementType = <EnemyMovementType>settings.moveType;
-        this.health = new UnitHealth(settings.health);
-        this.damage = settings.damage;
-        this.speedX = randomRange(settings.speed / 2, settings.speed);
-        this.speedY = randomRange(settings.speed / 2, settings.speed);
+        this.health = new UnitHealth(resolved.health);
+        this.damage = resolved.damage;
+        this.aggroRange = resolved.aggroRange;
+        this.attackRange = resolved.attackRange;
+        this.attackCooldown = resolved.attackCooldown;
+        this.speedX = randomRange(resolved.speed / 2, resolved.speed);
+        this.speedY = randomRange(resolved.speed / 2, resolved.speed);
         this.lifetimeLeft = settings.lifetime;
 
-        this.xpReward = settings.xpReward;
-        this.goldReward = settings.goldReward;
+        this.xpReward = resolved.xpReward;
+        this.goldReward = resolved.goldReward;
         this.healthPotionRewardChance = settings.healthPotionRewardChance;
         this.magnetRewardChance = settings.magnetRewardChance;
         this.chestRewardChance = settings.chestRewardChance;
@@ -70,6 +78,18 @@ export class Enemy extends Component {
 
     public get Damage(): number {
         return this.damage;
+    }
+
+    public get AggroRange(): number {
+        return this.aggroRange;
+    }
+
+    public get AttackRange(): number {
+        return this.attackRange;
+    }
+
+    public get AttackCooldown(): number {
+        return this.attackCooldown;
     }
 
     public get Health(): UnitHealth {

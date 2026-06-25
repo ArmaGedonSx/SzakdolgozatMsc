@@ -2,12 +2,15 @@ import { Animation, AnimationState, Component, _decorator } from "cc";
 import { ISignal } from "../../../../Services/EventSystem/ISignal";
 import { Signal } from "../../../../Services/EventSystem/Signal";
 import { GameTimer } from "../../../../Services/GameTimer";
+import { AttackResolver } from "../../../Data/AttackResolver";
 
 import { UpgradableCollider } from "./UpgradableCollider";
 const { ccclass, property } = _decorator;
 
 @ccclass("Weapon")
 export class Weapon extends Component {
+    private static readonly STRIKE_ANIMATION_SPEED = 0.75;
+
     @property(Animation) private weaponAnimation: Animation;
     @property(UpgradableCollider) private upgradableCollider: UpgradableCollider;
 
@@ -16,15 +19,19 @@ export class Weapon extends Component {
     private strikeTimer: GameTimer;
     private strikeState: AnimationState;
     private damage: number;
+    private critChance = 0;
+    private critMult = 1;
 
-    public init(strikeDelay: number, damage: number): void {
+    public init(strikeDelay: number, damage: number, critChance = 0, critMult = 1): void {
         this.strikeTimer = new GameTimer(strikeDelay);
         this.damage = damage;
+        this.critChance = critChance;
+        this.critMult = critMult;
         this.node.active = false;
 
         this.weaponAnimation.on(Animation.EventType.FINISHED, this.endStrike, this);
         this.strikeState = this.weaponAnimation.getState(this.weaponAnimation.clips[0].name);
-        this.strikeState.speed = 1;
+        this.strikeState.speed = Weapon.STRIKE_ANIMATION_SPEED;
 
         this.upgradableCollider.init();
     }
@@ -46,6 +53,10 @@ export class Weapon extends Component {
 
     public get Damage(): number {
         return this.damage;
+    }
+
+    public rollDamage(): number {
+        return AttackResolver.resolveOutgoingDamage(this.damage, this.critChance, this.critMult);
     }
 
     public upgradeWeaponDamage(): void {

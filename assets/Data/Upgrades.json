@@ -1,0 +1,8 @@
+{
+  "maxWeaponLengthUpgrades": 5,
+  "maxWeaponDamageUpgrades": 10,
+  "maxHorizontalProjectileUpgrades": 6,
+  "maxDiagonalProjectileUpgrades": 6,
+  "maxHaloProjectileUpgrades": 6,
+  "maxRegenerationUpgrades": 6
+}

@@ -7,16 +7,25 @@ export interface SkillChoicePresentationData {
 
 export class SkillChoicePresentation {
     public static build(choice: SkillChoiceSettings): SkillChoicePresentationData {
-        const lines = [choice.description, `Current rank: ${choice.currentRank}/${choice.maxRank}`];
+        const lines = [this.formatDescription(choice.description), `Rank ${choice.currentRank}/${choice.maxRank}`];
         const costLine = this.formatCostLine(choice);
         if (costLine) {
             lines.push(costLine);
         }
 
         return {
-            title: `${choice.name} Lv. ${choice.nextRank}/${choice.maxRank}`,
+            title: `${choice.name}\nLv ${choice.nextRank}/${choice.maxRank}`,
             description: lines.join("\n")
         };
+    }
+
+    private static formatDescription(description: string): string {
+        return description
+            .replace(/\bImprove\b/gi, "Boost")
+            .replace(/\bIncrease\b/gi, "Boost")
+            .replace(/\bCurrent rank\b/gi, "Rank")
+            .replace(/\.$/, "")
+            .trim();
     }
 
     private static formatCostLine(choice: SkillChoiceSettings): string {

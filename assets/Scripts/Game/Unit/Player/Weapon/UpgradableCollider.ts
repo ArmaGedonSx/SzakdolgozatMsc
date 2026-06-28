@@ -7,7 +7,7 @@ const { ccclass, property } = _decorator;
 @ccclass("UpgradableCollider")
 export class UpgradableCollider extends Component {
     @property(BoxCollider2D) private colliders: BoxCollider2D[] = [];
-    private static readonly ACTIVE_BLADE_COUNT = 4;
+    private static readonly ACTIVE_BLADE_COUNT = 1;
 
     private contactBeginEvent: Signal<Collider2D> = new Signal<Collider2D>();
     private currentUpgradeLevel = 0;

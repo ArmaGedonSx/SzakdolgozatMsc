@@ -13,15 +13,15 @@ export class OfflineRewardPresentation {
         if (pendingGold <= 0) {
             return {
                 isVisible: false,
-                buttonLabel: "Idle gold: None",
-                summary: "No idle gold waiting"
+                buttonLabel: "Gold: None",
+                summary: "No gold waiting"
             };
         }
 
         return {
             isVisible: true,
-            buttonLabel: `Claim idle gold: ${pendingGold}`,
-            summary: `Idle earnings waiting: ${pendingGold} gold | Rate: ${this.formatRate(idleRate)}`
+            buttonLabel: `Claim gold: ${pendingGold}`,
+            summary: `Gold waiting: ${pendingGold} | Rate: ${this.formatRate(idleRate)}`
         };
     }
 

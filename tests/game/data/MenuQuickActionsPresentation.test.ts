@@ -34,8 +34,8 @@ test("MenuQuickActionsPresentation summarizes stage and inventory buttons", () =
 
     const presentation = MenuQuickActionsPresentation.build(settings, userData);
 
-    expect(presentation.stageButtonLabel).toBe("Stages: Shadow Forest 1/3");
-    expect(presentation.inventoryButtonLabel).toBe("Inventory: 2");
+    expect(presentation.stageButtonLabel).toBe("Stages");
+    expect(presentation.inventoryButtonLabel).toBe("Inventory");
 });
 
 test("MenuQuickActionsPresentation falls back cleanly for unknown zones and empty bags", () => {
@@ -46,8 +46,8 @@ test("MenuQuickActionsPresentation falls back cleanly for unknown zones and empt
 
     const presentation = MenuQuickActionsPresentation.build(settings, userData);
 
-    expect(presentation.stageButtonLabel).toBe("Stages: zone_missing 0/0");
-    expect(presentation.inventoryButtonLabel).toBe("Inventory: Empty");
+    expect(presentation.stageButtonLabel).toBe("Stages");
+    expect(presentation.inventoryButtonLabel).toBe("Inventory");
 });
 
 test("MenuQuickActionsPresentation ignores duplicate and unknown cleared zones", () => {
@@ -62,5 +62,5 @@ test("MenuQuickActionsPresentation ignores duplicate and unknown cleared zones",
 
     const presentation = MenuQuickActionsPresentation.build(settings, userData);
 
-    expect(presentation.stageButtonLabel).toBe("Stages: Main Arena 1/2");
+    expect(presentation.stageButtonLabel).toBe("Stages");
 });

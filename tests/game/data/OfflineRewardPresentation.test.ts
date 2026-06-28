@@ -1,7 +1,7 @@
 import { UserData } from "../../../assets/Scripts/Game/Data/UserData";
 import { OfflineRewardPresentation } from "../../../assets/Scripts/Menu/OfflineRewardPresentation";
 
-test("OfflineRewardPresentation hides the claim action when there is no idle gold", () => {
+test("OfflineRewardPresentation hides the claim action when there is no pending gold", () => {
     const userData = new UserData();
     userData.game.offlineGold = 0;
     userData.game.idleRate = 1;
@@ -9,11 +9,11 @@ test("OfflineRewardPresentation hides the claim action when there is no idle gol
     const presentation = OfflineRewardPresentation.build(userData);
 
     expect(presentation.isVisible).toBe(false);
-    expect(presentation.buttonLabel).toBe("Idle gold: None");
-    expect(presentation.summary).toBe("No idle gold waiting");
+    expect(presentation.buttonLabel).toBe("Gold: None");
+    expect(presentation.summary).toBe("No gold waiting");
 });
 
-test("OfflineRewardPresentation summarizes pending idle gold and rate", () => {
+test("OfflineRewardPresentation summarizes pending gold and rate", () => {
     const userData = new UserData();
     userData.game.offlineGold = 125.8;
     userData.game.idleRate = 1.5;
@@ -21,6 +21,6 @@ test("OfflineRewardPresentation summarizes pending idle gold and rate", () => {
     const presentation = OfflineRewardPresentation.build(userData);
 
     expect(presentation.isVisible).toBe(true);
-    expect(presentation.buttonLabel).toBe("Claim idle gold: 125");
-    expect(presentation.summary).toBe("Idle earnings waiting: 125 gold | Rate: 1.5x");
+    expect(presentation.buttonLabel).toBe("Claim gold: 125");
+    expect(presentation.summary).toBe("Gold waiting: 125 | Rate: 1.5x");
 });

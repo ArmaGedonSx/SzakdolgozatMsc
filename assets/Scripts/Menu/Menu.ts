@@ -3,17 +3,16 @@ import { AppRoot } from "../AppRoot/AppRoot";
 import { requireAppRootAsync } from "../AppRoot/AppRootUtils";
 import { InventoryState, EquipmentSlotKey } from "../Game/Data/InventoryState";
 import { MetaUpgradeSettings } from "../Game/Data/GameSettings";
-import { OfflineProgressState } from "../Game/Data/OfflineProgressState";
 import { MetaUpgradesData } from "../Game/Data/UserData";
 import { UIButton } from "../Services/UI/Button/UIButton";
 import { GameRunner } from "./GameRunner";
 import { InventoryPanelLayout } from "./InventoryPanelLayout";
 import { InventoryPresentation } from "./InventoryPresentation";
 import { ColorTuple, MenuTheme } from "./MenuTheme";
+import { MenuGoldPresentation } from "./MenuGoldPresentation";
 import { MenuQuickActionsPresentation } from "./MenuQuickActionsPresentation";
 import { MenuTypography } from "./MenuTypography";
 import { MenuModalLauncher } from "./ModalWindows/MenuModalLauncher";
-import { OfflineRewardPresentation } from "./OfflineRewardPresentation";
 import { PlayerProfilePresentation } from "./PlayerProfilePresentation";
 import { ZoneSelectionPresentation } from "./ZoneSelectionPresentation";
 import { ZoneSelectionState } from "./ZoneSelectionState";
@@ -32,10 +31,9 @@ export class Menu extends Component {
     @property(Label) private highscoreLabel: Label;
 
     private menuModalLauncher: MenuModalLauncher;
+    private profileStatusLabel: Label | null = null;
     private inventoryBtn: UIButton | null = null;
     private inventoryBtnLabel: Label | null = null;
-    private offlineRewardBtn: UIButton | null = null;
-    private offlineRewardBtnLabel: Label | null = null;
     private inventoryPanel: Node | null = null;
     private inventorySummaryLabel: Label | null = null;
     private inventoryEquipmentContainer: Node | null = null;
@@ -57,9 +55,10 @@ export class Menu extends Component {
         this.audioSettingsBtn.InteractedEvent.on(this.openAudioSettingsWindow, this);
 
         this.menuModalLauncher = new MenuModalLauncher(AppRoot.Instance.ModalWindowManager);
-        this.createOfflineRewardButton();
+        this.createProfileStatusLabel();
         this.createInventoryButton();
         this.createZoneButton();
+        this.layoutMainMenuControls();
         this.createInventoryPanel();
         this.createZonePanel();
 
@@ -89,19 +88,36 @@ export class Menu extends Component {
         this.upgradeAvailableIndicator.active = this.isUpgradeAffordable();
 
         const goldCoins = AppRoot.Instance.LiveUserData.game.goldCoins;
-        this.goldCounter.active = 0 < goldCoins;
-        this.goldLabel.string = goldCoins.toString();
+        this.goldCounter.active = true;
+        this.goldLabel.string = MenuGoldPresentation.format(goldCoins);
+        this.goldLabel.fontSize = 24;
+        this.goldLabel.lineHeight = 26;
+        this.goldLabel.overflow = Overflow.SHRINK;
+        this.goldLabel.node.setScale(new Vec3(1, 1, 1));
+        this.goldLabel.getComponent(UITransform)?.setContentSize(128, 30);
 
         if (this.inventoryPanel?.active) {
             this.refreshInventoryPanel();
         }
-        this.refreshOfflineRewardButton();
         this.refreshQuickActionLabels();
     }
 
     private refreshHighscoreLabel(): void {
         const userData = AppRoot.Instance.LiveUserData;
-        this.highscoreLabel.string = PlayerProfilePresentation.build(AppRoot.Instance.Settings, userData);
+        this.highscoreLabel.string = PlayerProfilePresentation.buildZoneTitle(AppRoot.Instance.Settings, userData);
+        this.highscoreLabel.node.setScale(new Vec3(1, 1, 1));
+        this.highscoreLabel.fontSize = 28;
+        this.highscoreLabel.lineHeight = 30;
+        this.highscoreLabel.overflow = Overflow.SHRINK;
+        this.highscoreLabel.getComponent(UITransform)?.setContentSize(430, 34);
+
+        if (this.profileStatusLabel) {
+            this.profileStatusLabel.string = PlayerProfilePresentation.buildStatusLine(AppRoot.Instance.Settings, userData);
+            this.profileStatusLabel.fontSize = 16;
+            this.profileStatusLabel.lineHeight = 18;
+            this.profileStatusLabel.overflow = Overflow.SHRINK;
+            this.profileStatusLabel.getComponent(UITransform)?.setContentSize(430, 24);
+        }
     }
 
     private isUpgradeAffordable(): boolean {
@@ -141,11 +157,49 @@ export class Menu extends Component {
         this.menuModalLauncher.openAudioSettingsWindow();
     }
 
+    private layoutMainMenuControls(): void {
+        this.highscoreLabel.node.setPosition(new Vec3(0, 84, 0));
+        this.profileStatusLabel?.node.setPosition(new Vec3(0, 55, 0));
+        this.goldCounter.setPosition(new Vec3(0, 26, 0));
+
+        this.applyMainMenuButtonLayout(this.playBtn.node, -38);
+        this.applyMainMenuButtonLayout(this.upgradeBtn.node, -116);
+        if (this.inventoryBtn?.node) this.applyMainMenuButtonLayout(this.inventoryBtn.node, -194);
+        if (this.zoneBtn?.node) this.applyMainMenuButtonLayout(this.zoneBtn.node, -272);
+
+        this.audioSettingsBtn.node.active = false;
+    }
+
+    private applyMainMenuButtonLayout(node: Node, y: number): void {
+        node.setPosition(new Vec3(0, y, 0));
+        node.setScale(new Vec3(1, 1, 1));
+        node.getComponent(UITransform)?.setContentSize(300, 58);
+
+        const label = node.getComponentInChildren(Label);
+        if (!label) return;
+
+        label.fontSize = 29;
+        label.lineHeight = 31;
+        label.overflow = Overflow.SHRINK;
+        label.getComponent(UITransform)?.setContentSize(260, 38);
+    }
+
+    private createProfileStatusLabel(): void {
+        if (this.profileStatusLabel) return;
+
+        const statusLabelNode = instantiate(this.highscoreLabel.node);
+        statusLabelNode.name = "ProfileStatusLine";
+        statusLabelNode.setParent(this.node);
+        statusLabelNode.setScale(new Vec3(1, 1, 1));
+        this.profileStatusLabel = statusLabelNode.getComponent(Label);
+    }
+
     private createInventoryButton(): void {
         const inventoryBtnNode = instantiate(this.upgradeBtn.node);
         inventoryBtnNode.name = "InventoryBtn";
         inventoryBtnNode.setParent(this.node);
-        inventoryBtnNode.setPosition(new Vec3(0, -101.9145, 0));
+        inventoryBtnNode.setPosition(new Vec3(0, -180, 0));
+        this.removeClonedUpgradeIndicator(inventoryBtnNode);
 
         const inventoryLabel = inventoryBtnNode.getComponentInChildren(Label);
         if (inventoryLabel) {
@@ -155,37 +209,6 @@ export class Menu extends Component {
 
         this.inventoryBtn = inventoryBtnNode.getComponent(UIButton);
         this.inventoryBtn?.InteractedEvent.on(this.toggleInventoryPanel, this);
-    }
-
-    private createOfflineRewardButton(): void {
-        const offlineRewardBtnNode = instantiate(this.upgradeBtn.node);
-        offlineRewardBtnNode.name = "OfflineRewardBtn";
-        offlineRewardBtnNode.setParent(this.node);
-        offlineRewardBtnNode.setPosition(new Vec3(0, -50, 0));
-
-        const offlineRewardLabel = offlineRewardBtnNode.getComponentInChildren(Label);
-        if (offlineRewardLabel) {
-            this.offlineRewardBtnLabel = offlineRewardLabel;
-        }
-
-        this.offlineRewardBtn = offlineRewardBtnNode.getComponent(UIButton);
-        this.offlineRewardBtn?.InteractedEvent.on(this.claimOfflineReward, this);
-        this.refreshOfflineRewardButton();
-    }
-
-    private claimOfflineReward(): void {
-        OfflineProgressState.collect(AppRoot.Instance.LiveUserData);
-        AppRoot.Instance.saveUserData();
-        this.updateGoldIndicators();
-        this.refreshHighscoreLabel();
-    }
-
-    private refreshOfflineRewardButton(): void {
-        if (!this.offlineRewardBtn?.node || !this.offlineRewardBtnLabel) return;
-
-        const presentation = OfflineRewardPresentation.build(AppRoot.Instance.LiveUserData);
-        this.offlineRewardBtn.node.active = presentation.isVisible;
-        this.offlineRewardBtnLabel.string = presentation.buttonLabel;
     }
 
     private createInventoryPanel(): void {
@@ -335,6 +358,7 @@ export class Menu extends Component {
             buttonNode.setParent(container);
             buttonNode.setScale(new Vec3(1, 1, 1));
             buttonNode.name = entry.placeholderId ? `InventoryPlaceholder_${entry.placeholderId}` : entry.materialId ? `InventoryMaterial_${entry.materialId}` : entry.itemId ? `InventoryItem_${entry.itemId}` : `InventorySlot_${entry.slot}`;
+            this.removeClonedUpgradeIndicator(buttonNode);
 
             const row = Math.floor(index / columns);
             const column = index % columns;
@@ -437,6 +461,16 @@ export class Menu extends Component {
         label.color = new Color(color[0], color[1], color[2], color[3]);
     }
 
+    private removeClonedUpgradeIndicator(node: Node): void {
+        const indicatorName = this.upgradeAvailableIndicator?.name;
+        if (!indicatorName) return;
+
+        const clonedIndicator = node.getChildByName(indicatorName);
+        if (clonedIndicator && clonedIndicator !== this.upgradeAvailableIndicator) {
+            clonedIndicator.destroy();
+        }
+    }
+
     private createInputBlockingBackdrop(parent: Node, name: string, width: number, height: number): Node {
         const backdropNode = instantiate(this.upgradeBtn.node);
         backdropNode.name = name;
@@ -444,6 +478,7 @@ export class Menu extends Component {
         backdropNode.setPosition(new Vec3(0, 0, 0));
         backdropNode.setScale(new Vec3(1, 1, 1));
         backdropNode.getChildByName("Label")?.destroy();
+        this.removeClonedUpgradeIndicator(backdropNode);
         backdropNode.getComponent(UIButton)!.enabled = false;
         backdropNode.getComponent(Button)!.enabled = false;
         backdropNode.getComponent(UITransform)?.setContentSize(width, height);
@@ -461,6 +496,7 @@ export class Menu extends Component {
         backButtonNode.setParent(parent);
         backButtonNode.setPosition(new Vec3(x, y, 0));
         backButtonNode.getComponent(UITransform)?.setContentSize(94, 38);
+        this.removeClonedUpgradeIndicator(backButtonNode);
 
         const label = backButtonNode.getComponentInChildren(Label);
         if (label) {
@@ -477,7 +513,8 @@ export class Menu extends Component {
         const zoneBtnNode = instantiate(this.upgradeBtn.node);
         zoneBtnNode.name = "ZoneBtn";
         zoneBtnNode.setParent(this.node);
-        zoneBtnNode.setPosition(new Vec3(0, -151.9145, 0));
+        zoneBtnNode.setPosition(new Vec3(0, -262, 0));
+        this.removeClonedUpgradeIndicator(zoneBtnNode);
 
         const zoneLabel = zoneBtnNode.getComponentInChildren(Label);
         if (zoneLabel) {
@@ -555,6 +592,7 @@ export class Menu extends Component {
             buttonNode.name = `ZoneOption_${entry.zoneId}`;
             buttonNode.setParent(this.zoneListContainer);
             buttonNode.setScale(new Vec3(1, 1, 1));
+            this.removeClonedUpgradeIndicator(buttonNode);
             buttonNode.setPosition(new Vec3(0, -index * type.cardRowHeight, 0));
             buttonNode.getComponent(UITransform)?.setContentSize(500, type.cardHeight);
 

@@ -64,7 +64,12 @@ export class GameModalLauncher {
         const shouldExit = await this.modalWindowManager.showModal<ModalWindowManager, boolean>(GameModalWindowTypes.Pause, this.modalWindowManager);
 
         if (shouldExit) {
-            Game.Instance.exitGame();
+            if (Game.Instance?.tryExitGame()) {
+                return;
+            }
+
+            console.warn("[GameModalLauncher] Pause modal requested exit, but no active game run exists.");
+            this.gamePauser.resume();
         } else {
             this.gamePauser.resume();
         }

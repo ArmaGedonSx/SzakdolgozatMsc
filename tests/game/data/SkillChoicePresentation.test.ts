@@ -17,13 +17,13 @@ function createChoice(): SkillChoiceSettings {
 test("SkillChoicePresentation includes next rank in the title", () => {
     const presentation = SkillChoicePresentation.build(createChoice());
 
-    expect(presentation.title).toBe("Weapon Damage Lv. 2/10");
+    expect(presentation.title).toBe("Weapon Damage\nLv 2/10");
 });
 
 test("SkillChoicePresentation appends progress to the description", () => {
     const presentation = SkillChoicePresentation.build(createChoice());
 
-    expect(presentation.description).toBe("Increase melee damage.\nCurrent rank: 1/10");
+    expect(presentation.description).toBe("Boost melee damage\nRank 1/10");
 });
 
 test("SkillChoicePresentation appends a compact cost line when the skill has costs", () => {
@@ -37,7 +37,7 @@ test("SkillChoicePresentation appends a compact cost line when the skill has cos
     const presentation = SkillChoicePresentation.build(choice);
 
     expect(presentation.description).toBe(
-        "Increase melee damage.\nCurrent rank: 1/10\nCost: 5 gold, Common Ore x2, Rare Essence x1"
+        "Boost melee damage\nRank 1/10\nCost: 5 gold, Common Ore x2, Rare Essence x1"
     );
 });
 
@@ -50,5 +50,5 @@ test("SkillChoicePresentation omits zero material costs from the cost line", () 
 
     const presentation = SkillChoicePresentation.build(choice);
 
-    expect(presentation.description).toBe("Increase melee damage.\nCurrent rank: 1/10\nCost: Uncommon Crystal x3");
+    expect(presentation.description).toBe("Boost melee damage\nRank 1/10\nCost: Uncommon Crystal x3");
 });

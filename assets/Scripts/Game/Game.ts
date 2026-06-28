@@ -74,7 +74,8 @@ export class Game extends Component {
     private itemAttractor: ItemAttractor;
 
     private gamePauser: Pauser = new Pauser();
-    private gameResult: GameResult;
+    private gameResult: GameResult | null = null;
+    private exitRequested = false;
 
     private timeAlive = 0;
     private bossMilestones: number[] = [];
@@ -92,7 +93,10 @@ export class Game extends Component {
     }
 
     public async play(userData: UserData, settings: GameSettings, translationData: TranslationData, testValues?: TestValues): Promise<GameResult> {
+        this.exitRequested = false;
         await this.setup(userData, settings, translationData, testValues);
+        const runResult = this.gameResult ?? new GameResult();
+        this.gameResult = runResult;
 
         AppRoot.Instance.Analytics.gameStart();
 
@@ -100,19 +104,20 @@ export class Game extends Component {
         this.blackScreen.active = false;
         AppRoot.Instance.ScreenFader.playClose();
 
-        while (!this.gameResult.hasExitManually && this.player.Health.IsAlive && !this.isStageObjectiveComplete()) await delay(100);
+        while (!this.shouldExitRun(runResult) && this.player.Health.IsAlive && !this.isStageObjectiveComplete()) await delay(100);
 
         this.gamePauser.pause();
         Game.instance = null;
-        this.gameResult.score = this.timeAlive;
-        this.gameResult.zoneId = userData.game.currentZoneId;
-        this.gameResult.finalLevel = this.player.Level.CurrentLevel;
-        this.gameResult.targetSurvivalSeconds = this.targetSurvivalSeconds;
-        this.gameResult.cleared = this.isStageObjectiveComplete();
+        runResult.hasExitManually = this.shouldExitRun(runResult);
+        runResult.score = this.timeAlive;
+        runResult.zoneId = userData.game.currentZoneId;
+        runResult.finalLevel = this.player.Level.CurrentLevel;
+        runResult.targetSurvivalSeconds = this.targetSurvivalSeconds;
+        runResult.cleared = this.isStageObjectiveComplete();
 
-        if (!this.gameResult.hasExitManually) {
-            AppRoot.Instance.Analytics.goldPerRun(this.gameResult.goldCoins);
-            AppRoot.Instance.Analytics.gameEnd(this.gameResult.score);
+        if (!runResult.hasExitManually) {
+            AppRoot.Instance.Analytics.goldPerRun(runResult.goldCoins);
+            AppRoot.Instance.Analytics.gameEnd(runResult.score);
 
             await delay(2000);
         } else {
@@ -121,11 +126,27 @@ export class Game extends Component {
 
         PlayerProgression.syncFromRuntime(userData, this.player.Level);
         PlayerRuntimeState.syncFromRuntime(userData, this.player);
-        return this.gameResult;
+        return runResult;
     }
 
     public exitGame(): void {
+        this.tryExitGame();
+    }
+
+    public tryExitGame(): boolean {
+        this.exitRequested = true;
+
+        if (!this.gameResult) {
+            console.warn("[Game] Exit requested before an active run was initialized.");
+            return true;
+        }
+
         this.gameResult.hasExitManually = true;
+        return true;
+    }
+
+    private shouldExitRun(gameResult: GameResult): boolean {
+        return this.exitRequested || gameResult.hasExitManually;
     }
 
     public update(deltaTime: number): void {
@@ -157,7 +178,8 @@ export class Game extends Component {
         await requireAppRootAsync();
         this.gameCanvas.cameraComponent = AppRoot.Instance.MainCamera;
 
-        this.gameResult = new GameResult();
+        const runResult = new GameResult();
+        this.gameResult = runResult;
         this.targetSurvivalSeconds = StageObjective.resolveTargetSeconds(settings, userData.game.currentZoneId);
         this.bossMilestones = this.resolveBossMilestones(settings, userData.game.currentZoneId);
         this.hordeMilestones = this.resolveHordeMilestones(settings, userData.game.currentZoneId);
@@ -243,7 +265,7 @@ export class Game extends Component {
         this.itemManager.init(
             this.enemyManager,
             this.player,
-            this.gameResult,
+            runResult,
             modalLauncher,
             settings.items,
             1 + equipmentBonuses.goldBonus + skillBonuses.goldBonus,
@@ -251,7 +273,7 @@ export class Game extends Component {
             (zoneId) => MaterialDropResolver.tryResolveDrop(settings, zoneId),
             (zoneId) => ItemDropResolver.tryResolveDrop(settings, zoneId)
         );
-        this.gameUI.init(this.player, modalLauncher, this.itemManager, this.gameResult);
+        this.gameUI.init(this.player, modalLauncher, this.itemManager, runResult);
         this.background.init(this.player.node, userData.game.currentZoneId);
 
         if (testValues) {
@@ -307,7 +329,7 @@ export class Game extends Component {
     }
 
     private recordEnemyKill(): void {
-        this.gameResult.kills++;
+        if (this.gameResult) this.gameResult.kills++;
     }
 
     private resolveBossMilestones(settings: GameSettings, zoneId: string): number[] {

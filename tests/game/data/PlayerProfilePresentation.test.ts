@@ -28,9 +28,8 @@ test("PlayerProfilePresentation summarizes the current player progress for the m
 
     const summary = PlayerProfilePresentation.build(settings, userData);
 
-    expect(summary).toBe(
-        "Level: 4 | XP: 12/30 | Zone: Shadow Forest | Stages: 1/2 cleared | Current best: 92/120s (76%)\nLast run: Shadow Forest: 125s | Lv. 4 | Kills: 24 | Chests: 2 | Gold: 3"
-    );
+    expect(PlayerProfilePresentation.buildZoneTitle(settings, userData)).toBe("SHADOW FOREST");
+    expect(summary).toBe("LV 4  |  XP 12/30  |  1/2 STAGES  |  BEST 92/120s (76%)");
 });
 
 test("PlayerProfilePresentation falls back cleanly for missing zone names", () => {
@@ -44,5 +43,6 @@ test("PlayerProfilePresentation falls back cleanly for missing zone names", () =
 
     const summary = PlayerProfilePresentation.build(settings, userData);
 
-    expect(summary).toBe("Level: 1 | XP: 0/0 | Zone: zone_missing | Stages: 0/0 cleared | Current best: 0s");
+    expect(PlayerProfilePresentation.buildZoneTitle(settings, userData)).toBe("ZONE_MISSING");
+    expect(summary).toBe("LV 1  |  XP 0/0  |  0/0 STAGES  |  BEST 0s");
 });

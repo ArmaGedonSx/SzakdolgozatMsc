@@ -1,18 +1,18 @@
-import { _decorator, Component, Node, Prefab, instantiate, randomRangeInt, Vec3 } from "cc";
+import { _decorator, Component, Node, Prefab, instantiate, randomRangeInt, Vec3, CCString } from "cc";
 import { SCREEN_HALF_HEIGHT, SCREEN_HALF_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH } from "../Data/GameConstants";
 import { ZoneBackgroundResolver, ZoneBackgroundSetData } from "../Data/ZoneBackgroundResolver";
 const { ccclass, property } = _decorator;
 
 @ccclass("ZoneBackgroundSet")
 export class ZoneBackgroundSet implements ZoneBackgroundSetData<Prefab> {
-    @property() public zoneId = "";
-    @property(Prefab) public backgroundPrefabs: Prefab[] = [];
+    @property(CCString) public zoneId = "";
+    @property([Prefab]) public backgroundPrefabs: Prefab[] = [];
 }
 
 @ccclass("Background")
 export class Background extends Component {
-    @property(Prefab) private backgroundPrefabs: Prefab[] = [];
-    @property(ZoneBackgroundSet) private zoneBackgroundSets: ZoneBackgroundSet[] = [];
+    @property([Prefab]) private backgroundPrefabs: Prefab[] = [];
+    @property([ZoneBackgroundSet]) private zoneBackgroundSets: ZoneBackgroundSet[] = [];
 
     private targetNode: Node;
     private instancedBackgrounds: Node[][] = [];

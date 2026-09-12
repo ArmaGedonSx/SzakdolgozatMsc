@@ -1,13 +1,10 @@
 import { approx, BlockInputEvents, Button, Canvas, Color, Component, instantiate, input, Input, KeyCode, Label, Node, Overflow, UITransform, Vec3, _decorator } from "cc";
 import { AppRoot } from "../AppRoot/AppRoot";
 import { requireAppRootAsync } from "../AppRoot/AppRootUtils";
-import { InventoryState, EquipmentSlotKey } from "../Game/Data/InventoryState";
 import { MetaUpgradeSettings } from "../Game/Data/GameSettings";
 import { MetaUpgradesData } from "../Game/Data/UserData";
 import { UIButton } from "../Services/UI/Button/UIButton";
 import { GameRunner } from "./GameRunner";
-import { InventoryPanelLayout } from "./InventoryPanelLayout";
-import { InventoryPresentation } from "./InventoryPresentation";
 import { ColorTuple, MenuTheme } from "./MenuTheme";
 import { MenuGoldPresentation } from "./MenuGoldPresentation";
 import { MenuQuickActionsPresentation } from "./MenuQuickActionsPresentation";
@@ -32,14 +29,6 @@ export class Menu extends Component {
 
     private menuModalLauncher: MenuModalLauncher;
     private profileStatusLabel: Label | null = null;
-    private inventoryBtn: UIButton | null = null;
-    private inventoryBtnLabel: Label | null = null;
-    private inventoryPanel: Node | null = null;
-    private inventorySummaryLabel: Label | null = null;
-    private inventoryEquipmentContainer: Node | null = null;
-    private inventoryItemsContainer: Node | null = null;
-    private inventoryMaterialsTitle: Node | null = null;
-    private inventoryMaterialsContainer: Node | null = null;
     private zoneBtn: UIButton | null = null;
     private zoneBtnLabel: Label | null = null;
     private zonePanel: Node | null = null;
@@ -56,10 +45,8 @@ export class Menu extends Component {
 
         this.menuModalLauncher = new MenuModalLauncher(AppRoot.Instance.ModalWindowManager);
         this.createProfileStatusLabel();
-        this.createInventoryButton();
         this.createZoneButton();
         this.layoutMainMenuControls();
-        this.createInventoryPanel();
         this.createZonePanel();
 
         this.refreshHighscoreLabel();
@@ -96,9 +83,6 @@ export class Menu extends Component {
         this.goldLabel.node.setScale(new Vec3(1, 1, 1));
         this.goldLabel.getComponent(UITransform)?.setContentSize(128, 30);
 
-        if (this.inventoryPanel?.active) {
-            this.refreshInventoryPanel();
-        }
         this.refreshQuickActionLabels();
     }
 
@@ -164,10 +148,10 @@ export class Menu extends Component {
 
         this.applyMainMenuButtonLayout(this.playBtn.node, -38);
         this.applyMainMenuButtonLayout(this.upgradeBtn.node, -116);
-        if (this.inventoryBtn?.node) this.applyMainMenuButtonLayout(this.inventoryBtn.node, -194);
-        if (this.zoneBtn?.node) this.applyMainMenuButtonLayout(this.zoneBtn.node, -272);
+        if (this.zoneBtn?.node) this.applyMainMenuButtonLayout(this.zoneBtn.node, -194);
+        this.applyMainMenuButtonLayout(this.audioSettingsBtn.node, -272);
 
-        this.audioSettingsBtn.node.active = false;
+        this.audioSettingsBtn.node.active = true;
     }
 
     private applyMainMenuButtonLayout(node: Node, y: number): void {
@@ -194,89 +178,6 @@ export class Menu extends Component {
         this.profileStatusLabel = statusLabelNode.getComponent(Label);
     }
 
-    private createInventoryButton(): void {
-        const inventoryBtnNode = instantiate(this.upgradeBtn.node);
-        inventoryBtnNode.name = "InventoryBtn";
-        inventoryBtnNode.setParent(this.node);
-        inventoryBtnNode.setPosition(new Vec3(0, -180, 0));
-        this.removeClonedUpgradeIndicator(inventoryBtnNode);
-
-        const inventoryLabel = inventoryBtnNode.getComponentInChildren(Label);
-        if (inventoryLabel) {
-            inventoryLabel.string = "Inventory";
-            this.inventoryBtnLabel = inventoryLabel;
-        }
-
-        this.inventoryBtn = inventoryBtnNode.getComponent(UIButton);
-        this.inventoryBtn?.InteractedEvent.on(this.toggleInventoryPanel, this);
-    }
-
-    private createInventoryPanel(): void {
-        const panelNode = new Node("InventoryPanel");
-        panelNode.setParent(this.node);
-        panelNode.setPosition(new Vec3(0, -8, 0));
-        panelNode.active = false;
-        this.inventoryPanel = panelNode;
-
-        const type = MenuTypography.inventory;
-
-        this.createInputBlockingBackdrop(panelNode, "InventoryPanelBackdrop", 610, 700);
-        this.createPanelBackButton(panelNode, 242, 292, this.closeInventoryPanel);
-
-        const titleLabelNode = instantiate(this.highscoreLabel.node);
-        titleLabelNode.name = "InventoryTitle";
-        titleLabelNode.setParent(panelNode);
-        titleLabelNode.setPosition(new Vec3(0, 292, 0));
-        this.applyLabelLayout(titleLabelNode.getComponent(Label), 500, 62, type.panelTitleSize, type.panelTitleLineHeight);
-        titleLabelNode.getComponent(Label)!.string = "Inventory";
-
-        const summaryLabelNode = instantiate(this.highscoreLabel.node);
-        summaryLabelNode.name = "InventorySummary";
-        summaryLabelNode.setParent(panelNode);
-        summaryLabelNode.setPosition(new Vec3(0, 236, 0));
-        this.inventorySummaryLabel = summaryLabelNode.getComponent(Label);
-        this.applyLabelLayout(this.inventorySummaryLabel, 530, 72, type.summarySize, type.summaryLineHeight);
-
-        const equipmentLabelNode = instantiate(this.highscoreLabel.node);
-        equipmentLabelNode.name = "InventoryEquipmentTitle";
-        equipmentLabelNode.setParent(panelNode);
-        equipmentLabelNode.setPosition(new Vec3(0, 196, 0));
-        this.applyLabelLayout(equipmentLabelNode.getComponent(Label), 530, 44, type.sectionTitleSize, type.sectionTitleLineHeight);
-        equipmentLabelNode.getComponent(Label)!.string = "Equipment";
-
-        const equipmentContainer = new Node("InventoryEquipmentContainer");
-        equipmentContainer.setParent(panelNode);
-        equipmentContainer.setPosition(new Vec3(0, 136, 0));
-        this.inventoryEquipmentContainer = equipmentContainer;
-
-        const itemsLabelNode = instantiate(this.highscoreLabel.node);
-        itemsLabelNode.name = "InventoryItemsTitle";
-        itemsLabelNode.setParent(panelNode);
-        itemsLabelNode.setPosition(new Vec3(0, -38, 0));
-        this.applyLabelLayout(itemsLabelNode.getComponent(Label), 530, 44, type.sectionTitleSize, type.sectionTitleLineHeight);
-        itemsLabelNode.getComponent(Label)!.string = "Backpack";
-
-        const itemsContainer = new Node("InventoryItemsContainer");
-        itemsContainer.setParent(panelNode);
-        itemsContainer.setPosition(new Vec3(0, -112, 0));
-        this.inventoryItemsContainer = itemsContainer;
-
-        const materialsLabelNode = instantiate(this.highscoreLabel.node);
-        materialsLabelNode.name = "InventoryMaterialsTitle";
-        materialsLabelNode.setParent(panelNode);
-        materialsLabelNode.setPosition(new Vec3(0, -244, 0));
-        this.inventoryMaterialsTitle = materialsLabelNode;
-        this.applyLabelLayout(materialsLabelNode.getComponent(Label), 530, 44, type.sectionTitleSize, type.sectionTitleLineHeight);
-        materialsLabelNode.getComponent(Label)!.string = "Materials";
-
-        const materialsContainer = new Node("InventoryMaterialsContainer");
-        materialsContainer.setParent(panelNode);
-        materialsContainer.setPosition(new Vec3(0, -296, 0));
-        this.inventoryMaterialsContainer = materialsContainer;
-
-        this.refreshInventoryPanel();
-    }
-
     private applyLabelLayout(label: Label | null, width: number, height: number, fontSize: number, lineHeight: number): void {
         if (!label) return;
 
@@ -285,176 +186,6 @@ export class Menu extends Component {
         label.fontSize = fontSize;
         label.lineHeight = lineHeight;
         label.overflow = Overflow.SHRINK;
-    }
-
-    private toggleInventoryPanel(): void {
-        if (!this.inventoryPanel) return;
-
-        this.inventoryPanel.active = !this.inventoryPanel.active;
-        if (this.inventoryPanel.active && this.zonePanel) {
-            this.zonePanel.active = false;
-        }
-        if (this.inventoryPanel.active) {
-            this.refreshInventoryPanel();
-        }
-    }
-
-    private closeInventoryPanel(): void {
-        if (this.inventoryPanel) {
-            this.inventoryPanel.active = false;
-        }
-    }
-
-    private refreshInventoryPanel(): void {
-        if (!this.inventorySummaryLabel || !this.inventoryEquipmentContainer || !this.inventoryItemsContainer || !this.inventoryMaterialsTitle || !this.inventoryMaterialsContainer) return;
-
-        const presentation = InventoryPresentation.build(AppRoot.Instance.Settings, AppRoot.Instance.LiveUserData);
-        const type = MenuTypography.inventory;
-        this.inventorySummaryLabel.string = `${presentation.summary}\n${presentation.gearBonusSummary}`;
-        this.rebuildInventoryButtons(this.inventoryEquipmentContainer, presentation.equipment, this.onEquipmentClicked.bind(this), 2, 0, 58);
-        const itemEntries: any[] = presentation.items.length > 0 ? presentation.items : [{ placeholderId: "empty_bag", label: presentation.emptyBagLabel, isEmpty: true }];
-        const materialEntries: any[] = presentation.materials.length > 0 ? presentation.materials : [{ placeholderId: "empty_materials", label: presentation.emptyMaterialsLabel, isEmpty: true }];
-        const layout = InventoryPanelLayout.resolve(type, itemEntries.length);
-        this.inventoryMaterialsTitle.setPosition(new Vec3(0, layout.materialsTitleY, 0));
-        this.inventoryMaterialsContainer.setPosition(new Vec3(0, layout.materialsContainerY, 0));
-        this.rebuildInventoryButtons(this.inventoryItemsContainer, itemEntries, this.onInventoryItemClicked.bind(this), 1, 0, type.itemRowHeight);
-        this.rebuildInventoryButtons(this.inventoryMaterialsContainer, materialEntries, () => undefined, 1, 0, presentation.materials.length > 0 ? type.itemRowHeight : 58);
-    }
-
-    private onEquipmentClicked(slot: EquipmentSlotKey): void {
-        InventoryState.unequipItem(AppRoot.Instance.LiveUserData, slot);
-        AppRoot.Instance.saveUserData();
-        this.refreshInventoryPanel();
-        this.refreshQuickActionLabels();
-    }
-
-    private onInventoryItemClicked(itemId: string): void {
-        const equipped = InventoryState.equipItem(AppRoot.Instance.Settings, AppRoot.Instance.LiveUserData, itemId);
-        if (!equipped) return;
-
-        AppRoot.Instance.saveUserData();
-        this.refreshInventoryPanel();
-        this.refreshQuickActionLabels();
-    }
-
-    private rebuildInventoryButtons<T>(
-        container: Node,
-        entries: T[],
-        onClick: (value: any) => void,
-        columns: number,
-        startOffsetY: number,
-        rowHeight: number
-    ): void {
-        container.destroyAllChildren();
-
-        const hasCardSubtitle = entries.some((entry: any) => !!entry.subtitle);
-        const hasCompactBadge = entries.some((entry: any) => !!entry.materialId);
-        const type = MenuTypography.inventory;
-        const buttonWidth = hasCardSubtitle ? 510 : 238;
-        const buttonSpacingX = 254;
-
-        entries.forEach((entry: any, index: number) => {
-            const buttonNode = instantiate(this.upgradeBtn.node);
-            buttonNode.setParent(container);
-            buttonNode.setScale(new Vec3(1, 1, 1));
-            buttonNode.name = entry.placeholderId ? `InventoryPlaceholder_${entry.placeholderId}` : entry.materialId ? `InventoryMaterial_${entry.materialId}` : entry.itemId ? `InventoryItem_${entry.itemId}` : `InventorySlot_${entry.slot}`;
-            this.removeClonedUpgradeIndicator(buttonNode);
-
-            const row = Math.floor(index / columns);
-            const column = index % columns;
-            const x = columns === 1 ? 0 : column === 0 ? -buttonSpacingX / 2 : buttonSpacingX / 2;
-            const y = startOffsetY - row * rowHeight;
-            buttonNode.setPosition(new Vec3(x, y, 0));
-            const buttonHeight = entry.subtitle ? type.itemCardHeight : 52;
-            buttonNode.getComponent(UITransform)?.setContentSize(buttonWidth, buttonHeight);
-
-            const label = buttonNode.getComponentInChildren(Label);
-            const style = entry.rarity ? MenuTheme.forItemRarity(entry.rarity) : null;
-            if (label) {
-                label.string = this.resolveInventoryButtonTitle(entry);
-                label.node.setPosition(new Vec3(entry.subtitle ? 78 : entry.materialId ? 28 : 0, entry.subtitle ? 50 : 0, 0));
-                label.fontSize = entry.subtitle ? type.itemTitleSize : type.equipmentTitleSize;
-                label.lineHeight = entry.subtitle ? type.itemTitleLineHeight : type.equipmentLineHeight;
-                label.overflow = Overflow.SHRINK;
-                if (style) this.applyLabelColor(label, style.titleColor);
-                label.getComponent(UITransform)?.setContentSize(entry.subtitle ? type.itemTitleWidth : hasCompactBadge ? 166 : 214, entry.subtitle ? type.itemTitleHeight : 36);
-            }
-
-            if (entry.materialId && !entry.subtitle) {
-                this.createCardIconBadge(buttonNode, entry.iconLabel ?? "MAT", [235, 235, 220, 255], -88, 0, 40, 16);
-            } else if (entry.subtitle) {
-                this.createCardIconBadge(buttonNode, entry.iconLabel ?? (entry.materialId ? "MAT" : "ITM"), style?.titleColor ?? [235, 235, 220, 255], -208, 0, type.itemBadgeSize, type.itemBadgeFontSize);
-
-                const subtitleLabelNode = instantiate(this.highscoreLabel.node);
-                subtitleLabelNode.name = `${buttonNode.name}_Subtitle`;
-                subtitleLabelNode.setParent(buttonNode);
-                subtitleLabelNode.setPosition(new Vec3(78, 2, 0));
-
-                const subtitleLabel = subtitleLabelNode.getComponent(Label);
-                if (subtitleLabel) {
-                    subtitleLabel.string = entry.subtitle;
-                    subtitleLabel.fontSize = type.itemSubtitleSize;
-                    subtitleLabel.lineHeight = type.itemSubtitleLineHeight;
-                    subtitleLabel.overflow = Overflow.SHRINK;
-                    if (style) this.applyLabelColor(subtitleLabel, style.subtitleColor);
-                    subtitleLabel.getComponent(UITransform)?.setContentSize(type.itemSubtitleWidth, type.itemSubtitleHeight);
-                }
-
-                const statLabelNode = instantiate(this.highscoreLabel.node);
-                statLabelNode.name = `${buttonNode.name}_Stats`;
-                statLabelNode.setParent(buttonNode);
-                statLabelNode.setPosition(new Vec3(78, -58, 0));
-
-                const statLabel = statLabelNode.getComponent(Label);
-                if (statLabel) {
-                    statLabel.string = [entry.materialId ? "" : entry.statLine, entry.description].filter((line) => !!line).join("\n");
-                    statLabel.fontSize = type.itemStatSize;
-                    statLabel.lineHeight = type.itemStatLineHeight;
-                    statLabel.overflow = Overflow.SHRINK;
-                    if (style) this.applyLabelColor(statLabel, style.subtitleColor);
-                    statLabel.getComponent(UITransform)?.setContentSize(type.itemStatWidth, type.itemStatHeight);
-                }
-            }
-
-            const button = buttonNode.getComponent(UIButton);
-            const shouldEnable = this.isInventoryButtonEnabled(entry);
-            if (!shouldEnable) {
-                const buttonComponent = buttonNode.getComponent(Button);
-                if (buttonComponent) {
-                    buttonComponent.enabled = false;
-                }
-                return;
-            }
-
-            button?.InteractedEvent.on(() => onClick(entry.slot ?? entry.itemId ?? entry.materialId), this);
-        });
-    }
-
-    private resolveInventoryButtonTitle(entry: any): string {
-        if (entry.slot) {
-            return `${entry.label}: ${entry.itemLabel}`;
-        }
-
-        if (entry.materialId) {
-            return entry.label;
-        }
-
-        if (entry.placeholderId) {
-            return entry.label;
-        }
-
-        const actionSuffix = entry.actionLabel ? ` - ${entry.actionLabel}` : "";
-        return `${entry.label}${actionSuffix}`;
-    }
-
-    private isInventoryButtonEnabled(entry: any): boolean {
-        if (entry.placeholderId) return false;
-        if (entry.materialId) return false;
-        if (entry.isEmpty ?? false) return false;
-        if (entry.isEquipped ?? false) return false;
-        if (entry.canEquip === false) return false;
-
-        return true;
     }
 
     private applyLabelColor(label: Label, color: ColorTuple): void {
@@ -513,7 +244,7 @@ export class Menu extends Component {
         const zoneBtnNode = instantiate(this.upgradeBtn.node);
         zoneBtnNode.name = "ZoneBtn";
         zoneBtnNode.setParent(this.node);
-        zoneBtnNode.setPosition(new Vec3(0, -262, 0));
+        zoneBtnNode.setPosition(new Vec3(0, -194, 0));
         this.removeClonedUpgradeIndicator(zoneBtnNode);
 
         const zoneLabel = zoneBtnNode.getComponentInChildren(Label);
@@ -564,9 +295,6 @@ export class Menu extends Component {
         if (!this.zonePanel) return;
 
         this.zonePanel.active = !this.zonePanel.active;
-        if (this.zonePanel.active && this.inventoryPanel) {
-            this.inventoryPanel.active = false;
-        }
         if (this.zonePanel.active) {
             this.refreshZonePanel();
         }
@@ -648,9 +376,6 @@ export class Menu extends Component {
 
     private refreshQuickActionLabels(): void {
         const presentation = MenuQuickActionsPresentation.build(AppRoot.Instance.Settings, AppRoot.Instance.LiveUserData);
-        if (this.inventoryBtnLabel) {
-            this.inventoryBtnLabel.string = presentation.inventoryButtonLabel;
-        }
         if (this.zoneBtnLabel) {
             this.zoneBtnLabel.string = presentation.stageButtonLabel;
         }

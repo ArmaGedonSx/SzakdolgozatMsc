@@ -16,7 +16,8 @@ export class ZoneResolver {
         }
 
         const selectedZone = accessibleZones.find((zone) => zone.zoneId === userData.game.currentZoneId);
-        const fallbackZone = accessibleZones.sort((left, right) => left.requiredLevel - right.requiredLevel).at(-1) ?? configuredZones[0];
+        const sortedZones = accessibleZones.slice().sort((left, right) => left.requiredLevel - right.requiredLevel);
+        const fallbackZone = sortedZones[sortedZones.length - 1] ?? configuredZones[0];
         userData.game.currentZoneId = (selectedZone ?? fallbackZone).zoneId;
 
         return selectedZone ?? fallbackZone;

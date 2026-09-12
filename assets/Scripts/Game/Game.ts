@@ -104,14 +104,14 @@ export class Game extends Component {
         this.blackScreen.active = false;
         AppRoot.Instance.ScreenFader.playClose();
 
-        while (!this.shouldExitRun(runResult) && this.player.Health.IsAlive && !this.isStageObjectiveComplete()) await delay(100);
+        while (!this.shouldExitRun(runResult) && (this.player?.Health?.IsAlive ?? false) && !this.isStageObjectiveComplete()) await delay(100);
 
         this.gamePauser.pause();
         Game.instance = null;
         runResult.hasExitManually = this.shouldExitRun(runResult);
         runResult.score = this.timeAlive;
         runResult.zoneId = userData.game.currentZoneId;
-        runResult.finalLevel = this.player.Level.CurrentLevel;
+        runResult.finalLevel = this.player?.Level?.CurrentLevel ?? 1;
         runResult.targetSurvivalSeconds = this.targetSurvivalSeconds;
         runResult.cleared = this.isStageObjectiveComplete();
 
@@ -124,8 +124,12 @@ export class Game extends Component {
             AppRoot.Instance.Analytics.gameExit(this.timeAlive);
         }
 
-        PlayerProgression.syncFromRuntime(userData, this.player.Level);
-        PlayerRuntimeState.syncFromRuntime(userData, this.player);
+        if (this.player?.Level) {
+            PlayerProgression.syncFromRuntime(userData, this.player.Level);
+        }
+        if (this.player) {
+            PlayerRuntimeState.syncFromRuntime(userData, this.player);
+        }
         return runResult;
     }
 
@@ -150,7 +154,7 @@ export class Game extends Component {
     }
 
     public update(deltaTime: number): void {
-        if (this.gamePauser.IsPaused) return;
+        if (this.gamePauser.IsPaused || !this.player || !this.player.isValid) return;
 
         this.player.gameTick(deltaTime);
         this.playerCollisionSystem.gameTick(deltaTime);
